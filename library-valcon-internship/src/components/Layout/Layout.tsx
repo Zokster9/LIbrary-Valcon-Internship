@@ -4,11 +4,11 @@ import './Layout.css'
 
 const Layout = () => {
   return (
-    <>
+    <div className='Layout'>
       <Header />
-      <div className='Layout'>Layout Component</div>
+      <div>Layout Component</div>
       <Footer />
-    </>
+    </div>
   )
 }
 
