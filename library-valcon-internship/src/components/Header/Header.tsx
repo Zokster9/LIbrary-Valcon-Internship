@@ -3,7 +3,7 @@ import './Header.css'
 const Header = () => {
   return (
     <div className='Header'>
-      <h1>Header Component</h1>
+      <input className='header-search' type='text' placeholder='Search...' />
     </div>
   )
 }

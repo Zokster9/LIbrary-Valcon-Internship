@@ -1,1 +1,18 @@
-.Header {}
+@media (max-width: 400px) {
+  .Header {
+    display: flex;
+    justify-content: space-around;
+    background-color: #444;
+    overflow: hidden;
+  }
+
+  .header-search {
+    all: unset;
+    background-color: #444;
+    color: white;
+    margin: 1%;
+    border: 1px solid black;
+    padding: 2%;
+    border-radius: 15px;
+  }
+}
