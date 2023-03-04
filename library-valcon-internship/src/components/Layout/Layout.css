@@ -3,4 +3,12 @@
   flex-flow: column;
   min-height: 100vh;
   justify-content: space-between;
+  padding-top: 15%;
+  padding-bottom: 15%;
+}
+
+@media (max-width: 400px) {
+  .card {
+    margin: 0 auto;
+  }
 }
