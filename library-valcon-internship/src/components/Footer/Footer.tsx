@@ -3,7 +3,11 @@ import profile from '../../assets/icons/profile-icon.svg'
 import hamburgerMenuIcon from '../../assets/icons/hamburger-menu-icon.svg'
 import './Footer.css'
 
-const Footer = () => {
+interface FooterProps {
+  handleMenuClick: () => void
+}
+
+const Footer = ({ handleMenuClick }: FooterProps) => {
   return (
     <nav className='Footer'>
       <a className='footer-link' href=''>
@@ -12,9 +16,9 @@ const Footer = () => {
       <a className='footer-link' href=''>
         <img src={profile} alt='profile-icon' />
       </a>
-      <a className='footer-link' href=''>
+      <button className='footer-link' onClick={() => handleMenuClick()}>
         <img src={hamburgerMenuIcon} alt='moreOptions-icon' />
-      </a>
+      </button>
     </nav>
   )
 }

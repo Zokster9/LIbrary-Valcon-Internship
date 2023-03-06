@@ -1,8 +1,12 @@
 import './MobileSidebar.css'
 
-const MobileSidebar = () => {
+interface MobileSidebarProps {
+  isVisible: boolean
+}
+
+const MobileSidebar = ({ isVisible }: MobileSidebarProps) => {
   return (
-    <div className='MobileSidebar'>
+    <div className={isVisible ? 'MobileSidebar' : 'MobileSidebar-hidden'}>
       <a href='/' className='sidebar-link'>
         Option 1
       </a>

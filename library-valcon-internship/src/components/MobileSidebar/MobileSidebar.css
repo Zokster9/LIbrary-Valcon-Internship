@@ -6,13 +6,15 @@
     background-color: #444;
     display: flex;
     flex-flow: column-reverse;
-    z-index: 100;
+    z-index: 90;
     width: 50%;
     min-height: 100vh;
+    margin-bottom: 12%;
+    opacity: 0.3;
   }
 
   .sidebar-link {
-    color: #f2f2f2;
+    color: #f4f3f3;
     width: 100%;
     text-align: center;
     text-decoration: none;
@@ -22,5 +24,9 @@
 
   .sidebar-link:active {
     background-color: rgb(199, 149, 10);
+  }
+
+  .MobileSidebar-hidden {
+    display: none;
   }
 }
