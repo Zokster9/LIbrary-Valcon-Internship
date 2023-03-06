@@ -6,10 +6,6 @@
   padding-block: 7%;
 }
 
-.card {
-  margin: 0 auto;
-}
-
 @media (max-width: 400px) {
   .Layout {
     display: flex;
@@ -17,9 +13,5 @@
     min-height: 100vh;
     justify-content: space-between;
     padding-block: 15%;
-  }
-
-  .card {
-    margin: 0 auto;
   }
 }
