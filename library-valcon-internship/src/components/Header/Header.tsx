@@ -18,7 +18,17 @@ const Header = () => {
   const visibilityClass = visible ? 'visible' : 'hidden'
   return (
     <div className={'Header ' + visibilityClass}>
-      <input className='header-search' type='text' placeholder='Search...' />
+      <div className='header-search' >
+        <input className='header-search-bar' type='text' placeholder='Search...' />
+      </div>
+      <div className='header-user'>
+        <a className='header-btn' href='/'>
+          Sign in
+        </a>
+        <a className='header-btn' href='/'>
+          Sign out
+        </a>
+      </div>
     </div>
   )
 }

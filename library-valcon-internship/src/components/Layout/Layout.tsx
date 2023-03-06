@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import Footer from '../Footer/Footer'
+import Navbar from '../Navbar/Navbar'
 import Header from '../Header/Header'
 import MobileSidebar from '../MobileSidebar/MobileSidebar'
 import './Layout.css'
@@ -16,7 +16,7 @@ const Layout = () => {
       <Header />
       <div className='card'>Insert screens here</div>
       <MobileSidebar isVisible={isVisible} />
-      <Footer handleMenuClick={handleMenuClick} />
+      <Navbar handleMenuClick={handleMenuClick} />
     </div>
   )
 }

@@ -3,11 +3,22 @@
   flex-flow: column;
   min-height: 100vh;
   justify-content: space-between;
-  padding-top: 15%;
-  padding-bottom: 15%;
+  padding-block: 7%;
+}
+
+.card {
+  margin: 0 auto;
 }
 
 @media (max-width: 400px) {
+  .Layout {
+    display: flex;
+    flex-flow: column;
+    min-height: 100vh;
+    justify-content: space-between;
+    padding-block: 15%;
+  }
+
   .card {
     margin: 0 auto;
   }
