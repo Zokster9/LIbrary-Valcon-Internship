@@ -9,10 +9,9 @@ import AppRouter from '../AppRouter/AppRouter'
 import './Layout.css'
 
 const Layout = () => {
-  const [ isVisible, setIsVisible ] = useState<boolean>(false)
+  const [ isVisible, setIsVisible ] = useState(false)
   const handleMenuClick = () => {
-    const visibility = !isVisible
-    setIsVisible(visibility)
+    setIsVisible((currentState) => !currentState)
   }
   return (
     <div className='Layout'>
