@@ -1,9 +1,12 @@
 import { useState } from 'react'
 
+import { BrowserRouter } from 'react-router-dom'
+
 import Navbar from '../Navbar/Navbar'
 import Header from '../Header/Header'
 import MobileSidebar from '../MobileSidebar/MobileSidebar'
 import './Layout.css'
+import AppRouter from '../AppRouter/AppRouter'
 
 const Layout = () => {
   const [ isVisible, setIsVisible ] = useState<boolean>(false)
@@ -13,10 +16,12 @@ const Layout = () => {
   }
   return (
     <div className='Layout'>
-      <Header />
-      <div className='card'>Insert screens here</div>
-      <MobileSidebar isVisible={isVisible} />
-      <Navbar handleMenuClick={handleMenuClick} />
+      <BrowserRouter>
+        <Header />
+        <AppRouter />
+        <MobileSidebar isVisible={isVisible} />
+        <Navbar handleMenuClick={handleMenuClick} />
+      </BrowserRouter>
     </div>
   )
 }
