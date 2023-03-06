@@ -14,7 +14,7 @@ const Layout = () => {
   return (
     <div className='Layout'>
       <Header />
-      <div className='card'>Layout Component</div>
+      <div className='card'>Insert screens here</div>
       <MobileSidebar isVisible={isVisible} />
       <Footer handleMenuClick={handleMenuClick} />
     </div>
