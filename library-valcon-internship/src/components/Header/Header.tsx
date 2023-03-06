@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
+
 import './Header.css'
+import { NavLink } from 'react-router-dom'
 
 const Header = () => {
   const [ position, setPosition ] = useState(window.scrollY)
@@ -22,12 +24,12 @@ const Header = () => {
         <input className='header-search-bar' type='text' placeholder='Search...' />
       </div>
       <div className='header-user'>
-        <a className='header-btn' href='/'>
+        <NavLink className='header-btn' to='/'>
           Sign in
-        </a>
-        <a className='header-btn' href='/'>
+        </NavLink>
+        <NavLink className='header-btn' to='/'>
           Sign out
-        </a>
+        </NavLink>
       </div>
     </div>
   )

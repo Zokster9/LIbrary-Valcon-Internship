@@ -2,6 +2,7 @@ import home from '../../assets/icons/home-icon.svg'
 import profile from '../../assets/icons/profile-icon.svg'
 import hamburgerMenuIcon from '../../assets/icons/hamburger-menu-icon.svg'
 import './Navbar.css'
+import NavbarLink from '../NavbarLink/NavbarLink'
 
 interface FooterProps {
   handleMenuClick: () => void
@@ -10,24 +11,24 @@ interface FooterProps {
 const Navbar = ({ handleMenuClick }: FooterProps) => {
   return (
     <nav className='Footer'>
-      <a className='footer-link' href=''>
+      <NavbarLink className='footer-link' to='' color='#F56211'>
         <img src={home} alt='home-icon' />
-      </a>
-      <a className='footer-link' href=''>
+      </NavbarLink>
+      <NavbarLink className='footer-link' to='profile' color='#F56211'>
         <img src={profile} alt='profile-icon' />
-      </a>
+      </NavbarLink>
       <button className='footer-link' onClick={() => handleMenuClick()}>
         <img src={hamburgerMenuIcon} alt='moreOptions-icon' />
       </button>
-      <a href='/' className='footer-options-link'>
+      <NavbarLink to='option1' className='footer-options-link' color='#F56211'>
         Option 1
-      </a>
-      <a href='/' className='footer-options-link'>
+      </NavbarLink>
+      <NavbarLink to='option2' className='footer-options-link' color='#F56211'>
         Option 2
-      </a>
-      <a href='/' className='footer-options-link'>
+      </NavbarLink>
+      <NavbarLink to='option3' className='footer-options-link' color='#F56211'>
         Option 3
-      </a>
+      </NavbarLink>
     </nav>
   )
 }

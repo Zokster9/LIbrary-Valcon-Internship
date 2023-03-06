@@ -1,3 +1,4 @@
+import NavbarLink from '../NavbarLink/NavbarLink'
 import './MobileSidebar.css'
 
 interface MobileSidebarProps {
@@ -7,15 +8,15 @@ interface MobileSidebarProps {
 const MobileSidebar = ({ isVisible }: MobileSidebarProps) => {
   return (
     <div className={isVisible ? 'MobileSidebar' : 'MobileSidebar-hidden'}>
-      <a href='/' className='sidebar-link'>
+      <NavbarLink to='/' className='sidebar-link' color='#F56211'>
         Option 1
-      </a>
-      <a href='/' className='sidebar-link'>
+      </NavbarLink>
+      <NavbarLink to='/' className='sidebar-link' color='#F56211'>
         Option 2
-      </a>
-      <a href='/' className='sidebar-link'>
+      </NavbarLink>
+      <NavbarLink to='/' className='sidebar-link' color='#F56211'>
         Option 3
-      </a>
+      </NavbarLink>
     </div>
   )
 }
