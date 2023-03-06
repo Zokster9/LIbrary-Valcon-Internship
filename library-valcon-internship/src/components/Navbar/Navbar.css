@@ -45,14 +45,6 @@ button.footer-link {
 .footer-options-link:hover {
   background-color: #444;
 }
-/* .footer-link {
-  
-  .active
-} */
-
-/* .footer-link.active {
-  background-color: #444;
-} */
 
 @media (max-width: 400px) {
   .Footer {
