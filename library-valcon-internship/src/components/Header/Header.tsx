@@ -20,11 +20,11 @@ const Header = () => {
   const visibilityClass = visible ? 'visible' : 'hidden'
   return (
     <div className={'Header ' + visibilityClass}>
-      <div className='header-search' >
+      <div className='header-search'>
         <input className='header-search-bar' type='text' placeholder='Search...' />
       </div>
       <div className='header-user'>
-        <NavLink className='header-btn' to='/'>
+        <NavLink className='header-btn' to='/login'>
           Sign in
         </NavLink>
         <NavLink className='header-btn' to='/'>
