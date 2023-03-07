@@ -1,7 +1,6 @@
 import { PropsWithChildren } from 'react'
 
 import { NavLink } from 'react-router-dom'
-import './NavbarLink.css'
 
 interface NavbarLinkProps {
   to: string
