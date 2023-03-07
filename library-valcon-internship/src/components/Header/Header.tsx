@@ -24,7 +24,7 @@ const Header = () => {
         <input className='header-search-bar' type='text' placeholder='Search...' />
       </div>
       <div className='header-user'>
-        <NavLink className='header-btn' to='/login'>
+        <NavLink className='header-btn' to='/sign-in'>
           Sign in
         </NavLink>
         <NavLink className='header-btn' to='/'>
