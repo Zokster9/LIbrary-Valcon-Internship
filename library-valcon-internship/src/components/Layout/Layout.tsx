@@ -14,7 +14,7 @@ const Layout = () => {
     setIsVisible((currentState) => !currentState)
   }
   return (
-    <div className='Layout'>
+    <div className='layout'>
       <BrowserRouter>
         <Header />
         <AppRouter />

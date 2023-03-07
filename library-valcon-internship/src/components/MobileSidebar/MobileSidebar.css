@@ -1,13 +1,13 @@
-.MobileSidebar-hidden {
+.mobileSidebar-hidden {
   display: none;
 }
 
-.MobileSidebar {
+.mobileSidebar {
   display: none;
 }
 
 @media (max-width: 400px) {
-  .MobileSidebar {
+  .mobileSidebar {
     position: fixed;
     bottom: 0;
     right: 0;

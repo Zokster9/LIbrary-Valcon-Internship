@@ -1,4 +1,4 @@
-.Footer {
+.footer {
   padding-top: 1%;
   height: 100%;
   width: 5%;
@@ -47,7 +47,7 @@ button.footer-link {
 }
 
 @media (max-width: 400px) {
-  .Footer {
+  .footer {
     all: unset;
     width: 100%;
     display: flex;

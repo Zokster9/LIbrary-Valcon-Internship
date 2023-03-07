@@ -1,4 +1,4 @@
-.Header {
+.header {
   top: 0;
   position: fixed;
   display: flex;
@@ -47,7 +47,7 @@
 }
 
 @media (max-width: 400px) {
-  .Header {
+  .header {
     display: flex;
     justify-content: space-around;
     background-color: #444;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
-import './Header.css'
 import { NavLink } from 'react-router-dom'
+import './Header.css'
 
 const Header = () => {
   const [ position, setPosition ] = useState(window.scrollY)
@@ -19,7 +19,7 @@ const Header = () => {
   }, [ position ])
   const visibilityClass = visible ? 'visible' : 'hidden'
   return (
-    <div className={'Header ' + visibilityClass}>
+    <div className={'header ' + visibilityClass}>
       <div className='header-search' >
         <input className='header-search-bar' type='text' placeholder='Search...' />
       </div>
