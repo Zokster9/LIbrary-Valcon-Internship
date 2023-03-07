@@ -1,0 +1,36 @@
+.mobileSidebar-hidden {
+  display: none;
+}
+
+.mobileSidebar {
+  display: none;
+}
+
+@media (max-width: 400px) {
+  .mobileSidebar {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background-color: #444;
+    display: flex;
+    flex-flow: column-reverse;
+    z-index: 90;
+    width: 50%;
+    min-height: 100vh;
+    margin-bottom: 12%;
+    opacity: 0.3;
+  }
+
+  .sidebar-link {
+    color: #f4f3f3;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    background: none;
+    padding-block: 10%;
+  }
+
+  .sidebar-link:active {
+    background-color: rgb(199, 149, 10);
+  }
+}
