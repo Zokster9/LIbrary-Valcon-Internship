@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import './Header.css'
 
 const Header = () => {
   const [ position, setPosition ] = useState(window.scrollY)
   const [ visible, setVisible ] = useState(true)
+  const location = useLocation()
+  const isSearchVisible = location.pathname === '/'
   useEffect(() => {
     const handleScroll = () => {
       const moving = window.scrollY
@@ -20,7 +22,7 @@ const Header = () => {
   const visibilityClass = visible ? 'visible' : 'hidden'
   return (
     <div className={'header ' + visibilityClass}>
-      <div className='header-search' >
+      <div className={isSearchVisible ? 'header-search' : 'hide-search'} >
         <input className='header-search-bar' type='text' placeholder='Search...' />
       </div>
       <div className='header-user'>
