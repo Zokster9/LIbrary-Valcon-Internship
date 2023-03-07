@@ -29,9 +29,6 @@ const Header = () => {
         <NavLink className='header-btn' to='/sign-in'>
           Sign in
         </NavLink>
-        <NavLink className='header-btn' to='/'>
-          Sign out
-        </NavLink>
       </div>
     </div>
   )

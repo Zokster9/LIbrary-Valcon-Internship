@@ -11,12 +11,6 @@ const MobileSidebar = ({ isVisible }: MobileSidebarProps) => {
       <NavbarLink to='/sign-in' className='sidebar-link' color='#F56211'>
         Sign in
       </NavbarLink>
-      <NavbarLink to='/sign-up' className='sidebar-link' color='#F56211'>
-        Sign up
-      </NavbarLink>
-      <NavbarLink to='/option' className='sidebar-link' color='#F56211'>
-        Option 3
-      </NavbarLink>
     </div>
   )
 }
