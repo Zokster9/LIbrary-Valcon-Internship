@@ -14,6 +14,11 @@
   text-align: center;
   margin-bottom: 0.5rem;
   font-size: 20px;
+  max-width: 20rem;
+}
+
+.label.error {
+  color: red;
 }
 
 .title {
@@ -29,6 +34,7 @@
 .form-field {
   display: flex;
   flex-flow: column;
+  align-items: center;
   margin-bottom: 2rem;
 }
 
@@ -55,6 +61,20 @@
   font-size: 16px;
   width: 20rem;
   height: 2rem;
+}
+
+.form-input.error {
+  border: 2px solid red;
+}
+
+.signIn-message {
+  display: none;
+}
+
+.error-signIn {
+  color: red;
+  margin-bottom: 1rem;
+  font-size: 20px;
 }
 
 @media (max-width: 400px) {

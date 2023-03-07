@@ -9,7 +9,7 @@ const Header = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const isSearchVisible = location.pathname === '/'
-  const isLoggedIn = localStorage.getItem('email')
+  const isLoggedIn = localStorage.getItem('token')
   useEffect(() => {
     const handleScroll = () => {
       const moving = window.scrollY
@@ -23,8 +23,7 @@ const Header = () => {
   }, [ position ])
   const visibilityClass = visible ? 'visible' : 'hidden'
   const handleSignOut = () => {
-    localStorage.removeItem('email')
-    localStorage.removeItem('password')
+    localStorage.removeItem('token')
     navigate('/')
   }
   return (
