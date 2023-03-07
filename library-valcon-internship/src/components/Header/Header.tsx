@@ -33,11 +33,13 @@ const Header = () => {
       </div>
       <div className='header-user'>
         { !isLoggedIn ?
-          <NavLink className='header-btn' to='/sign-in'>
-          Sign in
-          </NavLink> :
+          <button className="header-btn">
+            <NavLink className='header-link' to='/sign-in'>
+              Sign in
+            </NavLink>
+          </button> :
           <button className='header-btn' onClick={handleSignOut}>
-          Sign out
+            Sign out
           </button>}
       </div>
     </div>

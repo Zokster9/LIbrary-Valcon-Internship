@@ -44,7 +44,7 @@ const SignIn = () => {
       return
     }
     login(email, password)
-      .then(response => {
+      .then((response) => {
         localStorage.setItem('token', response.data.accessToken)
         navigate('/')
       })
@@ -59,43 +59,45 @@ const SignIn = () => {
   return (
     <div className='signIn'>
       <h1 className='title'>Sign in</h1>
-      <form onSubmit={handleOnSubmit}>
-        <div className='form-field'>
-          <label className={ emailError ? 'label error' : 'label'} htmlFor='email'>
-            { !emailError ? 'Email:' : 'Please provide a valid email format (example@domain.com)'}
-          </label>
-          <input
-            className={ emailError ? 'form-input error' : 'form-input'}
-            type='email'
-            id='email'
-            name='email'
-            placeholder='Enter email...'
-            aria-required={true}
-            aria-invalid={true}
-            value={email}
-            onChange={handleOnChangeEmail}
-            onBlur={handleOnBlurEmail}
-            onFocus={() => setEmailError(false)}
-          />
-        </div>
-        <div className='form-field'>
-          <label className={ passwordError ? 'label error' : 'label'} htmlFor='password'>
-            { !passwordError ? 'Password:' : 'Please provide a valid password' }
-          </label>
-          <input
-            className={ passwordError ? 'form-input error' : 'form-input'}
-            type='password'
-            id='password'
-            name='password'
-            placeholder='Enter password...'
-            value={password}
-            onChange={handleOnChangePassword}
-            onBlur={handleOnBlurPassword}
-            onFocus={() => setPasswordError(false)}
-          />
+      <form className='form' onSubmit={handleOnSubmit}>
+        <div>
+          <div className='form-field'>
+            <label className={emailError ? 'label error' : 'label'} htmlFor='email'>
+              {!emailError ? 'Email:' : 'Please provide a valid email format'}
+            </label>
+            <input
+              className={emailError ? 'form-input error' : 'form-input'}
+              type='email'
+              id='email'
+              name='email'
+              placeholder='Enter email...'
+              aria-required={true}
+              aria-invalid={true}
+              value={email}
+              onChange={handleOnChangeEmail}
+              onBlur={handleOnBlurEmail}
+              onFocus={() => setEmailError(false)}
+            />
+          </div>
+          <div className='form-field'>
+            <label className={passwordError ? 'label error' : 'label'} htmlFor='password'>
+              {!passwordError ? 'Password:' : 'Please provide a valid password'}
+            </label>
+            <input
+              className={passwordError ? 'form-input error' : 'form-input'}
+              type='password'
+              id='password'
+              name='password'
+              placeholder='Enter password...'
+              value={password}
+              onChange={handleOnChangePassword}
+              onBlur={handleOnBlurPassword}
+              onFocus={() => setPasswordError(false)}
+            />
+          </div>
         </div>
         <div className='form-field-button'>
-          <div className={ invalidCredentials ? 'error-signIn' : 'signIn-message'}>
+          <div className={invalidCredentials ? 'error-signIn' : 'signIn-message'}>
             Wrong email or password!
           </div>
           <button className='form-button'>Sign in</button>
