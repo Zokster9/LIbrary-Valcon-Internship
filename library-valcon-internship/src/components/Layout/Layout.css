@@ -1,4 +1,4 @@
-.Layout {
+.layout {
   display: flex;
   flex-flow: column;
   min-height: 100vh;
@@ -7,7 +7,7 @@
 }
 
 @media (max-width: 400px) {
-  .Layout {
+  .layout {
     display: flex;
     flex-flow: column;
     min-height: 100vh;

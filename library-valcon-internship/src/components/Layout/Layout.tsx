@@ -5,17 +5,16 @@ import { BrowserRouter } from 'react-router-dom'
 import Navbar from '../Navbar/Navbar'
 import Header from '../Header/Header'
 import MobileSidebar from '../MobileSidebar/MobileSidebar'
-import './Layout.css'
 import AppRouter from '../AppRouter/AppRouter'
+import './Layout.css'
 
 const Layout = () => {
-  const [ isVisible, setIsVisible ] = useState<boolean>(false)
+  const [ isVisible, setIsVisible ] = useState(false)
   const handleMenuClick = () => {
-    const visibility = !isVisible
-    setIsVisible(visibility)
+    setIsVisible((currentState) => !currentState)
   }
   return (
-    <div className='Layout'>
+    <div className='layout'>
       <BrowserRouter>
         <Header />
         <AppRouter />

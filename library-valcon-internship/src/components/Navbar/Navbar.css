@@ -1,4 +1,4 @@
-.Footer {
+.footer {
   padding-top: 1%;
   height: 100%;
   width: 5%;
@@ -45,17 +45,9 @@ button.footer-link {
 .footer-options-link:hover {
   background-color: #444;
 }
-/* .footer-link {
-  
-  .active
-} */
-
-/* .footer-link.active {
-  background-color: #444;
-} */
 
 @media (max-width: 400px) {
-  .Footer {
+  .footer {
     all: unset;
     width: 100%;
     display: flex;

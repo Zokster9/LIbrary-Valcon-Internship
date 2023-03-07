@@ -1,8 +1,8 @@
 import home from '../../assets/icons/home-icon.svg'
 import profile from '../../assets/icons/profile-icon.svg'
 import hamburgerMenuIcon from '../../assets/icons/hamburger-menu-icon.svg'
-import './Navbar.css'
 import NavbarLink from '../NavbarLink/NavbarLink'
+import './Navbar.css'
 
 interface FooterProps {
   handleMenuClick: () => void
@@ -10,7 +10,7 @@ interface FooterProps {
 
 const Navbar = ({ handleMenuClick }: FooterProps) => {
   return (
-    <nav className='Footer'>
+    <nav className='footer'>
       <NavbarLink className='footer-link' to='' color='#F56211'>
         <img src={home} alt='home-icon' />
       </NavbarLink>

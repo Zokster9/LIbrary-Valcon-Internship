@@ -7,7 +7,7 @@ interface MobileSidebarProps {
 
 const MobileSidebar = ({ isVisible }: MobileSidebarProps) => {
   return (
-    <div className={isVisible ? 'MobileSidebar' : 'MobileSidebar-hidden'}>
+    <div className={isVisible ? 'mobileSidebar' : 'mobileSidebar-hidden'}>
       <NavbarLink to='/sign-in' className='sidebar-link' color='#F56211'>
         Sign in
       </NavbarLink>
