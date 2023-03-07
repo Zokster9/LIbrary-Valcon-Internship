@@ -1,11 +1,12 @@
 import { FormEvent, useState } from 'react'
 
+import { useNavigate } from 'react-router-dom'
 import './SignIn.css'
 
 const SignIn = () => {
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
-
+  const navigate = useNavigate()
   const handleOnChangeEmail = ({ currentTarget }: FormEvent<HTMLInputElement>) => {
     const newEmail = currentTarget.value
     setEmail(newEmail)
@@ -16,7 +17,9 @@ const SignIn = () => {
   }
   const handleOnSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault()
-    //TODO: Add sign in logic when backend is available
+    localStorage.setItem('email', email)
+    localStorage.setItem('password', password)
+    navigate('/')
   }
   return (
     <div className='signIn'>

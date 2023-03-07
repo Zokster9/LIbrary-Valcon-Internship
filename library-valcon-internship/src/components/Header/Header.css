@@ -51,6 +51,10 @@
   background-color: rgb(199, 149, 10);
 }
 
+button.header-btn {
+  font-size: 16px;
+}
+
 .hide-search {
   display: none;
 }
