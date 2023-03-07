@@ -33,8 +33,4 @@
   .sidebar-link:active {
     background-color: rgb(199, 149, 10);
   }
-
-  .MobileSidebar-hidden {
-    display: none;
-  }
 }
