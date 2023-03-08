@@ -1,4 +1,4 @@
-.signIn {
+.sign-in {
   margin: 0 auto;
   background-color: #555;
   border-radius: 15px;
@@ -33,10 +33,6 @@
   color: whitesmoke;
   text-align: center;
   margin-bottom: 3rem;
-}
-
-.signIn-form {
-  margin: 1rem;
 }
 
 .form-field {
@@ -80,18 +76,18 @@
   border: 2px solid red;
 }
 
-.signIn-message {
+.sign-in-message {
   display: none;
 }
 
-.error-signIn {
+.error-sign-in {
   color: red;
   margin-bottom: 1rem;
   font-size: 20px;
 }
 
 @media (max-width: 400px) {
-  .signIn {
+  .sign-in {
     padding-inline: 4rem;
     padding-bottom: 4rem;
   }
