@@ -1,9 +1,13 @@
-import { useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import './Header.css'
 
-const Header = () => {
+interface HeaderProps {
+  setToken: Dispatch<SetStateAction<string | null>>
+}
+
+const Header = ({ setToken }: HeaderProps) => {
   const [ position, setPosition ] = useState(window.scrollY)
   const [ visible, setVisible ] = useState(true)
   const location = useLocation()
@@ -24,6 +28,7 @@ const Header = () => {
   const visibilityClass = visible ? 'visible' : 'hidden'
   const handleSignOut = () => {
     localStorage.removeItem('token')
+    setToken(null)
     navigate('/')
   }
   return (

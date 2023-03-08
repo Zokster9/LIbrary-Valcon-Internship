@@ -1,12 +1,16 @@
-import { FormEvent, useState } from 'react'
+import { Dispatch, FormEvent, SetStateAction, useState } from 'react'
 
-import { useNavigate } from 'react-router-dom'
 import axios, { AxiosError } from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 import { login } from '../../services/AuthorizationService'
 import './SignIn.css'
 
-const SignIn = () => {
+interface SignInProps {
+  setToken: Dispatch<SetStateAction<string | null>>
+}
+
+const SignIn = ({ setToken }: SignInProps) => {
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
   const [ emailError, setEmailError ] = useState(false)
@@ -45,7 +49,8 @@ const SignIn = () => {
     }
     login(email, password)
       .then((response) => {
-        localStorage.setItem('token', response.data.accessToken)
+        localStorage.setItem('token', JSON.stringify(response.data))
+        setToken(JSON.stringify(response.data))
         navigate('/')
       })
       .catch((error: Error | AxiosError) => {
