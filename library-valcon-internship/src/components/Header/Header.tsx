@@ -12,8 +12,8 @@ const Header = ({ setToken }: HeaderProps) => {
   const [ visible, setVisible ] = useState(true)
   const location = useLocation()
   const navigate = useNavigate()
-  const isSearchVisible = location.pathname === '/'
   const isLoggedIn = localStorage.getItem('token')
+  const isSearchVisible = location.pathname === '/' && isLoggedIn
   useEffect(() => {
     const handleScroll = () => {
       const moving = window.scrollY
