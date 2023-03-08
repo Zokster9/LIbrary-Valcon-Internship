@@ -11,32 +11,29 @@ interface NavbarProps {
 
 const Navbar = ({ handleMenuClick, token }: NavbarProps) => {
   const isLoggedIn = token
-  return (
+  return isLoggedIn ? (
     <nav className='navbar'>
       <NavbarLink className='navbar-link' to='' color='#F56211'>
         <img src={home} alt='home-icon' />
       </NavbarLink>
-      {
-        isLoggedIn &&
-        <>
-          <NavbarLink className='navbar-link' to='profile' color='#F56211'>
-            <img src={profile} alt='profile-icon' />
-          </NavbarLink>
-          <button className='navbar-link' onClick={() => handleMenuClick()}>
-            <img src={hamburgerMenuIcon} alt='moreOptions-icon' />
-          </button>
-          <NavbarLink to='option1' className='navbar-options-link' color='#F56211'>
-            Option 1
-          </NavbarLink>
-          <NavbarLink to='option2' className='navbar-options-link' color='#F56211'>
-            Option 2
-          </NavbarLink>
-          <NavbarLink to='option3' className='navbar-options-link' color='#F56211'>
-            Option 3
-          </NavbarLink>
-        </>
-      }
+      <NavbarLink className='navbar-link' to='profile' color='#F56211'>
+        <img src={profile} alt='profile-icon' />
+      </NavbarLink>
+      <button className='navbar-link' onClick={() => handleMenuClick()}>
+        <img src={hamburgerMenuIcon} alt='moreOptions-icon' />
+      </button>
+      <NavbarLink to='option1' className='navbar-options-link' color='#F56211'>
+        Option 1
+      </NavbarLink>
+      <NavbarLink to='option2' className='navbar-options-link' color='#F56211'>
+        Option 2
+      </NavbarLink>
+      <NavbarLink to='option3' className='navbar-options-link' color='#F56211'>
+        Option 3
+      </NavbarLink>
     </nav>
+  ) : (
+    <></>
   )
 }
 

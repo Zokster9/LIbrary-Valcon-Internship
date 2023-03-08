@@ -1,29 +1,29 @@
-import { useNavigate } from 'react-router-dom'
+import { Dispatch, SetStateAction } from 'react'
 
-import NavbarLink from '../NavbarLink/NavbarLink'
+import { useNavigate } from 'react-router-dom'
 import './MobileSidebar.css'
 
 interface MobileSidebarProps {
-  isVisible: boolean
+  isVisible: boolean,
+  token: string | null,
+  setToken: Dispatch<SetStateAction<string | null>>,
+  handleMenuClick: () => void
 }
 
-const MobileSidebar = ({ isVisible }: MobileSidebarProps) => {
+const MobileSidebar = ({ isVisible, token, setToken, handleMenuClick }: MobileSidebarProps) => {
   const navigate = useNavigate()
-  const isLoggedIn = localStorage.getItem('email')
+  const isLoggedIn = token
   const handleSignOut = () => {
-    localStorage.removeItem('email')
-    localStorage.removeItem('password')
+    localStorage.removeItem('token')
+    setToken(null)
+    handleMenuClick()
     navigate('/')
   }
   return (
-    <div className={isVisible ? 'mobileSidebar' : 'mobileSidebar-hidden'}>
-      { !isLoggedIn ?
-        <NavbarLink to='/sign-in' className='sidebar-link' color='#F56211'>
-          Sign in
-        </NavbarLink> :
-        <button className='sidebar-link' onClick={handleSignOut}>
-          Sign out
-        </button>}
+    <div className={isVisible && isLoggedIn ? 'mobileSidebar' : 'mobileSidebar-hidden'}>
+      <button className='sidebar-link' onClick={handleSignOut}>
+        Sign out
+      </button>
     </div>
   )
 }

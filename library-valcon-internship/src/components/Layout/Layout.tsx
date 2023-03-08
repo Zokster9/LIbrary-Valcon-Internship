@@ -18,8 +18,13 @@ const Layout = () => {
     <div className='layout'>
       <BrowserRouter>
         <Header setToken={setToken} />
-        <AppRouter setToken={setToken} />
-        <MobileSidebar isVisible={isVisible} />
+        <AppRouter token={token} setToken={setToken} />
+        <MobileSidebar
+          token={token}
+          setToken={setToken}
+          isVisible={isVisible}
+          handleMenuClick={handleMenuClick}
+        />
         <Navbar token={token} handleMenuClick={handleMenuClick} />
       </BrowserRouter>
     </div>

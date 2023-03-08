@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
-import { NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import './Header.css'
 
 interface HeaderProps {
@@ -37,12 +37,7 @@ const Header = ({ setToken }: HeaderProps) => {
         <input className='header-search-bar' type='text' placeholder='Search...' />
       </div>
       <div className='header-user'>
-        { !isLoggedIn ?
-          <button className="header-btn">
-            <NavLink className='header-link' to='/sign-in'>
-              Sign in
-            </NavLink>
-          </button> :
+        { isLoggedIn &&
           <button className='header-btn' onClick={handleSignOut}>
             Sign out
           </button>}
