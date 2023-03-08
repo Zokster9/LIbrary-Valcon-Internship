@@ -1,13 +1,19 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from 'react'
 
 import axios, { AxiosError } from 'axios'
+import jwtDecode from 'jwt-decode'
 import { useNavigate } from 'react-router-dom'
 
+import Token from '../../models/Token'
 import { login } from '../../services/AuthorizationService'
 import './SignIn.css'
 
 interface SignInProps {
   setToken: Dispatch<SetStateAction<string | null>>
+}
+
+interface JwtRole {
+  ['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']: string
 }
 
 const SignIn = ({ setToken }: SignInProps) => {
@@ -49,8 +55,15 @@ const SignIn = ({ setToken }: SignInProps) => {
     }
     login(email, password)
       .then((response) => {
-        localStorage.setItem('token', JSON.stringify(response.data))
-        setToken(JSON.stringify(response.data))
+        const decodedJwt = jwtDecode<JwtRole>(response.data.accessToken)
+        const token: Token = {
+          accessToken: response.data.accessToken,
+          refreshToken: response.data.refreshToken,
+          expiration: response.data.expiration,
+          role: decodedJwt['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+        }
+        localStorage.setItem('token', JSON.stringify(token))
+        setToken(JSON.stringify(token))
         navigate('/')
       })
       .catch((error: Error | AxiosError) => {
