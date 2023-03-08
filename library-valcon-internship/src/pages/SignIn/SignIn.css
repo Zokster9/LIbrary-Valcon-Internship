@@ -101,7 +101,12 @@
     height: 2rem;
   }
 
+  .form {
+    width: 15.3rem;
+  }
+
   .label {
-    max-width: 10rem;
+    max-width: 15rem;
+    font-size: 1rem;
   }
 }
