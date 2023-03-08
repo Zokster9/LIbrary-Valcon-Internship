@@ -7,16 +7,17 @@ import SignIn from '../../pages/SignIn/SignIn'
 import PrivateRoutes from './PrivateRoutes'
 
 interface AppRouterProps {
+  token: string | null
   setToken: Dispatch<SetStateAction<string | null>>
 }
 
-const AppRouter = ({ setToken }: AppRouterProps) => {
+const AppRouter = ({ token, setToken }: AppRouterProps) => {
   return (
     <Routes>
-      <Route element={<PrivateRoutes />}>
+      <Route element={<PrivateRoutes token={token} />}>
         <Route path='/profile' element={<HomePage />} />
+        <Route path='/' element={<HomePage />} />
       </Route>
-      <Route path='/' element={<HomePage />} />
       <Route path='/sign-in' element={<SignIn setToken={setToken} />} />
     </Routes>
   )
