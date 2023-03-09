@@ -1,12 +1,11 @@
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
 
 import Author from '../models/Author'
+import { baseUrl } from './AxiosConfiguration'
 
-interface GetAuthorsResponse {
-  authors: Author[]
+export const getAllAuthors = async () =>
+  axios.get<Author[]>(baseUrl + 'api/Authors')
+
+export const addNewAuthor = async (firstName: string, lastName: string) => {
+  return axios.post(baseUrl + 'api/Authors', { firstName, lastName })
 }
-
-const baseUrl: string = process.env.REACT_APP_API_BASE_URL ? process.env.REACT_APP_API_BASE_URL : ''
-
-export const getAllAuthors = async (): Promise<AxiosResponse<GetAuthorsResponse>> =>
-  axios.get(baseUrl + 'api/Authors')

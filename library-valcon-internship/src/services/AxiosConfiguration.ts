@@ -2,6 +2,8 @@ import axios from 'axios'
 
 import Token from '../models/Token'
 
+export const baseUrl: string = process.env.REACT_APP_API_BASE_URL ? process.env.REACT_APP_API_BASE_URL : ''
+
 export const configureAxiosRequestInterceptors = () => {
   axios.interceptors.request.use(
     (config) => {
