@@ -44,3 +44,28 @@
   width: 220px;
   max-width: 220px;
 }
+
+.create-book-field-button {
+  height: 6.25rem;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-end;
+  text-align: center;
+  align-items: center;
+}
+
+.create-book-input {
+  font-size: 14px;
+  width: 220px;
+  height: 25px;
+}
+
+.create-book-text-area {
+  font-size: 14px;
+  width: 220px;;
+}
+
+.create-book-placeholder {
+  all: unset;
+  background-color: white;
+}
