@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { BrowserRouter } from 'react-router-dom'
 
+import { configureAxiosRequestInterceptors } from '../../services/AxiosConfiguration'
 import AppRouter from '../AppRouter/AppRouter'
 import Header from '../Header/Header'
 import MobileSidebar from '../MobileSidebar/MobileSidebar'
@@ -11,6 +12,7 @@ import './Layout.css'
 const Layout = () => {
   const [ token, setToken ] = useState(localStorage.getItem('token'))
   const [ isVisible, setIsVisible ] = useState(false)
+  configureAxiosRequestInterceptors()
   const handleMenuClick = () => {
     setIsVisible((currentState) => !currentState)
   }
