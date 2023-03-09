@@ -30,6 +30,16 @@
     padding-block: 10%;
   }
 
+  button.sidebar-link {
+    all: unset;
+    color: #f4f3f3;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    background: none;
+    padding-block: 10%;
+  }
+
   .sidebar-link:active {
     background-color: rgb(199, 149, 10);
   }

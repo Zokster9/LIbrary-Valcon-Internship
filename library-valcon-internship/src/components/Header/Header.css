@@ -6,6 +6,7 @@
   width: 100%;
   background-color: #444;
   overflow: hidden;
+  min-height: 6.875rem;
 }
 
 .header-search {
@@ -31,19 +32,39 @@
 .header-user {
   width: 10%;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 }
 
 .header-btn {
+  display: flex;
+  height: 1.6rem;
+  width: 4.7rem;
+  padding-block: 1.5rem;
+  align-items: center;
+  justify-content: center;
   color: #f4f3f3;
-  width: 40%;
-  text-align: center;
   text-decoration: none;
   background: none;
-  padding-block: 10%;
   border: 1px solid black;
   border-radius: 15px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.header-link {
+  color: #f4f3f3;
+  text-decoration: none;
+  background: none;
+}
+
+.header-btn:hover {
+  background-color: rgb(199, 149, 10);
+  cursor: pointer;
+}
+
+.hide-search {
+  display: none;
 }
 
 @media (max-width: 400px) {
@@ -55,6 +76,7 @@
     top: 0;
     position: fixed;
     width: 100%;
+    min-height: 3.5rem;
   }
 
   .header-search {

@@ -1,11 +1,19 @@
-import { useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
-import { NavLink } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import './Header.css'
 
-const Header = () => {
+interface HeaderProps {
+  setToken: Dispatch<SetStateAction<string | null>>
+}
+
+const Header = ({ setToken }: HeaderProps) => {
   const [ position, setPosition ] = useState(window.scrollY)
   const [ visible, setVisible ] = useState(true)
+  const location = useLocation()
+  const navigate = useNavigate()
+  const isLoggedIn = localStorage.getItem('token')
+  const isSearchVisible = location.pathname === '/' && isLoggedIn
   useEffect(() => {
     const handleScroll = () => {
       const moving = window.scrollY
@@ -18,18 +26,21 @@ const Header = () => {
     }
   }, [ position ])
   const visibilityClass = visible ? 'visible' : 'hidden'
+  const handleSignOut = () => {
+    localStorage.removeItem('token')
+    setToken(null)
+    navigate('/')
+  }
   return (
     <div className={'header ' + visibilityClass}>
-      <div className='header-search' >
+      <div className={isSearchVisible ? 'header-search' : 'hide-search'} >
         <input className='header-search-bar' type='text' placeholder='Search...' />
       </div>
       <div className='header-user'>
-        <NavLink className='header-btn' to='/'>
-          Sign in
-        </NavLink>
-        <NavLink className='header-btn' to='/'>
-          Sign out
-        </NavLink>
+        { isLoggedIn &&
+          <button className='header-btn' onClick={handleSignOut}>
+            Sign out
+          </button>}
       </div>
     </div>
   )
