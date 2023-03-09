@@ -1,5 +1,5 @@
 export default interface Author {
-  id: string,
-  firstName: string,
+  id: number
+  firstName: string
   lastName: string
 }
