@@ -75,7 +75,7 @@ const SignIn = ({ setToken }: SignInProps) => {
       })
   }
   return (
-    <div className='signIn'>
+    <div className='sign-in'>
       <h1 className='title'>Sign in</h1>
       <form className='form' onSubmit={handleOnSubmit}>
         <div>
@@ -115,7 +115,7 @@ const SignIn = ({ setToken }: SignInProps) => {
           </div>
         </div>
         <div className='form-field-button'>
-          <div className={invalidCredentials ? 'error-signIn' : 'signIn-message'}>
+          <div className={invalidCredentials ? 'error-sign-in' : 'sign-in-message'}>
             Wrong email or password!
           </div>
           <button className='form-button'>Sign in</button>

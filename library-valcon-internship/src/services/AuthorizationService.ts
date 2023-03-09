@@ -6,7 +6,7 @@ interface SignInResponse {
   expiration: Date
 }
 
-const API_URL = 'https://library-practice-app.azurewebsites.net/'
+const API_URL: string = process.env.REACT_APP_API_BASE_URL ? process.env.REACT_APP_API_BASE_URL : ''
 
 export const login = async (email: string, password: string): Promise<AxiosResponse<SignInResponse>> => {
   const credentials = {
