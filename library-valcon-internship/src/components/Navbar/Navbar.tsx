@@ -22,9 +22,9 @@ const Navbar = ({ handleMenuClick, token }: NavbarProps) => {
       <button className='navbar-link' onClick={() => handleMenuClick()}>
         <img src={hamburgerMenuIcon} alt='moreOptions-icon' />
       </button>
-      <NavbarLink to='option1' className='navbar-options-link' color='#F56211'>
-        Option 1
-      </NavbarLink>
+      <button className='navbar-options-link'>
+        Add a new book
+      </button>
       <NavbarLink to='option2' className='navbar-options-link' color='#F56211'>
         Option 2
       </NavbarLink>
