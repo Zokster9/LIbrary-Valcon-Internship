@@ -90,10 +90,6 @@
   align-items: center;
 }
 
-.add-author-input.error {
-  border: 2px solid red;
-}
-
 .add-author-error-label {
   color: red;
 }

@@ -78,3 +78,25 @@
   background-color: #D5BF81;
   color: #666;
 }
+
+.create-book-error-label {
+  color: red;
+}
+
+.create-book-error-input {
+  border: 2px solid red;
+}
+
+.cover {
+  height: 200px;
+  width: 200px;
+  object-fit: cover;
+}
+
+.data-error {
+  color: red;
+}
+
+.data {
+  display: none;
+}
