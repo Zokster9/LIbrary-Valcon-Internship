@@ -69,3 +69,12 @@
   all: unset;
   background-color: white;
 }
+
+.author-add-btn {
+  border-style: none;
+  margin-top: 10px;
+  border-radius: 15px;
+  font-size: 14px;
+  background-color: #D5BF81;
+  color: #666;
+}

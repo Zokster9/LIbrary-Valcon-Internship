@@ -1,15 +1,18 @@
 import { FormEvent, SyntheticEvent, useEffect, useRef, useState } from 'react'
 
-import Select from 'react-select'
+import Select, { MultiValue } from 'react-select'
 
 import placeholderBook from '../../assets/icons/placeholder-book.png'
+import ModalAddAuthor from '../../components/ModalAddAuthor/ModalAddAuthor'
 import Author from '../../models/Author'
 import { getAllAuthors } from '../../services/AuthorService'
 import './CreateBookPage.css'
 
 const CreateBookPage = () => {
   const [ authors, setAuthors ] = useState<Author[]>([])
-  const [ cover, setCover ] = useState('')
+  const [ show, setShow ] = useState(false)
+  const [ retrieveAuthors, setRetrieveAuthors ] = useState(false)
+  const [ selectedAuthors, setSelectedAuthors ] = useState<Author[]>([])
   const hiddenFileInput = useRef<HTMLInputElement>(null)
   useEffect(() => {
     getAllAuthors()
@@ -19,7 +22,7 @@ const CreateBookPage = () => {
       .catch(error => {
         console.log(error)
       })
-  }, [])
+  }, [ retrieveAuthors ])
   const handleCoverClick = () => {
     if (hiddenFileInput.current)
       hiddenFileInput.current.click()
@@ -28,6 +31,10 @@ const CreateBookPage = () => {
     if (currentTarget.files) {
       console.log(currentTarget.files[0])
     }
+  }
+  const handleOnSelectedAuthorsChange = (authorsData: MultiValue<Author>) => {
+    console.log({ authorsData })
+    setSelectedAuthors(authorsData as Author[])
   }
   const handleOnSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
@@ -38,7 +45,7 @@ const CreateBookPage = () => {
       <form className='create-book-form' onSubmit={handleOnSubmit}>
         <div className="create-book-form-field">
           <h3>Add a cover</h3>
-          <button className='create-book-placeholder' type="button" onClick={handleCoverClick}>
+          <button className='create-book-placeholder' type='button' onClick={handleCoverClick}>
             <img src={placeholderBook} alt='placeholder-book' />
           </button>
           <input
@@ -90,13 +97,24 @@ const CreateBookPage = () => {
             className='author-select'
             options={authors}
             getOptionLabel={(option: Author) => `${option.firstName} ${option.lastName}`}
+            value={selectedAuthors}
+            onChange={handleOnSelectedAuthorsChange}
+            isSearchable={true}
             isMulti
           />
+          <button
+            className='author-add-btn'
+            type='button'
+            onClick={() => { setShow(true) }}
+          >
+            + Add a new Author
+          </button>
         </div>
         <div className='create-book-field-button'>
           <button className='create-book-button'>Create a book</button>
         </div>
       </form>
+      <ModalAddAuthor retrieveAuthors={retrieveAuthors} setRetrieveAuthors={setRetrieveAuthors} show={show} closeModal={() => { setShow(false) }} />
     </div>
   )
 }
