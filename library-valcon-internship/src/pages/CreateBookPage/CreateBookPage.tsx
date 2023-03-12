@@ -20,6 +20,9 @@ const CreateBookPage = () => {
   const [ quantity, setQuantity ] = useState('1')
   const [ releaseDate, setReleaseDate ] = useState<Date | null>(null)
   const [ selectedAuthors, setSelectedAuthors ] = useState<Author[]>([])
+  const [ requestCover, setRequestCover ] = useState(new Blob())
+  const [ cover, setCover ] = useState('')
+
   const [ invalidTitle, setInvalidTitle ] = useState(false)
   const [ invalidDescription, setInvalidDescription ] = useState(false)
   const [ invalidIsbn, setInvalidIsbn ] = useState(false)
@@ -27,10 +30,10 @@ const CreateBookPage = () => {
   const [ invalidReleaseDate, setInvalidReleaseDate ] = useState(false)
   const [ invalidSelectedAuthors, setInvalidSelectedAuthors ] = useState(false)
   const [ invalidData, setInvalidData ] = useState(false)
-  const [ requestCover, setRequestCover ] = useState(new Blob())
-  const [ cover, setCover ] = useState('')
+
   const navigate = useNavigate()
   const hiddenFileInput = useRef<HTMLInputElement>(null)
+
   useEffect(() => {
     getAllAuthors()
       .then(response => {
@@ -118,7 +121,7 @@ const CreateBookPage = () => {
       return
     }
     const isbnRegex = new RegExp('^(?=(?:\\D*\\d){10}(?:(?:\\D*\\d){3})?$)[\\d-]+$')
-    if (isbn.trim() === '' && !isbnRegex.test(isbn)) {
+    if (isbn.trim() === '' || !isbnRegex.test(isbn)) {
       setInvalidIsbn(true)
       return
     }
@@ -282,7 +285,11 @@ const CreateBookPage = () => {
           <button className='create-book-button'>Create a book</button>
         </div>
       </form>
-      <ModalAddAuthor retrieveAuthors={retrieveAuthors} setRetrieveAuthors={setRetrieveAuthors} show={show} closeModal={() => { setShow(false) }} />
+      <ModalAddAuthor
+        retrieveAuthors={retrieveAuthors}
+        setRetrieveAuthors={setRetrieveAuthors}
+        show={show} closeModal={() => { setShow(false) }}
+      />
     </div>
   )
 }
