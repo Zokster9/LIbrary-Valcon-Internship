@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import Select, { MultiValue } from 'react-select'
 
 import placeholderBook from '../../assets/icons/placeholder-book.png'
-import ModalAddAuthor from '../../components/ModalAddAuthor/ModalAddAuthor'
+import ModalAddAuthor from '../../components/Modals/ModalAddAuthor/ModalAddAuthor'
 import Author from '../../models/Author'
 import { getAllAuthors } from '../../services/AuthorService'
 import { addNewBook } from '../../services/BookService'

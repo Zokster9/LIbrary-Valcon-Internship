@@ -2,7 +2,8 @@ import { Dispatch, FormEvent, SetStateAction, SyntheticEvent, useState } from 'r
 
 import ReactDOM from 'react-dom'
 
-import { addNewAuthor } from '../../services/AuthorService'
+import { addNewAuthor } from '../../../services/AuthorService'
+import '../Modals.css'
 import './ModalAddAuthor.css'
 
 interface AddAuthorProps {
