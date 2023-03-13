@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import InfiniteScroll from 'react-infinite-scroll-component'
 import { NavLink } from 'react-router-dom'
 
 import addIcon from '../../assets/icons/add-icon.svg'
@@ -9,21 +10,38 @@ import { getBooks } from '../../services/BookService'
 import './HomePage.css'
 
 const HomePage = () => {
-  const [ books, setBooks ] = useState<Book[] | null>(null)
+  const [ pageNumber, setPageNumber ] = useState(1)
+  const [ books, setBooks ] = useState<Book[]>([])
+  const [ isEmptyResponse, setIsEmptyResponse ] = useState(false)
   useEffect(() => {
-    getBooks(1, 10)
+    getBooks(pageNumber, 10)
       .then(response => {
-        setBooks(response.data)
+        setIsEmptyResponse(response.data.length === 0)
+        setBooks(prevBooks => [ ...prevBooks, ...response.data ])
       })
       .catch(() => {
-        setBooks(null)
+        setBooks([])
       })
-  }, [])
+  }, [ pageNumber ])
+  const handleNextPage = () => {
+    setPageNumber(prevPageNumber => prevPageNumber + 1)
+  }
   return (
     <div className='homePage'>
       {
         books ?
-          <BookList books={books} /> :
+          (
+            <InfiniteScroll
+              dataLength={books.length}
+              next={handleNextPage}
+              hasMore={!isEmptyResponse}
+              loader={<h4 style={{ textAlign: 'center' }}>Loading...</h4>}
+              endMessage={<h4 style={{ textAlign: 'center' }}>You have browsed all books</h4>}
+            >
+              <BookList books={books} />
+            </InfiniteScroll>
+          )
+          :
           <h3>No books currently available</h3>
       }
       <button className='fab'>
