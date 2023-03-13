@@ -127,7 +127,7 @@ const ModalAddBook = ({ show, closeModal }: AddBookProps) => {
       setInvalidDescription(true)
       return
     }
-    if (Number.parseInt(quantity) < 1) {
+    if (Number.parseInt(quantity.trim()) < 1) {
       setInvalidQuantity(true)
       return
     }
@@ -146,10 +146,10 @@ const ModalAddBook = ({ show, closeModal }: AddBookProps) => {
     }
 
     const formData = new FormData()
-    formData.append('title', title)
-    formData.append('description', description)
-    formData.append('isbn', isbn)
-    formData.append('quantity', quantity)
+    formData.append('title', title.trim())
+    formData.append('description', description.trim())
+    formData.append('isbn', isbn.trim())
+    formData.append('quantity', quantity.trim())
     formData.append('cover', requestCover)
     formData.append('publishDate', releaseDate.toISOString())
     selectedAuthors.forEach(author => formData.append('authorIds', author.Id.toString()))
@@ -186,7 +186,7 @@ const ModalAddBook = ({ show, closeModal }: AddBookProps) => {
       setInvalidLastName(true)
       return
     }
-    addNewAuthor(firstName, lastName)
+    addNewAuthor(firstName.trim(), lastName.trim())
       .then(() => {
         getAllAuthors()
           .then(response => {

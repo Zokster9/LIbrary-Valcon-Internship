@@ -44,7 +44,7 @@ const ModalAddAuthor = ({ show, closeModal, retrieveAuthors, setRetrieveAuthors 
       setInvalidLastName(true)
       return
     }
-    addNewAuthor(firstName, lastName)
+    addNewAuthor(firstName.trim(), lastName.trim())
       .then(() => {
         setRetrieveAuthors(!retrieveAuthors)
         handleOnCloseModal()

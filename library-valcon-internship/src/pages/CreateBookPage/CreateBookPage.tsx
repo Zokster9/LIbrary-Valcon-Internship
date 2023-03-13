@@ -135,10 +135,10 @@ const CreateBookPage = () => {
     }
 
     const formData = new FormData()
-    formData.append('title', title)
-    formData.append('description', description)
-    formData.append('isbn', isbn)
-    formData.append('quantity', quantity)
+    formData.append('title', title.trim())
+    formData.append('description', description.trim())
+    formData.append('isbn', isbn.trim())
+    formData.append('quantity', quantity.trim())
     formData.append('cover', requestCover)
     formData.append('publishDate', releaseDate.toISOString())
     selectedAuthors.forEach(author => formData.append('authorIds', author.Id.toString()))
