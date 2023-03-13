@@ -11,7 +11,7 @@ import './HomePage.css'
 const HomePage = () => {
   const [ books, setBooks ] = useState<Book[] | null>(null)
   useEffect(() => {
-    getBooks(1, 5)
+    getBooks(1, 10)
       .then(response => {
         setBooks(response.data)
       })
