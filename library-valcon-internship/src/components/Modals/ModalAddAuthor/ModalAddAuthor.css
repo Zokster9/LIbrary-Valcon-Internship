@@ -1,0 +1,57 @@
+.add-author-form {
+  display: flex;
+  flex-flow: column;
+}
+
+.add-author-form-field {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.add-author-button {
+  background-color: rgb(199, 149, 10);
+}
+
+.modal-btn {
+  color: white;
+  border-radius: 10px;
+  padding-block: 7px;
+  padding-inline: 12px;
+  font-size: 14px;
+}
+
+.modal-btns {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
+  width: 200px;
+}
+
+.author-modal-message {
+  display: none;
+}
+
+.error-author-modal {
+  color: red;
+  margin-bottom: 1rem;
+  font-size: 14px;
+}
+
+.add-author-button-field {
+  height: 60px;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-end;
+  text-align: center;
+  align-items: center;
+}
+
+.add-author-error-label {
+  color: red;
+}
+
+.add-author-error-input {
+  border: 2px solid red;
+}

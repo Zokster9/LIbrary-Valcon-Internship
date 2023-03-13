@@ -1,6 +1,9 @@
+import { useState } from 'react'
+
 import hamburgerMenuIcon from '../../assets/icons/hamburger-menu-icon.svg'
 import home from '../../assets/icons/home-icon.svg'
 import profile from '../../assets/icons/profile-icon.svg'
+import ModalAddBook from '../Modals/ModalAddBook/ModalAddBook'
 import NavbarLink from '../NavbarLink/NavbarLink'
 import './Navbar.css'
 
@@ -10,6 +13,7 @@ interface NavbarProps {
 }
 
 const Navbar = ({ handleMenuClick, token }: NavbarProps) => {
+  const [ showAddBookModal, setShowAddBookModal ] = useState(false)
   const isLoggedIn = token
   return isLoggedIn ? (
     <nav className='navbar'>
@@ -22,15 +26,16 @@ const Navbar = ({ handleMenuClick, token }: NavbarProps) => {
       <button className='navbar-link' onClick={() => handleMenuClick()}>
         <img src={hamburgerMenuIcon} alt='moreOptions-icon' />
       </button>
-      <NavbarLink to='option1' className='navbar-options-link' color='#F56211'>
-        Option 1
-      </NavbarLink>
+      <button className='navbar-options-link' onClick={() => setShowAddBookModal(true)}>
+        Add a new book
+      </button>
       <NavbarLink to='option2' className='navbar-options-link' color='#F56211'>
         Option 2
       </NavbarLink>
       <NavbarLink to='option3' className='navbar-options-link' color='#F56211'>
         Option 3
       </NavbarLink>
+      <ModalAddBook show={showAddBookModal} closeModal={() => setShowAddBookModal(false)} />
     </nav>
   ) : (
     <></>

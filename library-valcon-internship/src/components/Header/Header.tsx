@@ -27,7 +27,7 @@ const Header = ({ setToken }: HeaderProps) => {
   }, [ position ])
   const visibilityClass = visible ? 'visible' : 'hidden'
   const handleSignOut = () => {
-    localStorage.removeItem('token')
+    localStorage.clear()
     setToken(null)
     navigate('/')
   }
