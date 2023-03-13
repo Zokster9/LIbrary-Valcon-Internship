@@ -1,7 +1,6 @@
 import { FormEvent, SyntheticEvent, useEffect, useRef, useState } from 'react'
 
 import ReactDOM from 'react-dom'
-import { useNavigate } from 'react-router-dom'
 import Select, { MultiValue } from 'react-select'
 
 import placeholderBook from '../../../assets/icons/placeholder-book.png'
@@ -42,8 +41,6 @@ const ModalAddBook = ({ show, closeModal }: AddBookProps) => {
   const [ invalidFirstName, setInvalidFirstName ] = useState(false)
   const [ invalidLastName, setInvalidLastName ] = useState(false)
   const [ invalidAuthorData, setInvalidAuthorData ] = useState(false)
-
-  const navigate = useNavigate()
 
   useEffect(() => {
     getAllAuthors()
@@ -155,10 +152,10 @@ const ModalAddBook = ({ show, closeModal }: AddBookProps) => {
     formData.append('quantity', quantity)
     formData.append('cover', requestCover)
     formData.append('publishDate', releaseDate.toISOString())
-    selectedAuthors.forEach(author => formData.append('authorIds', author.id.toString()))
+    selectedAuthors.forEach(author => formData.append('authorIds', author.Id.toString()))
     addNewBook(formData)
       .then(() => {
-        navigate('/')
+        closeModal()
       })
       .catch(() => {
         setInvalidData(true)
@@ -271,7 +268,8 @@ const ModalAddBook = ({ show, closeModal }: AddBookProps) => {
               </label>
               <textarea
                 className={
-                  invalidDescription ? 'add-book-text-area add-book-error-input' : 'add-book-text-area'
+                  invalidDescription ? 'add-book-text-area add-book-error-input' :
+                    'add-book-text-area'
                 }
                 id='description'
                 name='description'
@@ -328,8 +326,8 @@ const ModalAddBook = ({ show, closeModal }: AddBookProps) => {
                       'add-book-author-select'
                   }
                   options={authors}
-                  getOptionLabel={(option: Author) => `${option.firstName} ${option.lastName}`}
-                  getOptionValue={(option: Author) => option.id.toString()}
+                  getOptionLabel={(option: Author) => `${option.FirstName} ${option.LastName}`}
+                  getOptionValue={(option: Author) => option.Id.toString()}
                   value={selectedAuthors}
                   onChange={handleOnSelectedAuthorsChange}
                   onFocus={() => setInvalidSelectedAuthors(false)}
@@ -347,7 +345,8 @@ const ModalAddBook = ({ show, closeModal }: AddBookProps) => {
                   <div
                     className=
                       {
-                        showAccordion ? 'add-book-accordion-content show' : 'add-book-accordion-content'
+                        showAccordion ? 'add-book-accordion-content show' :
+                          'add-book-accordion-content'
                       }
                   >
                     <div className='add-author-form'>
@@ -388,11 +387,22 @@ const ModalAddBook = ({ show, closeModal }: AddBookProps) => {
                         />
                       </div>
                       <div className='add-author-button-field'>
-                        <div className={invalidAuthorData ? 'error-author-model' : 'author-modal-message'}>
+                        <div className=
+                          {
+                            invalidAuthorData ? 'error-author-model' :
+                              'author-modal-message'
+                          }
+                        >
                           Something went wrong!
                         </div>
                         <div className='modal-btns'>
-                          <button form='authorForm' className='add-author-button modal-btn'>Create</button>
+                          <button
+                            form='authorForm'
+                            className='add-author-button modal-btn'
+                            onClick={(e: FormEvent<HTMLButtonElement>) => { e.stopPropagation() }}
+                          >
+                            Create
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -400,9 +410,26 @@ const ModalAddBook = ({ show, closeModal }: AddBookProps) => {
                 </div>
               </div>
             </div>
-            <div>
-              <button>Create a book</button>
-              <button onClick={() => closeModal()}>Close</button>
+            <div className='add-book-submit-area'>
+              <h4 className=
+                { invalidData ? 'add-book-error-message' :
+                  'add-book-error-message hidden'
+                }
+              >
+                Wrong book data!
+              </h4>
+              <div className='add-book-btns'>
+                <div className='submit-book-btn'>
+                  <button className='add-book-btn new-book-btn'>Create a book</button>
+                </div>
+                <button
+                  type='button'
+                  className='close-modal-btn add-book-btn'
+                  onClick={() => closeModal()}
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </form>
         </div>

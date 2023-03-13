@@ -141,7 +141,7 @@ const CreateBookPage = () => {
     formData.append('quantity', quantity)
     formData.append('cover', requestCover)
     formData.append('publishDate', releaseDate.toISOString())
-    selectedAuthors.forEach(author => formData.append('authorIds', author.id.toString()))
+    selectedAuthors.forEach(author => formData.append('authorIds', author.Id.toString()))
     addNewBook(formData)
       .then(() => {
         navigate('/')
@@ -262,12 +262,13 @@ const CreateBookPage = () => {
               invalidSelectedAuthors ? 'author-select create-book-error-input' : 'author-select'
             }
             options={authors}
-            getOptionLabel={(option: Author) => `${option.firstName} ${option.lastName}`}
-            getOptionValue={(option: Author) => option.id.toString()}
+            getOptionLabel={(option: Author) => `${option.FirstName} ${option.LastName}`}
+            getOptionValue={(option: Author) => option.Id.toString()}
             value={selectedAuthors}
             onChange={handleOnSelectedAuthorsChange}
             onFocus={() => setInvalidSelectedAuthors(false)}
             isSearchable={true}
+            maxMenuHeight={30}
             isMulti={true}
           />
           <button
