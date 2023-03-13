@@ -23,13 +23,13 @@ const CreateBookPage = () => {
   const [ requestCover, setRequestCover ] = useState(new Blob())
   const [ cover, setCover ] = useState('')
 
-  const [ invalidTitle, setInvalidTitle ] = useState(false)
-  const [ invalidDescription, setInvalidDescription ] = useState(false)
-  const [ invalidIsbn, setInvalidIsbn ] = useState(false)
-  const [ invalidQuantity, setInvalidQuantity ] = useState(false)
-  const [ invalidReleaseDate, setInvalidReleaseDate ] = useState(false)
-  const [ invalidSelectedAuthors, setInvalidSelectedAuthors ] = useState(false)
-  const [ invalidData, setInvalidData ] = useState(false)
+  const [ isTitleValid, setIsTitleValid ] = useState(true)
+  const [ isDescriptionValid, setIsDescriptionValid ] = useState(true)
+  const [ isIsbnValid, setIsIsbnValid ] = useState(true)
+  const [ isQuantityValid, setIsQuantityValid ] = useState(true)
+  const [ isReleaseDateValid, setIsReleaseDateValid ] = useState(true)
+  const [ isSelectedAuthorsValid, setIsSelectedAuthorsValid ] = useState(true)
+  const [ isDataValid, setIsDataValid ] = useState(true)
 
   const navigate = useNavigate()
   const hiddenFileInput = useRef<HTMLInputElement>(null)
@@ -68,7 +68,7 @@ const CreateBookPage = () => {
   }
   const handleOnBlurTitle = () => {
     if (title.trim() === '')
-      setInvalidTitle(true)
+      setIsTitleValid(false)
   }
 
   const handleOnChangeDescription = ({ currentTarget }: FormEvent<HTMLTextAreaElement>) => {
@@ -76,7 +76,7 @@ const CreateBookPage = () => {
   }
   const handleOnBlurDescription = () => {
     if (description.trim() === '')
-      setInvalidDescription(true)
+      setIsDescriptionValid(false)
   }
 
   const handleOnChangeIsbn = ({ currentTarget }: FormEvent<HTMLInputElement>) => {
@@ -84,15 +84,15 @@ const CreateBookPage = () => {
   }
   const handleOnBlurIsbn = () => {
     if (isbn.trim() === '')
-      setInvalidIsbn(true)
+      setIsIsbnValid(false)
   }
 
   const handleOnChangeQuantity = ({ currentTarget }: FormEvent<HTMLInputElement>) => {
     setQuantity(currentTarget.value)
   }
   const handleOnBlurQuantity = () => {
-    if (title.trim() === '')
-      setInvalidQuantity(true)
+    if (quantity.trim() === '')
+      setIsQuantityValid(false)
   }
 
   const handleOnChangeReleaseDate = ({ currentTarget }: FormEvent<HTMLInputElement>) => {
@@ -100,7 +100,7 @@ const CreateBookPage = () => {
   }
   const handleOnBlurReleaseDate = () => {
     if (!releaseDate)
-      setInvalidReleaseDate(true)
+      setIsReleaseDateValid(false)
   }
 
   const handleOnSelectedAuthorsChange = (authorsData: MultiValue<Author>) => {
@@ -109,28 +109,28 @@ const CreateBookPage = () => {
   const handleOnSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
     if (title.trim() === '') {
-      setInvalidTitle(true)
+      setIsTitleValid(false)
       return
     }
     if (description.trim() === '') {
-      setInvalidDescription(true)
+      setIsDescriptionValid(false)
       return
     }
-    if (Number.parseInt(quantity) < 1) {
-      setInvalidQuantity(true)
+    if (Number.parseInt(quantity.trim()) < 1) {
+      setIsQuantityValid(false)
       return
     }
     const isbnRegex = new RegExp('^(?=(?:\\D*\\d){10}(?:(?:\\D*\\d){3})?$)[\\d-]+$')
     if (isbn.trim() === '' || !isbnRegex.test(isbn)) {
-      setInvalidIsbn(true)
+      setIsIsbnValid(false)
       return
     }
     if (!releaseDate) {
-      setInvalidReleaseDate(true)
+      setIsReleaseDateValid(false)
       return
     }
     if (selectedAuthors.length === 0) {
-      setInvalidSelectedAuthors(true)
+      setIsSelectedAuthorsValid(false)
       return
     }
 
@@ -147,7 +147,7 @@ const CreateBookPage = () => {
         navigate('/')
       })
       .catch(() => {
-        setInvalidData(true)
+        setIsDataValid(false)
       })
   }
   return (
@@ -170,12 +170,12 @@ const CreateBookPage = () => {
           />
         </div>
         <div className='create-book-form-field'>
-          <label className={invalidTitle ? 'create-book-error-label' : ''}>
-            {invalidTitle ? 'Please enter title' : 'Title'}
+          <label className={!isTitleValid ? 'create-book-error-label' : ''}>
+            {!isTitleValid ? 'Please enter title' : 'Title'}
           </label>
           <input
             className={
-              invalidTitle ? 'create-book-input create-book-error-input' : 'create-book-input'
+              !isTitleValid ? 'create-book-input create-book-error-input' : 'create-book-input'
             }
             type='text'
             id='title'
@@ -184,16 +184,16 @@ const CreateBookPage = () => {
             value={title}
             onChange={handleOnChangeTitle}
             onBlur={handleOnBlurTitle}
-            onFocus={() => setInvalidTitle(false)}
+            onFocus={() => setIsTitleValid(true)}
           />
         </div>
         <div className='create-book-form-field'>
-          <label className={invalidDescription ? 'create-book-error-label' : ''}>
-            {invalidDescription ? 'Please enter description' : 'Description'}
+          <label className={!isDescriptionValid ? 'create-book-error-label' : ''}>
+            {!isDescriptionValid ? 'Please enter description' : 'Description'}
           </label>
           <textarea
             className={
-              invalidDescription ? 'create-book-text-area create-book-error-input' : 'create-book-text-area'
+              !isDescriptionValid ? 'create-book-text-area create-book-error-input' : 'create-book-text-area'
             }
             id='description'
             name='description'
@@ -203,32 +203,32 @@ const CreateBookPage = () => {
             value={description}
             onChange={handleOnChangeDescription}
             onBlur={handleOnBlurDescription}
-            onFocus={() => setInvalidDescription(false)}
+            onFocus={() => setIsDescriptionValid(true)}
           />
         </div>
         <div className='create-book-form-field'>
-          <label className={invalidIsbn ? 'create-book-error-label' : ''}>
-            {invalidIsbn ? 'Please enter ISBN' : 'ISBN'}
+          <label className={!isIsbnValid ? 'create-book-error-label' : ''}>
+            {!isIsbnValid ? 'Please enter ISBN' : 'ISBN'}
           </label>
           <input
             className={
-              invalidIsbn ? 'create-book-input create-book-error-input' : 'create-book-input'
+              !isIsbnValid ? 'create-book-input create-book-error-input' : 'create-book-input'
             }
             type='text'
             placeholder='Enter ISBN...'
             value={isbn}
             onChange={handleOnChangeIsbn}
             onBlur={handleOnBlurIsbn}
-            onFocus={() => setInvalidIsbn(false)}
+            onFocus={() => setIsIsbnValid(true)}
           />
         </div>
         <div className='create-book-form-field'>
-          <label className={invalidQuantity ? 'create-book-error-label' : ''}>
-            {invalidQuantity ? 'Please enter quantity' : 'Quantity'}
+          <label className={!isQuantityValid ? 'create-book-error-label' : ''}>
+            {!isQuantityValid ? 'Please enter quantity' : 'Quantity'}
           </label>
           <input
             className={
-              invalidQuantity ? 'create-book-input create-book-error-input' : 'create-book-input'
+              !isQuantityValid ? 'create-book-input create-book-error-input' : 'create-book-input'
             }
             type='number'
             placeholder='Enter quantity...'
@@ -236,37 +236,37 @@ const CreateBookPage = () => {
             value={quantity}
             onChange={handleOnChangeQuantity}
             onBlur={handleOnBlurQuantity}
-            onFocus={() => setInvalidQuantity(false)}
+            onFocus={() => setIsQuantityValid(true)}
           />
         </div>
         <div className='create-book-form-field'>
-          <label className={invalidReleaseDate ? 'create-book-error-label' : ''}>
-            {invalidReleaseDate ? 'Please enter release date' : 'Release date'}
+          <label className={!isReleaseDateValid ? 'create-book-error-label' : ''}>
+            {!isReleaseDateValid ? 'Please enter release date' : 'Release date'}
           </label>
           <input
             className={
-              invalidReleaseDate ? 'create-book-input create-book-error-input' : 'create-book-input'
+              !isReleaseDateValid ? 'create-book-input create-book-error-input' : 'create-book-input'
             }
             type='date'
             onChange={handleOnChangeReleaseDate}
             onBlur={handleOnBlurReleaseDate}
-            onFocus={() => setInvalidReleaseDate(false)}
+            onFocus={() => setIsReleaseDateValid(true)}
           />
         </div>
         <div className='create-book-form-field'>
-          <label className={invalidSelectedAuthors ? 'create-book-error-label' : ''}>
-            {invalidSelectedAuthors ? 'Please enter an author' : 'Authors'}
+          <label className={!isSelectedAuthorsValid ? 'create-book-error-label' : ''}>
+            {!isSelectedAuthorsValid ? 'Please enter an author' : 'Authors'}
           </label>
           <Select
             className={
-              invalidSelectedAuthors ? 'author-select create-book-error-input' : 'author-select'
+              !isSelectedAuthorsValid ? 'author-select create-book-error-input' : 'author-select'
             }
             options={authors}
             getOptionLabel={(option: Author) => `${option.FirstName} ${option.LastName}`}
             getOptionValue={(option: Author) => option.Id.toString()}
             value={selectedAuthors}
             onChange={handleOnSelectedAuthorsChange}
-            onFocus={() => setInvalidSelectedAuthors(false)}
+            onFocus={() => setIsSelectedAuthorsValid(false)}
             isSearchable={true}
             maxMenuHeight={30}
             isMulti={true}
@@ -280,7 +280,7 @@ const CreateBookPage = () => {
           </button>
         </div>
         <div className='create-book-field-button'>
-          <div className={invalidData ? 'data-error' : 'data'}>
+          <div className={!isDataValid ? 'data-error' : 'data'}>
             Wrong input data!
           </div>
           <button className='create-book-button'>Create a book</button>
