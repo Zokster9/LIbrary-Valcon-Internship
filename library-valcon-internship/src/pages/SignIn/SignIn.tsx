@@ -55,12 +55,12 @@ const SignIn = ({ setToken }: SignInProps) => {
     }
     login(email, password)
       .then((response) => {
-        const decodedJwt = jwtDecode<JwtRole>(response.data.accessToken)
+        const decodedJwt = jwtDecode<JwtRole>(response.data.AccessToken)
         const token: Token = {
-          accessToken: response.data.accessToken,
-          refreshToken: response.data.refreshToken,
-          expiration: response.data.expiration,
-          role: decodedJwt['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+          AccessToken: response.data.AccessToken,
+          RefreshToken: response.data.RefreshToken,
+          Expiration: response.data.Expiration,
+          Role: decodedJwt['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
         }
         localStorage.setItem('token', JSON.stringify(token))
         setToken(JSON.stringify(token))

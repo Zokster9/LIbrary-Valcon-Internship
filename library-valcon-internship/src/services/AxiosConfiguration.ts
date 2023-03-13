@@ -10,7 +10,7 @@ export const configureAxiosRequestInterceptors = () => {
       const token = localStorage.getItem('token')
       if (token) {
         const jsonToken: Token = JSON.parse(token) as Token
-        config.headers['Authorization'] = `Bearer ${jsonToken.accessToken}`
+        config.headers['Authorization'] = `Bearer ${jsonToken.AccessToken}`
       }
       return config
     },

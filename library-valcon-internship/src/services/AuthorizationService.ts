@@ -3,9 +3,9 @@ import axios, { AxiosResponse } from 'axios'
 import { baseUrl } from './AxiosConfiguration'
 
 interface SignInResponse {
-  accessToken: string,
-  refreshToken: string,
-  expiration: Date
+  AccessToken: string,
+  RefreshToken: string,
+  Expiration: Date
 }
 
 export const login = async (email: string, password: string): Promise<AxiosResponse<SignInResponse>> => {

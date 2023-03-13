@@ -11,7 +11,7 @@ const AdminPrivateRoutes = ({ token }: AdminPrivateRoutesProps) => {
   let isAdmin = false
   if (token) {
     jsonToken = JSON.parse(token) as Token
-    isAdmin = jsonToken.role === 'Admin'
+    isAdmin = jsonToken.Role === 'Admin'
   }
   return isAdmin ? <Outlet /> : <Navigate to='/' />
 }
