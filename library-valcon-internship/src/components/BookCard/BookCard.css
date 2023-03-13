@@ -1,0 +1,43 @@
+.book-card {
+  display: flex;
+  flex-flow: column;
+  margin-bottom: 2rem;
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid black;
+  border-radius: 15px;
+  color: white;
+  background-color: #444;
+  box-shadow: 5px 0 20px 2px #666;
+  transition: box-shadow 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+
+.book-card:active {
+  opacity: 0.8;
+  box-shadow: 0 0 30px 30px #666;
+  transition: box-shadow 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+
+.book-card-cover {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  align-self: center;
+}
+
+.book-card-info {
+  display: flex;
+  justify-content: space-around;
+  align-items: center
+}
+
+.book-card-info-title {
+  width: 100%;
+  align-self: center;
+}
+
+.book-card-info-content {
+  width: 100%;
+  text-align: right;
+  align-self: center;
+}

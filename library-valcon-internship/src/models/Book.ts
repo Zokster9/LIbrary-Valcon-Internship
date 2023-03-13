@@ -8,6 +8,6 @@ export default interface Book {
   Quantity: number
   Available: number
   Cover: string
-  PublishDate: Date
+  PublishDate: string
   Authors: Author[]
 }
