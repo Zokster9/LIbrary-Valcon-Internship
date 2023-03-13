@@ -332,7 +332,7 @@ const ModalAddBook = ({ show, closeModal }: AddBookProps) => {
                   onChange={handleOnSelectedAuthorsChange}
                   onFocus={() => setIsSelectedAuthorsValid(true)}
                   isSearchable={true}
-                  maxMenuHeight={70}
+                  maxMenuHeight={120}
                   isMulti={true}
                 />
               </div>
