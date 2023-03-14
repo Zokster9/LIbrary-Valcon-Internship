@@ -1,7 +1,8 @@
 import { ChangeEvent, Dispatch, SetStateAction, useMemo } from 'react'
 
-
 import debounce from 'lodash.debounce'
+import { BsSortDownAlt } from 'react-icons/bs'
+import { VscFilter } from 'react-icons/vsc'
 import './Search.css'
 
 interface SearchProps {
@@ -26,6 +27,8 @@ const Search = ({ isSearchVisible, setSearch }: SearchProps) => {
         autoComplete='off'
         onChange={debouncedChangeHandler}
       />
+      <VscFilter className='icon' />
+      <BsSortDownAlt className='icon' />
     </div>
   )
 }
