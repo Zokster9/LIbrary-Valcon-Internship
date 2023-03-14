@@ -7,21 +7,12 @@ interface BookCardProps {
 }
 
 const BookCard = ({ book }: BookCardProps) => {
-  let descriptionLength = 0
-  if (book.Description) {
-    descriptionLength = book.Description.length
-    if (descriptionLength > 20) descriptionLength = 20
-  }
   const publishDate = new Intl.DateTimeFormat('sr-RS').format(new Date(book.PublishDate))
-  let author = ''
+  let authors = ''
   if (book.Authors.length > 0) {
-    if (book.Authors.length > 1) {
-      author = `${book.Authors[0].FirstName} ${book.Authors[0].LastName}...`
-    } else {
-      author = `${book.Authors[0].FirstName} ${book.Authors[0].LastName}`
-    }
+    authors = book.Authors.map((author) => `${author.FirstName} ${author.LastName}`).join(', ')
   } else {
-    author = 'Unknown'
+    authors = 'Unknown'
   }
   return (
     <div className='book-card'>
@@ -39,7 +30,9 @@ const BookCard = ({ book }: BookCardProps) => {
       </div>
       <div className="book-card-info">
         <h4 className='book-card-info-title'>Description:</h4>
-        <p className='book-card-info-content'>{descriptionLength ? book.Description.substring(0, descriptionLength) : 'No description'}...</p>
+        <p className='book-card-info-content hide'>
+          {book.Description ? book.Description : 'No description'}
+        </p>
       </div>
       <div className="book-card-info">
         <h4 className='book-card-info-title'>Publish date:</h4>
@@ -51,7 +44,7 @@ const BookCard = ({ book }: BookCardProps) => {
       </div>
       <div className="book-card-info">
         <h4 className='book-card-info-title'>Authors:</h4>
-        <p className='book-card-info-content'>{author}
+        <p className='book-card-info-content hide'>{authors}
         </p>
       </div>
     </div>
