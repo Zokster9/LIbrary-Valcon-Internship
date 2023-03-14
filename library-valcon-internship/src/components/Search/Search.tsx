@@ -14,7 +14,7 @@ const Search = ({ isSearchVisible, setSearch }: SearchProps) => {
     setSearch(target.value)
   }
   const debouncedChangeHandler = useMemo(
-    () => debounce(handleSearchOnChange, 300)
+    () => debounce(handleSearchOnChange, 500)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     , [])
   return (
