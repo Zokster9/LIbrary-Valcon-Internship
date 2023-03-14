@@ -6,6 +6,7 @@ import { VscFilter } from 'react-icons/vsc'
 
 import Where from '../../models/Where'
 import ModalFilter from '../Modals/ModalFilter/ModalFilter'
+import ModalSort from '../Modals/ModalSort/ModalSort'
 import './Search.css'
 
 interface SearchProps {
@@ -16,6 +17,7 @@ interface SearchProps {
 
 const Search = ({ isSearchVisible, setSearch, setFilter }: SearchProps) => {
   const [ showFilter, setShowFilter ] = useState(false)
+  const [ showSort, setShowSort ] = useState(false)
   const handleSearchOnChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     setSearch(target.value)
   }
@@ -35,8 +37,16 @@ const Search = ({ isSearchVisible, setSearch, setFilter }: SearchProps) => {
         onChange={debouncedChangeHandler}
       />
       <VscFilter className='icon' onClick={() => setShowFilter(true)} title='Filter' />
-      <BsSortDownAlt className='icon' />
-      <ModalFilter show={showFilter} closeModal={() => setShowFilter(false)} applyFilter={handleFilterOnChange} />
+      <BsSortDownAlt className='icon' onClick={() => setShowSort(true)} title='Sort' />
+      <ModalFilter
+        show={showFilter}
+        closeModal={() => setShowFilter(false)}
+        applyFilter={handleFilterOnChange}
+      />
+      <ModalSort
+        show={showSort}
+        closeModal={() => setShowSort(false)}
+      />
     </div>
   )
 }
