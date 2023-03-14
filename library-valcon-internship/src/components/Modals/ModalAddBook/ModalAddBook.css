@@ -40,6 +40,7 @@
 .add-book-placeholder {
   all: unset;
   background-color: white;
+  cursor: pointer;
 }
 
 .book-cover {

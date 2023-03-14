@@ -268,7 +268,7 @@ const CreateBookPage = () => {
             onChange={handleOnSelectedAuthorsChange}
             onFocus={() => setIsSelectedAuthorsValid(false)}
             isSearchable={true}
-            maxMenuHeight={30}
+            maxMenuHeight={100}
             isMulti={true}
           />
           <button

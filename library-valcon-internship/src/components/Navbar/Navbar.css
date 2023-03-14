@@ -40,6 +40,7 @@ button.navbar-link {
   background: none;
   padding-block: 10%;
   font-size: 19px;
+  cursor: pointer;
 }
 
 .navbar-options-link:hover {

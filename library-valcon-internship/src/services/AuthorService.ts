@@ -6,6 +6,6 @@ import { baseUrl } from './AxiosConfiguration'
 export const getAllAuthors = async () =>
   axios.get<Author[]>(baseUrl + 'api/Authors')
 
-export const addNewAuthor = async (firstName: string, lastName: string) => {
-  return axios.post(baseUrl + 'api/Authors', { firstName, lastName })
+export const addNewAuthor = async (FirstName: string, LastName: string) => {
+  return axios.post(baseUrl + 'api/Authors', { FirstName, LastName })
 }
