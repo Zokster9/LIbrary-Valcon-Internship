@@ -12,16 +12,21 @@ import './HomePage.css'
 const HomePage = () => {
   const [ pageNumber, setPageNumber ] = useState(1)
   const [ books, setBooks ] = useState<Book[]>([])
-  const [ isEmptyResponse, setIsEmptyResponse ] = useState(false)
-  useEffect(() => {
+  const [ hasMoreBooks, setHasMoreBooks ] = useState(true)
+  const fetchBooks = (pageNumber: number, pageLength: number) => {
     getBooks(pageNumber, 10)
       .then(response => {
-        setIsEmptyResponse(response.data.length === 0)
-        setBooks(prevBooks => [ ...prevBooks, ...response.data ])
+        const totalCount = response.data.TotalCount
+        const currentCount = pageNumber * pageLength
+        setHasMoreBooks((totalCount - currentCount) > 0)
+        setBooks(prevBooks => [ ...prevBooks, ...response.data.Items ])
       })
       .catch(() => {
         setBooks([])
       })
+  }
+  useEffect(() => {
+    fetchBooks(pageNumber, 10)
   }, [ pageNumber ])
   const handleNextPage = () => {
     setPageNumber(prevPageNumber => prevPageNumber + 1)
@@ -34,7 +39,7 @@ const HomePage = () => {
             <InfiniteScroll
               dataLength={books.length}
               next={handleNextPage}
-              hasMore={!isEmptyResponse}
+              hasMore={hasMoreBooks}
               loader={<h4 style={{ textAlign: 'center' }}>Loading...</h4>}
               endMessage={<h4 style={{ textAlign: 'center' }}>You have browsed all books</h4>}
             >

@@ -43,6 +43,12 @@
   align-self: center;
 }
 
+.book-card-info-content.hide {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 @media (max-width: 400px) {
   .book-card {
     justify-content: unset;

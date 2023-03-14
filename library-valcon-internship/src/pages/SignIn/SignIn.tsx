@@ -4,16 +4,14 @@ import axios, { AxiosError } from 'axios'
 import jwtDecode from 'jwt-decode'
 import { useNavigate } from 'react-router-dom'
 
+import JwtRole from '../../models/JwtRole'
 import Token from '../../models/Token'
 import { login } from '../../services/AuthorizationService'
+import { ROLE_KEY } from '../../services/AxiosConfiguration'
 import './SignIn.css'
 
 interface SignInProps {
   setToken: Dispatch<SetStateAction<string | null>>
-}
-
-interface JwtRole {
-  ['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']: string
 }
 
 const SignIn = ({ setToken }: SignInProps) => {
@@ -60,7 +58,7 @@ const SignIn = ({ setToken }: SignInProps) => {
           AccessToken: response.data.AccessToken,
           RefreshToken: response.data.RefreshToken,
           Expiration: response.data.Expiration,
-          Role: decodedJwt['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+          Role: decodedJwt[ROLE_KEY]
         }
         localStorage.setItem('token', JSON.stringify(token))
         setToken(JSON.stringify(token))

@@ -1,7 +1,8 @@
 .book-list {
   display: flex;
   flex-flow: row wrap;
-  padding-inline: 3rem;
+  /* padding-inline: 3rem; */
+  width: 100%;
   justify-content: center;
   align-items: center;
 }
