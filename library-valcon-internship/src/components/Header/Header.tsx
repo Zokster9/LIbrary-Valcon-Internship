@@ -1,13 +1,16 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 import { useLocation, useNavigate } from 'react-router-dom'
+
+import Search from '../Search/Search'
 import './Header.css'
 
 interface HeaderProps {
   setToken: Dispatch<SetStateAction<string | null>>
+  setSearch: Dispatch<SetStateAction<string>>
 }
 
-const Header = ({ setToken }: HeaderProps) => {
+const Header = ({ setToken, setSearch }: HeaderProps) => {
   const [ position, setPosition ] = useState(window.scrollY)
   const [ visible, setVisible ] = useState(true)
   const location = useLocation()
@@ -33,9 +36,7 @@ const Header = ({ setToken }: HeaderProps) => {
   }
   return (
     <div className={'header ' + visibilityClass}>
-      <div className={isSearchVisible ? 'header-search' : 'hide-search'} >
-        <input className='header-search-bar' type='text' placeholder='Search...' />
-      </div>
+      <Search isSearchVisible={isSearchVisible} setSearch={setSearch} />
       <div className='header-user'>
         { isLoggedIn &&
           <button className='header-btn' onClick={handleSignOut}>

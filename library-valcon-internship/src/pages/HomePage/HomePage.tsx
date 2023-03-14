@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { NavLink } from 'react-router-dom'
@@ -9,12 +9,18 @@ import Book from '../../models/Book'
 import { getBooks } from '../../services/BookService'
 import './HomePage.css'
 
-const HomePage = () => {
+interface HomePageProps {
+  search: string
+}
+
+const HomePage = ({ search }: HomePageProps) => {
   const [ pageNumber, setPageNumber ] = useState(1)
   const [ books, setBooks ] = useState<Book[]>([])
   const [ hasMoreBooks, setHasMoreBooks ] = useState(true)
-  const fetchBooks = (pageNumber: number, pageLength: number) => {
-    getBooks(pageNumber, 10)
+  const pageLength = 10
+  const currentSearch = useRef<string>(search)
+  const fetchBooks = (pageNumber: number, pageLength: number, search: string) => {
+    getBooks({ pageNumber, pageLength, search })
       .then(response => {
         const totalCount = response.data.TotalCount
         const currentCount = pageNumber * pageLength
@@ -26,8 +32,14 @@ const HomePage = () => {
       })
   }
   useEffect(() => {
-    fetchBooks(pageNumber, 10)
-  }, [ pageNumber ])
+    if (currentSearch.current !== search) {
+      setBooks([])
+      setPageNumber(1)
+      currentSearch.current = search
+    }
+    fetchBooks(pageNumber, pageLength, search)
+  }, [ pageNumber, search ])
+
   const handleNextPage = () => {
     setPageNumber(prevPageNumber => prevPageNumber + 1)
   }

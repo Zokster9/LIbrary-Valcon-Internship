@@ -12,6 +12,7 @@ import './Layout.css'
 const Layout = () => {
   const [ token, setToken ] = useState(localStorage.getItem('token'))
   const [ isVisible, setIsVisible ] = useState(false)
+  const [ search, setSearch ] = useState('')
   configureAxiosRequestInterceptors()
   const handleMenuClick = () => {
     setIsVisible((currentState) => !currentState)
@@ -19,8 +20,8 @@ const Layout = () => {
   return (
     <div className='layout'>
       <BrowserRouter>
-        <Header setToken={setToken} />
-        <AppRouter token={token} setToken={setToken} />
+        <Header setToken={setToken} setSearch={setSearch} />
+        <AppRouter token={token} setToken={setToken} search={search} />
         <MobileSidebar
           token={token}
           setToken={setToken}
