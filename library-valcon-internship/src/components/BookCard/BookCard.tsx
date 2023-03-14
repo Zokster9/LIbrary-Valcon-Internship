@@ -7,10 +7,10 @@ interface BookCardProps {
 }
 
 const BookCard = ({ book }: BookCardProps) => {
-  let descriptionLen = 0
+  let descriptionLength = 0
   if (book.Description) {
-    descriptionLen = book.Description.length
-    if (descriptionLen > 20) descriptionLen = 20
+    descriptionLength = book.Description.length
+    if (descriptionLength > 20) descriptionLength = 20
   }
   const publishDate = new Intl.DateTimeFormat('sr-RS').format(new Date(book.PublishDate))
   let author = ''
@@ -39,7 +39,7 @@ const BookCard = ({ book }: BookCardProps) => {
       </div>
       <div className="book-card-info">
         <h4 className='book-card-info-title'>Description:</h4>
-        <p className='book-card-info-content'>{descriptionLen ? book.Description.substring(0, descriptionLen) : 'No description'}...</p>
+        <p className='book-card-info-content'>{descriptionLength ? book.Description.substring(0, descriptionLength) : 'No description'}...</p>
       </div>
       <div className="book-card-info">
         <h4 className='book-card-info-title'>Publish date:</h4>
