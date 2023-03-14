@@ -14,14 +14,15 @@ interface AppRouterProps {
   setToken: Dispatch<SetStateAction<string | null>>,
   search: string
   filter: Where[]
+  sort: string[]
 }
 
-const AppRouter = ({ token, setToken, search, filter }: AppRouterProps) => {
+const AppRouter = ({ token, setToken, search, filter, sort }: AppRouterProps) => {
   return (
     <Routes>
       <Route element={<PrivateRoutes token={token} />}>
-        <Route path='/profile' element={<HomePage search={search} filter={filter} />} />
-        <Route path='/' element={<HomePage search={search} filter={filter} />} />
+        <Route path='/profile' element={<HomePage search={search} filter={filter} sort={sort} />} />
+        <Route path='/' element={<HomePage search={search} filter={filter} sort={sort} />} />
         <Route element={<AdminPrivateRoutes token={token} />}>
           <Route path='/create-book' element={<CreateBookPage />} />
         </Route>

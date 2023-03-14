@@ -13,7 +13,8 @@ interface GetBooksProps {
   pageNumber: number,
   pageLength: number,
   search: string,
-  filter: Where[]
+  filter: Where[],
+  sort: string[]
 }
 
 const createWhereSearch = (search: string) => {
@@ -24,7 +25,7 @@ const createWhereSearch = (search: string) => {
   }
 }
 
-const convertParamsToQueryString = ({ pageNumber, pageLength, search, filter }: GetBooksProps) => {
+const convertParamsToQueryString = ({ pageNumber, pageLength, search, filter, sort }: GetBooksProps) => {
   let result = '?'
   result += 'PageNumber=' + pageNumber.toString()
   result += '&PageLength=' + pageLength.toString()
@@ -35,16 +36,17 @@ const convertParamsToQueryString = ({ pageNumber, pageLength, search, filter }: 
       result += `&where=${JSON.stringify(where)}`
     }
   })
-  // request.Order?.forEach((order) => {
-  //   result += '&Order=' + order
-  // })
+  sort.forEach((sort) => {
+    if (sort)
+      result += '&Order=' + sort
+  })
   return result
 }
 
-export const getBooks = async ({ pageNumber, pageLength, search, filter }: GetBooksProps) => {
+export const getBooks = async ({ pageNumber, pageLength, search, filter, sort }: GetBooksProps) => {
   return axios.get<BooksResponse>(baseUrl + 'api/Books/paged' + convertParamsToQueryString(
     {
-      pageNumber, pageLength, search, filter
+      pageNumber, pageLength, search, filter, sort
     }
   ))
 }

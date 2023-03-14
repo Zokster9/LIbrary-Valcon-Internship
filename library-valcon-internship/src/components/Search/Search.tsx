@@ -13,15 +13,19 @@ interface SearchProps {
   isSearchVisible: string | false | null
   setSearch: Dispatch<SetStateAction<string>>
   setFilter: Dispatch<SetStateAction<Where[]>>
+  setSort: Dispatch<SetStateAction<string[]>>
 }
 
-const Search = ({ isSearchVisible, setSearch, setFilter }: SearchProps) => {
+const Search = ({ isSearchVisible, setSearch, setFilter, setSort }: SearchProps) => {
   const [ showFilter, setShowFilter ] = useState(false)
   const [ showSort, setShowSort ] = useState(false)
+
   const handleSearchOnChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     setSearch(target.value)
   }
   const handleFilterOnChange = (filter: Where[]) => setFilter(filter)
+  const handleSortOnChange = (sort: string[]) => setSort(sort)
+
   const debouncedChangeHandler = useMemo(
     () => debounce(handleSearchOnChange, 500),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -46,6 +50,7 @@ const Search = ({ isSearchVisible, setSearch, setFilter }: SearchProps) => {
       <ModalSort
         show={showSort}
         closeModal={() => setShowSort(false)}
+        applySort={handleSortOnChange}
       />
     </div>
   )

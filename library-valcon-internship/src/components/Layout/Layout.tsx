@@ -15,6 +15,7 @@ const Layout = () => {
   const [ isVisible, setIsVisible ] = useState(false)
   const [ search, setSearch ] = useState('')
   const [ filter, setFilter ] = useState<Where[]>([])
+  const [ sort, setSort ] = useState<string[]>([])
   configureAxiosRequestInterceptors()
   const handleMenuClick = () => {
     setIsVisible((currentState) => !currentState)
@@ -22,8 +23,8 @@ const Layout = () => {
   return (
     <div className='layout'>
       <BrowserRouter>
-        <Header setToken={setToken} setSearch={setSearch} setFilter={setFilter} />
-        <AppRouter token={token} setToken={setToken} search={search} filter={filter} />
+        <Header setToken={setToken} setSearch={setSearch} setFilter={setFilter} setSort={setSort} />
+        <AppRouter token={token} setToken={setToken} search={search} filter={filter} sort={sort} />
         <MobileSidebar
           token={token}
           setToken={setToken}

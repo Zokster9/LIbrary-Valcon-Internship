@@ -10,9 +10,10 @@ interface HeaderProps {
   setToken: Dispatch<SetStateAction<string | null>>
   setSearch: Dispatch<SetStateAction<string>>
   setFilter: Dispatch<SetStateAction<Where[]>>
+  setSort: Dispatch<SetStateAction<string[]>>
 }
 
-const Header = ({ setToken, setSearch, setFilter }: HeaderProps) => {
+const Header = ({ setToken, setSearch, setFilter, setSort }: HeaderProps) => {
   const [ position, setPosition ] = useState(window.scrollY)
   const [ visible, setVisible ] = useState(true)
   const location = useLocation()
@@ -38,7 +39,7 @@ const Header = ({ setToken, setSearch, setFilter }: HeaderProps) => {
   }
   return (
     <div className={'header ' + visibilityClass}>
-      <Search isSearchVisible={isSearchVisible} setSearch={setSearch} setFilter={setFilter} />
+      <Search isSearchVisible={isSearchVisible} setSearch={setSearch} setFilter={setFilter} setSort={setSort} />
       <div className='header-user'>
         { isLoggedIn &&
           <button className='header-btn' onClick={handleSignOut}>

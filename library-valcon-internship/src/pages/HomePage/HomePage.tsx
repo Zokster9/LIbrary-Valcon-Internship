@@ -13,17 +13,19 @@ import './HomePage.css'
 interface HomePageProps {
   search: string,
   filter: Where[]
+  sort: string[]
 }
 
-const HomePage = ({ search, filter }: HomePageProps) => {
+const HomePage = ({ search, filter, sort }: HomePageProps) => {
   const [ pageNumber, setPageNumber ] = useState(1)
   const [ books, setBooks ] = useState<Book[]>([])
   const [ hasMoreBooks, setHasMoreBooks ] = useState(true)
   const pageLength = 10
   const currentSearch = useRef<string>(search)
   const currentFilter = useRef<Where[]>(filter)
-  const fetchBooks = (pageNumber: number, pageLength: number, search: string, filter: Where[]) => {
-    getBooks({ pageNumber, pageLength, search, filter })
+  const currentSort = useRef<string[]>(sort)
+  const fetchBooks = (pageNumber: number, pageLength: number, search: string, filter: Where[], sort: string[]) => {
+    getBooks({ pageNumber, pageLength, search, filter, sort })
       .then(response => {
         const totalCount = response.data.TotalCount
         const currentCount = pageNumber * pageLength
@@ -45,9 +47,12 @@ const HomePage = ({ search, filter }: HomePageProps) => {
     } else if (currentFilter.current !== filter) {
       resetPaging()
       currentFilter.current = filter
+    } else if (currentSort.current !== sort) {
+      resetPaging()
+      currentSort.current = sort
     }
-    fetchBooks(pageNumber, pageLength, search, filter)
-  }, [ pageNumber, search, filter ])
+    fetchBooks(pageNumber, pageLength, search, filter, sort)
+  }, [ pageNumber, search, filter, sort ])
 
   const handleNextPage = () => {
     setPageNumber(prevPageNumber => prevPageNumber + 1)
