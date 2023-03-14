@@ -1,0 +1,45 @@
+.content.filter {
+  padding-block: 3rem;
+  padding-inline: unset;
+  width: 700px;
+  align-items: center;
+}
+
+.filter-form {
+  display: flex;
+  flex-flow: column;
+  gap: 2rem;
+  font-size: 18px;
+  width: 50%;
+}
+
+.filter-form-group {
+  display: flex;
+  flex-flow: column;
+}
+
+.filter-form-button-group {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.filter-form-button {
+  background-color: rgb(199, 149, 10);
+  color: white;
+  border-radius: 15px;
+  padding: 1rem;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.filter-form-button.clear {
+  color: black;
+  background-color: transparent;
+  border: 1px solid black;
+  border-color: black;
+}
+
+.filter-form-button.close {
+  background-color: red;
+}

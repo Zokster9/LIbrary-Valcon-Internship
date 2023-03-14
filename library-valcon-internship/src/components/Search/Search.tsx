@@ -1,8 +1,10 @@
-import { ChangeEvent, Dispatch, SetStateAction, useMemo } from 'react'
+import { ChangeEvent, Dispatch, SetStateAction, useMemo, useState } from 'react'
 
 import debounce from 'lodash.debounce'
 import { BsSortDownAlt } from 'react-icons/bs'
 import { VscFilter } from 'react-icons/vsc'
+
+import ModalFilter from '../Modals/ModalFilter/ModalFilter'
 import './Search.css'
 
 interface SearchProps {
@@ -11,13 +13,15 @@ interface SearchProps {
 }
 
 const Search = ({ isSearchVisible, setSearch }: SearchProps) => {
+  const [ showFilter, setShowFilter ] = useState(false)
   const handleSearchOnChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     setSearch(target.value)
   }
   const debouncedChangeHandler = useMemo(
-    () => debounce(handleSearchOnChange, 500)
+    () => debounce(handleSearchOnChange, 500),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    , [])
+    []
+  )
   return (
     <div className={isSearchVisible ? 'header-search' : 'hide-search'}>
       <input
@@ -27,8 +31,9 @@ const Search = ({ isSearchVisible, setSearch }: SearchProps) => {
         autoComplete='off'
         onChange={debouncedChangeHandler}
       />
-      <VscFilter className='icon' />
+      <VscFilter className='icon' onClick={() => setShowFilter(true)} title='Filter' />
       <BsSortDownAlt className='icon' />
+      <ModalFilter show={showFilter} closeModal={() => setShowFilter(false)} />
     </div>
   )
 }
