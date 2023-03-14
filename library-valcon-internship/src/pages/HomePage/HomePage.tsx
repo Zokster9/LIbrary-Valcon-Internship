@@ -46,7 +46,7 @@ const HomePage = ({ search }: HomePageProps) => {
   return (
     <div className='homePage'>
       {
-        books ?
+        books.length > 0 ?
           (
             <InfiniteScroll
               dataLength={books.length}
@@ -59,7 +59,7 @@ const HomePage = ({ search }: HomePageProps) => {
             </InfiniteScroll>
           )
           :
-          <h3>No books currently available</h3>
+          <h3 style={{ textAlign: 'center' }}>No books currently available</h3>
       }
       <button className='fab'>
         <NavLink to='/create-book'>
