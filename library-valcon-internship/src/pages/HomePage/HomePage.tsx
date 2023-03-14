@@ -6,21 +6,24 @@ import { NavLink } from 'react-router-dom'
 import addIcon from '../../assets/icons/add-icon.svg'
 import BookList from '../../components/BookList/BookList'
 import Book from '../../models/Book'
+import Where from '../../models/Where'
 import { getBooks } from '../../services/BookService'
 import './HomePage.css'
 
 interface HomePageProps {
-  search: string
+  search: string,
+  filter: Where[]
 }
 
-const HomePage = ({ search }: HomePageProps) => {
+const HomePage = ({ search, filter }: HomePageProps) => {
   const [ pageNumber, setPageNumber ] = useState(1)
   const [ books, setBooks ] = useState<Book[]>([])
   const [ hasMoreBooks, setHasMoreBooks ] = useState(true)
   const pageLength = 10
   const currentSearch = useRef<string>(search)
-  const fetchBooks = (pageNumber: number, pageLength: number, search: string) => {
-    getBooks({ pageNumber, pageLength, search })
+  const currentFilter = useRef<Where[]>(filter)
+  const fetchBooks = (pageNumber: number, pageLength: number, search: string, filter: Where[]) => {
+    getBooks({ pageNumber, pageLength, search, filter })
       .then(response => {
         const totalCount = response.data.TotalCount
         const currentCount = pageNumber * pageLength
@@ -31,14 +34,20 @@ const HomePage = ({ search }: HomePageProps) => {
         setBooks([])
       })
   }
+  const resetPaging = () => {
+    setBooks([])
+    setPageNumber(1)
+  }
   useEffect(() => {
     if (currentSearch.current !== search) {
-      setBooks([])
-      setPageNumber(1)
       currentSearch.current = search
+      resetPaging()
+    } else if (currentFilter.current !== filter) {
+      resetPaging()
+      currentFilter.current = filter
     }
-    fetchBooks(pageNumber, pageLength, search)
-  }, [ pageNumber, search ])
+    fetchBooks(pageNumber, pageLength, search, filter)
+  }, [ pageNumber, search, filter ])
 
   const handleNextPage = () => {
     setPageNumber(prevPageNumber => prevPageNumber + 1)

@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { BrowserRouter } from 'react-router-dom'
 
+import Where from '../../models/Where'
 import { configureAxiosRequestInterceptors } from '../../services/AxiosConfiguration'
 import AppRouter from '../AppRouter/AppRouter'
 import Header from '../Header/Header'
@@ -13,6 +14,7 @@ const Layout = () => {
   const [ token, setToken ] = useState(localStorage.getItem('token'))
   const [ isVisible, setIsVisible ] = useState(false)
   const [ search, setSearch ] = useState('')
+  const [ filter, setFilter ] = useState<Where[]>([])
   configureAxiosRequestInterceptors()
   const handleMenuClick = () => {
     setIsVisible((currentState) => !currentState)
@@ -20,8 +22,8 @@ const Layout = () => {
   return (
     <div className='layout'>
       <BrowserRouter>
-        <Header setToken={setToken} setSearch={setSearch} />
-        <AppRouter token={token} setToken={setToken} search={search} />
+        <Header setToken={setToken} setSearch={setSearch} setFilter={setFilter} />
+        <AppRouter token={token} setToken={setToken} search={search} filter={filter} />
         <MobileSidebar
           token={token}
           setToken={setToken}

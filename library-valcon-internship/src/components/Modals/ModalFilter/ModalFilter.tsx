@@ -1,12 +1,15 @@
 import { FormEvent, SyntheticEvent, useState } from 'react'
+
+import Where from '../../../models/Where'
 import './ModalFilter.css'
 
 interface ModalFilterProps {
   show: boolean,
   closeModal: () => void
+  applyFilter: (filter: Where[]) => void
 }
 
-const ModalFilter = ({ show, closeModal }: ModalFilterProps) => {
+const ModalFilter = ({ show, closeModal, applyFilter }: ModalFilterProps) => {
   const [ description, setDescription ] = useState('')
   const [ isbn, setIsbn ] = useState('')
   const [ firstName, setFirstName ] = useState('')
@@ -32,6 +35,30 @@ const ModalFilter = ({ show, closeModal }: ModalFilterProps) => {
   }
   const handleOnSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
+    const filter: Where[] = [
+      {
+        Field: 'Description',
+        Value: description,
+        Operation: 2
+      },
+      {
+        Field: 'ISBN',
+        Value: isbn,
+        Operation: 2
+      },
+      {
+        Field: 'Authors.Firstname',
+        Value: firstName,
+        Operation: 2
+      },
+      {
+        Field: 'Authors.Lastname',
+        Value: lastName,
+        Operation: 2
+      }
+    ]
+    closeModal()
+    applyFilter(filter)
   }
   return (
     <div style={!show ? { visibility: 'hidden' } : {}} className='modal'>

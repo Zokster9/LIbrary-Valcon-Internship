@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from 'react'
 
 import { Route, Routes } from 'react-router-dom'
 
+import Where from '../../models/Where'
 import CreateBookPage from '../../pages/CreateBookPage/CreateBookPage'
 import HomePage from '../../pages/HomePage/HomePage'
 import SignIn from '../../pages/SignIn/SignIn'
@@ -12,14 +13,15 @@ interface AppRouterProps {
   token: string | null
   setToken: Dispatch<SetStateAction<string | null>>,
   search: string
+  filter: Where[]
 }
 
-const AppRouter = ({ token, setToken, search }: AppRouterProps) => {
+const AppRouter = ({ token, setToken, search, filter }: AppRouterProps) => {
   return (
     <Routes>
       <Route element={<PrivateRoutes token={token} />}>
-        <Route path='/profile' element={<HomePage search={search} />} />
-        <Route path='/' element={<HomePage search={search} />} />
+        <Route path='/profile' element={<HomePage search={search} filter={filter} />} />
+        <Route path='/' element={<HomePage search={search} filter={filter} />} />
         <Route element={<AdminPrivateRoutes token={token} />}>
           <Route path='/create-book' element={<CreateBookPage />} />
         </Route>
