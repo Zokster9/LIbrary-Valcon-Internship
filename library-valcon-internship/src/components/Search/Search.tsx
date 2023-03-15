@@ -1,9 +1,10 @@
 import { ChangeEvent, Dispatch, SetStateAction, useMemo, useState } from 'react'
 
 import debounce from 'lodash.debounce'
-import { BsSortDownAlt } from 'react-icons/bs'
 import { VscFilter } from 'react-icons/vsc'
 
+import Filter from '../../models/Filter'
+import Sort from '../../models/Sort'
 import Where from '../../models/Where'
 import Modal from '../Modals/Modal'
 import ModalFilter from '../Modals/ModalFilter/ModalFilter'
@@ -19,29 +20,61 @@ interface SearchProps {
 
 const Search = ({ isSearchVisible, setSearch, setFilter, setSort }: SearchProps) => {
   const [ showModal, setShowModal ] = useState(false)
-  const [ showFilter, setShowFilter ] = useState(false)
-  const [ showSort, setShowSort ] = useState(false)
+  const [ filterForm, setFilterForm ] = useState<Filter>({
+    description: '',
+    isbn: '',
+    firstName: '',
+    lastName: ''
+  })
+  const [ sortForm, setSortForm ] = useState<Sort>({
+    titleSort: '',
+    isbnSort: '',
+    publishDateSort: '',
+    descriptionSort: ''
+  })
 
   const handleSearchOnChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     setSearch(target.value)
   }
-  const handleFilterOnChange = (filter: Where[]) => setFilter(filter)
-  const handleSortOnChange = (sort: string[]) => setSort(sort)
 
-  const handleToggleFilterModal = () => {
-    setShowFilter(!showFilter)
+  const handleToggleModal = () => {
     setShowModal(!showModal)
   }
 
-  const handleToggleSortModal = () => {
-    setShowSort(!showSort)
-    setShowModal(!showModal)
+  const handleConfirmFilter = () => {
+    const filter: Where[] = [
+      {
+        Field: 'Description',
+        Value: filterForm.description,
+        Operation: 2
+      },
+      {
+        Field: 'ISBN',
+        Value: filterForm.isbn,
+        Operation: 2
+      },
+      {
+        Field: 'Authors.Firstname',
+        Value: filterForm.firstName,
+        Operation: 2
+      },
+      {
+        Field: 'Authors.Lastname',
+        Value: filterForm.lastName,
+        Operation: 2
+      }
+    ]
+    setFilter(filter)
   }
 
-  const handleCloseModal = () => {
-    setShowFilter(false)
-    setShowSort(false)
-    setShowModal(false)
+  const handleConfirmSort = () => {
+    const sort: string[] = [
+      sortForm.titleSort,
+      sortForm.isbnSort,
+      sortForm.publishDateSort,
+      sortForm.descriptionSort
+    ]
+    setSort(sort)
   }
 
   const debouncedChangeHandler = useMemo(
@@ -49,6 +82,11 @@ const Search = ({ isSearchVisible, setSearch, setFilter, setSort }: SearchProps)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
+
+  const handleConfirm = () => {
+    handleConfirmFilter()
+    handleConfirmSort()
+  }
   return (
     <div className={isSearchVisible ? 'header-search' : 'hide-search'}>
       <input
@@ -58,11 +96,11 @@ const Search = ({ isSearchVisible, setSearch, setFilter, setSort }: SearchProps)
         autoComplete='off'
         onChange={debouncedChangeHandler}
       />
-      <VscFilter className='icon' onClick={handleToggleFilterModal} title='Filter' />
-      <BsSortDownAlt className='icon' onClick={handleToggleSortModal} title='Sort' />
-      <Modal show={showModal} closeModal={handleCloseModal} >
-        { showFilter && <ModalFilter closeModal={handleCloseModal} applyFilter={handleFilterOnChange} />}
-        { showSort && <ModalSort closeModal={handleCloseModal} applySort={handleSortOnChange} />}
+      <VscFilter className='icon' onClick={handleToggleModal} title='Filter' />
+      <Modal show={showModal} closeModal={handleToggleModal} confirm={handleConfirm} >
+        <ModalFilter filterForm={filterForm} setFilterForm={setFilterForm} />
+        <hr />
+        <ModalSort sortForm={sortForm} setSortForm={setSortForm} />
       </Modal>
     </div>
   )

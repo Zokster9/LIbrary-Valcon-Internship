@@ -1,80 +1,72 @@
-import { FormEvent, SyntheticEvent, useState } from 'react'
+import { Dispatch, FormEvent, SetStateAction } from 'react'
 
-import Where from '../../../models/Where'
+import Filter from '../../../models/Filter'
+
 import './ModalFilter.css'
 
 interface ModalFilterProps {
-  closeModal: () => void
-  applyFilter: (filter: Where[]) => void
+  filterForm: Filter,
+  setFilterForm: Dispatch<SetStateAction<Filter>>
 }
 
-const ModalFilter = ({ closeModal, applyFilter }: ModalFilterProps) => {
-  const [ description, setDescription ] = useState('')
-  const [ isbn, setIsbn ] = useState('')
-  const [ firstName, setFirstName ] = useState('')
-  const [ lastName, setLastName ] = useState('')
+const ModalFilter = ({ filterForm, setFilterForm }: ModalFilterProps) => {
 
   const handleOnChangeInput = (value: string, state: string) => {
     switch(state) {
       case 'Description':
-        setDescription(value)
+        setFilterForm(filterForm => {
+          return {
+            ...filterForm,
+            description: value
+          }
+        })
         break
       case 'Isbn':
-        setIsbn(value)
+        setFilterForm(filterForm => {
+          return {
+            ...filterForm,
+            isbn: value
+          }
+        })
         break
       case 'FirstName':
-        setFirstName(value)
+        setFilterForm(filterForm => {
+          return {
+            ...filterForm,
+            firstName: value
+          }
+        })
         break
       case 'LastName':
-        setLastName(value)
+        setFilterForm(filterForm => {
+          return {
+            ...filterForm,
+            lastName: value
+          }
+        })
         break
       default:
         break
     }
   }
   const handleOnClickClear = () => {
-    setDescription('')
-    setIsbn('')
-    setFirstName('')
-    setLastName('')
-  }
-  const handleOnSubmit = (e: SyntheticEvent) => {
-    e.preventDefault()
-    const filter: Where[] = [
-      {
-        Field: 'Description',
-        Value: description,
-        Operation: 2
-      },
-      {
-        Field: 'ISBN',
-        Value: isbn,
-        Operation: 2
-      },
-      {
-        Field: 'Authors.Firstname',
-        Value: firstName,
-        Operation: 2
-      },
-      {
-        Field: 'Authors.Lastname',
-        Value: lastName,
-        Operation: 2
-      }
-    ]
-    closeModal()
-    applyFilter(filter)
+    setFilterForm({
+      description: '',
+      isbn: '',
+      firstName: '',
+      lastName: ''
+    })
   }
   return (
     <>
       <h1>Filter</h1>
-      <form className='filter-form' onSubmit={handleOnSubmit}>
+      <form className='filter-form'>
         <div className='filter-form-group'>
           <label>Description</label>
           <textarea
             style={{ resize: 'none' }}
             rows={4}
-            value={description}
+            value={filterForm.description}
             onChange={({ currentTarget }: FormEvent<HTMLTextAreaElement>) => {
               handleOnChangeInput(currentTarget.value, 'Description')
             }}
@@ -85,7 +77,7 @@ const ModalFilter = ({ closeModal, applyFilter }: ModalFilterProps) => {
           <label>ISBN</label>
           <input
             type='text'
-            value={isbn}
+            value={filterForm.isbn}
             onChange={({ currentTarget }: FormEvent<HTMLInputElement>) => {
               handleOnChangeInput(currentTarget.value, 'Isbn')
             }}
@@ -95,7 +87,7 @@ const ModalFilter = ({ closeModal, applyFilter }: ModalFilterProps) => {
           <label>Author First Name</label>
           <input
             type='text'
-            value={firstName}
+            value={filterForm.firstName}
             onChange={({ currentTarget }: FormEvent<HTMLInputElement>) => {
               handleOnChangeInput(currentTarget.value, 'FirstName')
             }}
@@ -105,14 +97,13 @@ const ModalFilter = ({ closeModal, applyFilter }: ModalFilterProps) => {
           <label>Author Last Name</label>
           <input
             type='text'
-            value={lastName}
+            value={filterForm.lastName}
             onChange={({ currentTarget }: FormEvent<HTMLInputElement>) => {
               handleOnChangeInput(currentTarget.value, 'LastName')
             }}
           />
         </div>
         <div className='filter-form-button-group'>
-          <button className='filter-form-button'>Apply filters</button>
           <button
             type='button'
             className='filter-form-button clear'

@@ -1,0 +1,7 @@
+.sort-radio {
+    cursor: pointer;
+}
+  
+.sort-radio.clicked {
+background-color: rgb(199, 149, 10);
+}
