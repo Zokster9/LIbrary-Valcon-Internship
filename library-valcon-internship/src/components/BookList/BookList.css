@@ -2,6 +2,19 @@
   display: flex;
   flex-flow: row wrap;
   padding-inline: 3rem;
+  padding-inline-start: 10rem;
   justify-content: center;
   align-items: center;
+  gap: 5rem;
+}
+
+@media (max-width: 400px) {
+  .book-list {
+    display: flex;
+    flex-flow: row wrap;
+    padding-inline: 3rem;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
 }

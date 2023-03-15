@@ -24,15 +24,17 @@ const BookCard = ({ book }: BookCardProps) => {
           }
         alt='Book Cover'
       />
-      <div className="book-card-info">
-        <h4 className='book-card-info-title'>Title:</h4>
-        <p className='book-card-info-content'>{book.Title}</p>
+      <div className="book-card-title">
+        <h2 className='hide' title={book.Title}>{book.Title}</h2>
       </div>
-      <div className="book-card-info">
-        <h4 className='book-card-info-title'>Description:</h4>
-        <p className='book-card-info-content hide'>
+      <div className="book-card-description">
+        <p className='hide'>
           {book.Description ? book.Description : 'No description'}
         </p>
+      </div>
+      <div className="book-card-info">
+        <h4 className='book-card-info-title'>ISBN:</h4>
+        <p className='book-card-info-content'>{book.Isbn}</p>
       </div>
       <div className="book-card-info">
         <h4 className='book-card-info-title'>Publish date:</h4>
