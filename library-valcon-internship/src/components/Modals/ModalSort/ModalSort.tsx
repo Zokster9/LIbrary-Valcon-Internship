@@ -132,8 +132,8 @@ const ModalSort = ({ sortForm, setSortForm }: ModalSortProps) => {
     <>
       <h1>Sort</h1>
       <form className='sort-form'>
-        <fieldset className="sort-radio-group">
-          <legend>Title</legend>
+        <div className="sort-radio-group">
+          <label className='sort-radio-label'>Title</label>
           <div className='sort-radio-options'>
             <SortIconButtons
               isAscClicked={whichRadioButtonsClicked.isTitleAscClicked}
@@ -148,9 +148,9 @@ const ModalSort = ({ sortForm, setSortForm }: ModalSortProps) => {
             descButtonRef={radioButtons.titleDesc}
             handleOnClickSort={handleOnClickSort}
           />
-        </fieldset>
-        <fieldset className="sort-radio-group">
-          <legend>ISBN</legend>
+        </div>
+        <div className="sort-radio-group">
+          <label className='sort-radio-label'>ISBN</label>
           <div className='sort-radio-options'>
             <SortIconButtons
               isAscClicked={whichRadioButtonsClicked.isIsbnAscClicked}
@@ -165,9 +165,9 @@ const ModalSort = ({ sortForm, setSortForm }: ModalSortProps) => {
             descButtonRef={radioButtons.isbnDesc}
             handleOnClickSort={handleOnClickSort}
           />
-        </fieldset>
-        <fieldset className="sort-radio-group">
-          <legend>Publish Date</legend>
+        </div>
+        <div className="sort-radio-group">
+          <label className='sort-radio-label'>Publish Date</label>
           <div className='sort-radio-options'>
             <SortIconButtons
               isAscClicked={whichRadioButtonsClicked.isPublishDateAscClicked}
@@ -182,9 +182,9 @@ const ModalSort = ({ sortForm, setSortForm }: ModalSortProps) => {
             descButtonRef={radioButtons.publishDateDesc}
             handleOnClickSort={handleOnClickSort}
           />
-        </fieldset>
-        <fieldset className="sort-radio-group">
-          <legend>Description</legend>
+        </div>
+        <div className="sort-radio-group">
+          <label className='sort-radio-label'>Description</label>
           <div className='sort-radio-options'>
             <SortIconButtons
               isAscClicked={whichRadioButtonsClicked.isDescriptionAscClicked}
@@ -199,7 +199,7 @@ const ModalSort = ({ sortForm, setSortForm }: ModalSortProps) => {
             descButtonRef={radioButtons.descriptionDesc}
             handleOnClickSort={handleOnClickSort}
           />
-        </fieldset>
+        </div>
       </form>
     </>
   )
