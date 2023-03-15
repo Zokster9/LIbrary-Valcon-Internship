@@ -1,8 +1,11 @@
-import { Dispatch, FormEvent, SetStateAction, SyntheticEvent, useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 
 import ReactDOM from 'react-dom'
 
+import AuthorFormType from '../../../models/AuthorFormType'
+import AuthorFormValidation from '../../../models/AuthorFormValidation'
 import { addNewAuthor } from '../../../services/AuthorService'
+import AuthorForm from '../../AuthorForm/AuthorForm'
 import '../Modals.css'
 import './ModalAddAuthor.css'
 
@@ -14,107 +17,83 @@ interface AddAuthorProps {
 }
 
 const ModalAddAuthor = ({ show, closeModal, retrieveAuthors, setRetrieveAuthors }: AddAuthorProps) => {
-  const [ firstName, setFirstName ] = useState('')
-  const [ lastName, setLastName ] = useState('')
-  const [ isFirstNameValid, setIsFirstNameValid ] = useState(true)
-  const [ isLastNameValid, setIsLastNameValid ] = useState(true)
-  const [ isAuthorDataValid, setIsAuthorDataValid ] = useState(true)
+  const [ authorForm, setAuthorForm ] = useState<AuthorFormType>({
+    firstName: '',
+    lastName: ''
+  })
+  const [ authorFormValidation, setAuthorFormValidation ] = useState<AuthorFormValidation>({
+    isFirstNameValid: true,
+    isLastNameValid: true,
+    isAuthorDataValid: true
+  })
   if (!show) return null
-  const handleOnChangeFirstName = ({ currentTarget }: FormEvent<HTMLInputElement>) => {
-    setFirstName(currentTarget.value)
-  }
-  const handleOnBlurFirstName = () => {
-    if (firstName.trim() === '')
-      setIsFirstNameValid(false)
-  }
-  const handleOnChangeLastName = ({ currentTarget }: FormEvent<HTMLInputElement>) => {
-    setLastName(currentTarget.value)
-  }
-  const handleOnBlurLastName = () => {
-    if (lastName.trim() === '')
-      setIsLastNameValid(false)
-  }
-  const handleOnSubmit = (e: SyntheticEvent) => {
-    e.preventDefault()
-    if (firstName.trim() === '') {
-      setIsFirstNameValid(false)
+
+  const handleOnSubmit = () => {
+    if (authorForm.firstName.trim() === '') {
+      setAuthorFormValidation(authorFormValidation => {
+        return {
+          ...authorFormValidation,
+          isFirstNameValid: false
+        }
+      })
       return
     }
-    if (lastName.trim() === '') {
-      setIsLastNameValid(false)
+    if (authorForm.lastName.trim() === '') {
+      setAuthorFormValidation(authorFormValidation => {
+        return {
+          ...authorFormValidation,
+          isLastNameValid: false
+        }
+      })
       return
     }
-    addNewAuthor(firstName.trim(), lastName.trim())
+    addNewAuthor(authorForm.firstName.trim(), authorForm.lastName.trim())
       .then(() => {
         setRetrieveAuthors(!retrieveAuthors)
         handleOnCloseModal()
       })
       .catch(() => {
-        setIsAuthorDataValid(false)
+        setAuthorFormValidation(authorFormValidation => {
+          return {
+            ...authorFormValidation,
+            isAuthorDataValid: false
+          }
+        })
       })
   }
   const handleOnCloseModal = () => {
-    setFirstName('')
-    setLastName('')
-    setIsFirstNameValid(true)
-    setIsLastNameValid(true)
-    setIsAuthorDataValid(true)
+    setAuthorForm({
+      firstName: '',
+      lastName: ''
+    })
+    setAuthorFormValidation({
+      isFirstNameValid: true,
+      isLastNameValid: true,
+      isAuthorDataValid: true
+    })
     closeModal()
   }
   return ReactDOM.createPortal(
     <div className='modal'>
       <div className='overlay' onClick={closeModal} />
       <div className='content'>
-        <h2>Add author</h2>
-        <form className='add-author-form' onSubmit={handleOnSubmit}>
-          <div className='add-author-form-field'>
-            <label className={!isFirstNameValid ? 'add-author-error-label' : ''}>
-              {!isFirstNameValid ? 'Please enter first name' : 'First name'}
-            </label>
-            <input
-              className={!isFirstNameValid ? 'add-author-error-input' : ''}
-              id='firstName'
-              name='firstName'
-              type='text'
-              value={firstName}
-              placeholder='Enter first name...'
-              onChange={handleOnChangeFirstName}
-              onBlur={handleOnBlurFirstName}
-              onFocus={() => setIsFirstNameValid(true)}
-            />
-          </div>
-          <div className='add-author-form-field'>
-            <label className={!isLastNameValid ? 'add-author-error-label' : ''}>
-              {!isLastNameValid ? 'Please enter last name' : 'Last name'}
-            </label>
-            <input
-              className={!isLastNameValid ? 'add-author-error-input' : ''}
-              id='lastName'
-              name='lastName'
-              type='text'
-              value={lastName}
-              placeholder='Enter last name...'
-              onChange={handleOnChangeLastName}
-              onBlur={handleOnBlurLastName}
-              onFocus={() => setIsLastNameValid(true)}
-            />
-          </div>
-          <div className='add-author-button-field'>
-            <div className={!isAuthorDataValid ? 'error-author-model' : 'author-modal-message'}>
-              Something went wrong!
-            </div>
-            <div className='modal-btns'>
-              <button className='add-author-button modal-btn'>Create</button>
-              <button
-                type='button'
-                className='close-modal-btn modal-btn'
-                onClick={handleOnCloseModal}
-              >
-                Close
-              </button>
-            </div>
-          </div>
+        <form id='authorForm' onSubmit={handleOnSubmit}>
+          <AuthorForm
+            authorForm={authorForm}
+            authorFormValidation={authorFormValidation}
+            setAuthorForm={setAuthorForm}
+            setAuthorFormValidation={setAuthorFormValidation}
+            title='Add an author'
+            onSubmit={handleOnSubmit}
+          />
         </form>
+        <button
+          className='add-author-close-modal'
+          type='button'
+          onClick={closeModal}
+        >
+          Close
+        </button>
       </div>
     </div>,
     document.getElementById('portal') as HTMLElement

@@ -14,21 +14,22 @@ import './BookForm.css'
 interface BookFormProps {
   bookForm: BookFormType
   bookFormValidation: BookFormValidation
-  authorForm: AuthorFormType
-  authorFormValidation: AuthorFormValidation
+  authorForm?: AuthorFormType
+  authorFormValidation?: AuthorFormValidation
   setBookForm: Dispatch<SetStateAction<BookFormType>>
   setBookFormValidation: Dispatch<SetStateAction<BookFormValidation>>
-  setAuthorForm: Dispatch<SetStateAction<AuthorFormType>>
-  setAuthorFormValidation: Dispatch<SetStateAction<AuthorFormValidation>>
-  handleOnAuthorSubmit: (e: SyntheticEvent) => void
+  setAuthorForm?: Dispatch<SetStateAction<AuthorFormType>>
+  setAuthorFormValidation?: Dispatch<SetStateAction<AuthorFormValidation>>
+  handleOnAuthorSubmit?: () => void
   handleOnBookSubmit: (e: SyntheticEvent) => void
   title: string
+  handleShowAuthorModal?: () => void
 }
 
 const BookForm = ({
   bookForm, bookFormValidation, authorForm, authorFormValidation,
   setBookForm, setBookFormValidation, setAuthorForm, setAuthorFormValidation,
-  handleOnAuthorSubmit, handleOnBookSubmit, title
+  handleOnAuthorSubmit, handleOnBookSubmit, title, handleShowAuthorModal
 }: BookFormProps) => {
   const hiddenFileInput = useRef<HTMLInputElement>(null)
   const [ showAccordion, setShowAccordion ] = useState(false)
@@ -161,10 +162,9 @@ const BookForm = ({
       }
     })
   }
-
   return (
-    <div>
-      <h1>{title}</h1>
+    <>
+      <h1 className='book-header'>{title}</h1>
       <form id='authorForm' onSubmit={handleOnAuthorSubmit} />
       <form className='book-form' onSubmit={handleOnBookSubmit}>
         <div className="book-form-field">
@@ -331,6 +331,13 @@ const BookForm = ({
               maxMenuHeight={120}
               isMulti={true}
             />
+            <button
+              className='author-add-btn'
+              type='button'
+              onClick={handleShowAuthorModal}
+            >
+              + Add a new Author
+            </button>
           </div>
           <div className="book-accordion" onClick={() => setShowAccordion(!showAccordion)}>
             <div className="book-accordion-item">
@@ -345,12 +352,18 @@ const BookForm = ({
                       'book-accordion-content'
                   }
               >
-                <AuthorForm
-                  authorForm={authorForm}
-                  authorFormValidation={authorFormValidation}
-                  setAuthorForm={setAuthorForm}
-                  setAuthorFormValidation={setAuthorFormValidation}
-                />
+                {
+                  authorForm &&
+                  authorFormValidation &&
+                  setAuthorForm &&
+                  setAuthorFormValidation &&
+                  <AuthorForm
+                    authorForm={authorForm}
+                    authorFormValidation={authorFormValidation}
+                    setAuthorForm={setAuthorForm}
+                    setAuthorFormValidation={setAuthorFormValidation}
+                    onSubmit={handleOnAuthorSubmit}
+                  />}
               </div>
             </div>
           </div>
@@ -370,7 +383,7 @@ const BookForm = ({
           </div>
         </div>
       </form>
-    </div>
+    </>
   )
 }
 

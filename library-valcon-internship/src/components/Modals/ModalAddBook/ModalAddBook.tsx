@@ -148,8 +148,7 @@ const ModalAddBook = ({ show, closeModal }: AddBookProps) => {
         })
       })
   }
-  const handleOnAuthorSubmit = (e: SyntheticEvent) => {
-    e.preventDefault()
+  const handleOnAuthorSubmit = () => {
     if (authorForm.firstName.trim() === '') {
       setAuthorFormValidation(authorFormValidation => {
         return {
