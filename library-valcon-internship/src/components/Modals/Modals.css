@@ -48,7 +48,7 @@
 .modal-btn {
   color: white;
   border-radius: 15px;
-  padding: 2rem;
+  padding: 1rem;
   cursor: pointer;
 }
 
@@ -64,6 +64,6 @@
 
 @media (max-width: 400px) {
   .content {
-    width: 70%;
+    width: 80%;
   }
 }

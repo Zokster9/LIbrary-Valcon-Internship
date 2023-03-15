@@ -36,14 +36,14 @@ interface RadioButtons {
 const ModalSort = ({ sortForm, setSortForm }: ModalSortProps) => {
 
   const [ whichRadioButtonsClicked, setWhichRadioButtonsClicked ] = useState<RadioButtonsClicked>({
-    isTitleAscClicked: false,
-    isTitleDescClicked: false,
-    isIsbnAscClicked: false,
-    isIsbnDescClicked: false,
-    isPublishDateAscClicked: false,
-    isPublishDateDescClicked: false,
-    isDescriptionAscClicked: false,
-    isDescriptionDescClicked: false
+    isTitleAscClicked: sortForm.titleSort === 'Title ASC',
+    isTitleDescClicked: sortForm.titleSort === 'Title DESC',
+    isIsbnAscClicked: sortForm.isbnSort === 'Isbn ASC',
+    isIsbnDescClicked: sortForm.isbnSort === 'Isbn DESC',
+    isPublishDateAscClicked: sortForm.publishDateSort === 'PublishDate ASC',
+    isPublishDateDescClicked: sortForm.publishDateSort === 'PublishDate DESC',
+    isDescriptionAscClicked: sortForm.descriptionSort === 'Description ASC',
+    isDescriptionDescClicked: sortForm.descriptionSort === 'Description DESC'
   })
 
   const radioButtons: RadioButtons = {
