@@ -1,6 +1,7 @@
 import { ChangeEvent, Dispatch, SetStateAction, useMemo, useState } from 'react'
 
 import debounce from 'lodash.debounce'
+import { BsSortDown } from 'react-icons/bs'
 import { VscFilter } from 'react-icons/vsc'
 
 import Filter from '../../models/Filter'
@@ -20,6 +21,8 @@ interface SearchProps {
 
 const Search = ({ isSearchVisible, setSearch, setFilter, setSort }: SearchProps) => {
   const [ showModal, setShowModal ] = useState(false)
+  const [ showFilter, setShowFilter ] = useState(false)
+  const [ showSort, setShowSort ] = useState(false)
   const [ filterForm, setFilterForm ] = useState<Filter>({
     description: '',
     isbn: '',
@@ -37,8 +40,20 @@ const Search = ({ isSearchVisible, setSearch, setFilter, setSort }: SearchProps)
     setSearch(target.value)
   }
 
-  const handleToggleModal = () => {
+  const handleShowFilterToggle = () => {
+    setShowFilter(!showFilter)
     setShowModal(!showModal)
+  }
+
+  const handleShowSortToggle = () => {
+    setShowSort(!showSort)
+    setShowModal(!showModal)
+  }
+
+  const handleCloseModals = () => {
+    setShowFilter(false)
+    setShowSort(false)
+    setShowModal(false)
   }
 
   const handleConfirmFilter = () => {
@@ -84,8 +99,13 @@ const Search = ({ isSearchVisible, setSearch, setFilter, setSort }: SearchProps)
   )
 
   const handleConfirm = () => {
-    handleConfirmFilter()
-    handleConfirmSort()
+    if (showFilter) {
+      handleConfirmFilter()
+      handleCloseModals()
+    } else {
+      handleConfirmSort()
+    }
+    handleCloseModals()
   }
   return (
     <div className={isSearchVisible ? 'header-search' : 'hide-search'}>
@@ -96,11 +116,11 @@ const Search = ({ isSearchVisible, setSearch, setFilter, setSort }: SearchProps)
         autoComplete='off'
         onChange={debouncedChangeHandler}
       />
-      <VscFilter className='icon' onClick={handleToggleModal} title='Filter' />
-      <Modal show={showModal} closeModal={handleToggleModal} confirm={handleConfirm} >
-        <ModalFilter filterForm={filterForm} setFilterForm={setFilterForm} />
-        <hr />
-        <ModalSort sortForm={sortForm} setSortForm={setSortForm} />
+      <VscFilter className='icon' onClick={handleShowFilterToggle} title='Filter' />
+      <BsSortDown className='icon' onClick={handleShowSortToggle} title='Sort' />
+      <Modal show={showModal} closeModal={handleCloseModals} confirm={handleConfirm} >
+        {showFilter && <ModalFilter filterForm={filterForm} setFilterForm={setFilterForm} />}
+        {showSort && <ModalSort sortForm={sortForm} setSortForm={setSortForm} />}
       </Modal>
     </div>
   )
