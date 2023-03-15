@@ -29,7 +29,7 @@
 }
 
 @media (max-width: 400px) {
-  .content.sort {
-    width: 50%;
+  .sort-radio-group {
+    padding-inline: 1rem;
   }
 }
