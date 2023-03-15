@@ -1,0 +1,130 @@
+.book-form {
+  display: flex;
+  flex-flow: column;
+}
+
+.book-form-fields {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 600px;
+  margin-bottom: 1rem;
+}
+
+.book-form-field {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 18px;
+}
+
+.book-placeholder {
+  all: unset;
+  background-color: white;
+  cursor: pointer;
+}
+
+.book-cover {
+  height: 200px;
+  width: 200px;
+  object-fit: cover;
+}
+
+.book-input {
+  width: 220px;
+  height: 25px;
+  font-size: 15px;
+}
+
+.book-error-label {
+  color: red;
+}
+
+.book-error-input {
+  border: 2px solid red;
+}
+
+.book-text-area {
+  font-size: 14px;
+  width: 525px;
+}
+
+.book-author-select {
+  color: #444;
+  width: 220px;
+  max-width: 220px;
+}
+
+.book-accordion {
+  width: 200px;
+  cursor: pointer;
+}
+
+.book-accordion-item {
+  background-color: #444;
+}
+
+.book-accordion-title {
+  color: whitesmoke;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.book-accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0, 1, 0, 1);
+}
+
+.book-accordion-content.show {
+  height: auto;
+  max-height: 9999px;
+  transition: all 0.5s cubic-bezier(0, 1, 0, 1);
+}
+
+.book-btns {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.book-btn {
+  color: white;
+  border-radius: 10px;
+  padding-block: 7px;
+  padding-inline: 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.new-book-btn {
+  background-color: rgb(199, 149, 10);
+  padding: 1rem;
+}
+
+.submit-book-btn {
+  flex-grow: 1;
+  justify-items: center;
+}
+
+.book-submit-area {
+  margin-top: 2rem;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-end;
+  align-items: center;
+  height: 5rem;
+}
+
+.book-error-message {
+  color: red;
+  margin-bottom: 1rem;
+  font-size: 16px;
+}
+
+.book-error-message.hidden {
+  display: none;
+}
