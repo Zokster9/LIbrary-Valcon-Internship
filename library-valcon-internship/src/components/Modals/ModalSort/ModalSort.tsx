@@ -4,7 +4,6 @@ import { BsSortAlphaDown, BsSortAlphaUp } from 'react-icons/bs'
 import './ModalSort.css'
 
 interface ModalSortProps {
-  show: boolean,
   closeModal: () => void
   applySort: (sort: string[]) => void
 }
@@ -31,7 +30,7 @@ interface RadioButtons {
   descriptionDesc: RefObject<HTMLInputElement>
 }
 
-const ModalSort = ({ show, closeModal, applySort }: ModalSortProps) => {
+const ModalSort = ({ closeModal, applySort }: ModalSortProps) => {
   const [ titleSort, setTitleSort ] = useState('')
   const [ isbnSort, setIsbnSort ] = useState('')
   const [ publishDateSort, setPublishDateSort ] = useState('')
@@ -235,150 +234,146 @@ const ModalSort = ({ show, closeModal, applySort }: ModalSortProps) => {
     closeModal()
   }
   return (
-    <div style={!show ? { visibility: 'hidden' } : {}} className="modal">
-      <div className="overlay" onClick={closeModal} />
-      <div className="content sort">
-        <h1>Sort</h1>
-        <form className='sort-form' onSubmit={handleOnSubmit}>
-          <fieldset className="sort-radio-group">
-            <legend>Title</legend>
-            <div className='sort-radio-options'>
-              <button
-                className={whichRadioButtonsClicked.isTitleAscClicked ? 'sort-radio clicked' : 'sort-radio'}
-                type='button'
-                onClick={() => { radioButtons.titleAsc.current?.click() }}
-              >
-                <BsSortAlphaUp size='2rem' />
-              </button>
-              <button
-                className={whichRadioButtonsClicked.isTitleDescClicked ? 'sort-radio clicked' : 'sort-radio'}
-                type='button'
-                onClick={() => { radioButtons.titleDesc.current?.click() }}
-              >
-                <BsSortAlphaDown size='2rem' />
-              </button>
-            </div>
-            <input
-              style={{ display: 'none' }}
-              type='radio'
-              value='Title ASC'
-              ref={radioButtons.titleAsc}
-              onClick={handleOnClickTitleAscending}
-            />
-            <input
-              style={{ display: 'none' }}
-              type='radio'
-              value='Title DESC'
-              ref={radioButtons.titleDesc}
-              onClick={handleOnClickTitleDescending}
-            />
-          </fieldset>
-          <fieldset className="sort-radio-group">
-            <legend>ISBN</legend>
-            <div className='sort-radio-options'>
-              <button
-                className={whichRadioButtonsClicked.isIsbnAscClicked ? 'sort-radio clicked' : 'sort-radio'}
-                type='button'
-                onClick={() => { radioButtons.isbnAsc.current?.click() }}
-              >
-                <BsSortAlphaUp size='2rem' />
-              </button>
-              <button
-                className={whichRadioButtonsClicked.isIsbnDescClicked ? 'sort-radio clicked' : 'sort-radio'}
-                type='button'
-                onClick={() => { radioButtons.isbnDesc.current?.click() }}
-              >
-                <BsSortAlphaDown size='2rem' />
-              </button>
-            </div>
-            <input
-              style={{ display: 'none' }}
-              type='radio'
-              value='Isbn ASC'
-              ref={radioButtons.isbnAsc}
-              onClick={handleOnClickIsbnAscending}
-            />
-            <input
-              style={{ display: 'none' }}
-              type='radio'
-              value='Isbn DESC'
-              ref={radioButtons.isbnDesc}
-              onClick={handleOnClickIsbnDescending}
-            />
-          </fieldset>
-          <fieldset className="sort-radio-group">
-            <legend>Publish Date</legend>
-            <div className='sort-radio-options'>
-              <button
-                className={whichRadioButtonsClicked.isPublishDateAscClicked ? 'sort-radio clicked' : 'sort-radio'}
-                type='button'
-                onClick={() => { radioButtons.publishDateAsc.current?.click() }}
-              >
-                <BsSortAlphaUp size='2rem' />
-              </button>
-              <button
-                className={whichRadioButtonsClicked.isPublishDateDescClicked ? 'sort-radio clicked' : 'sort-radio'}
-                type='button'
-                onClick={() => { radioButtons.publishDateDesc.current?.click() }}
-              >
-                <BsSortAlphaDown size='2rem' />
-              </button>
-            </div>
-            <input
-              style={{ display: 'none' }}
-              type='radio'
-              value='PublishDate ASC'
-              ref={radioButtons.publishDateAsc}
-              onClick={handleOnClickPublishDateAscending}
-            />
-            <input
-              style={{ display: 'none' }}
-              type='radio'
-              value='PublishDate DESC'
-              ref={radioButtons.publishDateDesc}
-              onClick={handleOnClickPublishDateDescending}
-            />
-          </fieldset>
-          <fieldset className="sort-radio-group">
-            <legend>Description</legend>
-            <div className='sort-radio-options'>
-              <button
-                className={whichRadioButtonsClicked.isDescriptionAscClicked ? 'sort-radio clicked' : 'sort-radio'}
-                type='button'
-                onClick={() => { radioButtons.descriptionAsc.current?.click() }}
-              >
-                <BsSortAlphaUp size='2rem' />
-              </button>
-              <button
-                className={whichRadioButtonsClicked.isDescriptionDescClicked ? 'sort-radio clicked' : 'sort-radio'}
-                type='button'
-                onClick={() => { radioButtons.descriptionDesc.current?.click() }}
-              >
-                <BsSortAlphaDown size='2rem' />
-              </button>
-            </div>
-            <input
-              style={{ display: 'none' }}
-              type='radio'
-              value='Description ASC'
-              ref={radioButtons.descriptionAsc}
-              onClick={handleOnClickDescriptionAscending}
-            />
-            <input
-              style={{ display: 'none' }}
-              type='radio'
-              value='Description DESC'
-              ref={radioButtons.descriptionDesc}
-              onClick={handleOnClickDescriptionDescending}
-            />
-          </fieldset>
-          <div className='sort-button-group'>
-            <button className='sort-button'>Apply sort</button>
-            <button className='sort-button close' type='button' onClick={closeModal}>Close</button>
+    <>
+      <h1>Sort</h1>
+      <form className='sort-form' onSubmit={handleOnSubmit}>
+        <fieldset className="sort-radio-group">
+          <legend>Title</legend>
+          <div className='sort-radio-options'>
+            <button
+              className={whichRadioButtonsClicked.isTitleAscClicked ? 'sort-radio clicked' : 'sort-radio'}
+              type='button'
+              onClick={() => { radioButtons.titleAsc.current?.click() }}
+            >
+              <BsSortAlphaUp size='2rem' />
+            </button>
+            <button
+              className={whichRadioButtonsClicked.isTitleDescClicked ? 'sort-radio clicked' : 'sort-radio'}
+              type='button'
+              onClick={() => { radioButtons.titleDesc.current?.click() }}
+            >
+              <BsSortAlphaDown size='2rem' />
+            </button>
           </div>
-        </form>
-      </div>
-    </div>
+          <input
+            style={{ display: 'none' }}
+            type='radio'
+            value='Title ASC'
+            ref={radioButtons.titleAsc}
+            onClick={handleOnClickTitleAscending}
+          />
+          <input
+            style={{ display: 'none' }}
+            type='radio'
+            value='Title DESC'
+            ref={radioButtons.titleDesc}
+            onClick={handleOnClickTitleDescending}
+          />
+        </fieldset>
+        <fieldset className="sort-radio-group">
+          <legend>ISBN</legend>
+          <div className='sort-radio-options'>
+            <button
+              className={whichRadioButtonsClicked.isIsbnAscClicked ? 'sort-radio clicked' : 'sort-radio'}
+              type='button'
+              onClick={() => { radioButtons.isbnAsc.current?.click() }}
+            >
+              <BsSortAlphaUp size='2rem' />
+            </button>
+            <button
+              className={whichRadioButtonsClicked.isIsbnDescClicked ? 'sort-radio clicked' : 'sort-radio'}
+              type='button'
+              onClick={() => { radioButtons.isbnDesc.current?.click() }}
+            >
+              <BsSortAlphaDown size='2rem' />
+            </button>
+          </div>
+          <input
+            style={{ display: 'none' }}
+            type='radio'
+            value='Isbn ASC'
+            ref={radioButtons.isbnAsc}
+            onClick={handleOnClickIsbnAscending}
+          />
+          <input
+            style={{ display: 'none' }}
+            type='radio'
+            value='Isbn DESC'
+            ref={radioButtons.isbnDesc}
+            onClick={handleOnClickIsbnDescending}
+          />
+        </fieldset>
+        <fieldset className="sort-radio-group">
+          <legend>Publish Date</legend>
+          <div className='sort-radio-options'>
+            <button
+              className={whichRadioButtonsClicked.isPublishDateAscClicked ? 'sort-radio clicked' : 'sort-radio'}
+              type='button'
+              onClick={() => { radioButtons.publishDateAsc.current?.click() }}
+            >
+              <BsSortAlphaUp size='2rem' />
+            </button>
+            <button
+              className={whichRadioButtonsClicked.isPublishDateDescClicked ? 'sort-radio clicked' : 'sort-radio'}
+              type='button'
+              onClick={() => { radioButtons.publishDateDesc.current?.click() }}
+            >
+              <BsSortAlphaDown size='2rem' />
+            </button>
+          </div>
+          <input
+            style={{ display: 'none' }}
+            type='radio'
+            value='PublishDate ASC'
+            ref={radioButtons.publishDateAsc}
+            onClick={handleOnClickPublishDateAscending}
+          />
+          <input
+            style={{ display: 'none' }}
+            type='radio'
+            value='PublishDate DESC'
+            ref={radioButtons.publishDateDesc}
+            onClick={handleOnClickPublishDateDescending}
+          />
+        </fieldset>
+        <fieldset className="sort-radio-group">
+          <legend>Description</legend>
+          <div className='sort-radio-options'>
+            <button
+              className={whichRadioButtonsClicked.isDescriptionAscClicked ? 'sort-radio clicked' : 'sort-radio'}
+              type='button'
+              onClick={() => { radioButtons.descriptionAsc.current?.click() }}
+            >
+              <BsSortAlphaUp size='2rem' />
+            </button>
+            <button
+              className={whichRadioButtonsClicked.isDescriptionDescClicked ? 'sort-radio clicked' : 'sort-radio'}
+              type='button'
+              onClick={() => { radioButtons.descriptionDesc.current?.click() }}
+            >
+              <BsSortAlphaDown size='2rem' />
+            </button>
+          </div>
+          <input
+            style={{ display: 'none' }}
+            type='radio'
+            value='Description ASC'
+            ref={radioButtons.descriptionAsc}
+            onClick={handleOnClickDescriptionAscending}
+          />
+          <input
+            style={{ display: 'none' }}
+            type='radio'
+            value='Description DESC'
+            ref={radioButtons.descriptionDesc}
+            onClick={handleOnClickDescriptionDescending}
+          />
+        </fieldset>
+        <div className='sort-button-group'>
+          <button className='sort-button'>Apply sort</button>
+        </div>
+      </form>
+    </>
   )
 }
 

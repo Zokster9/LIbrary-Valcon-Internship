@@ -29,7 +29,8 @@
 
 .sort-button-group {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  align-items: center;
 }
 
 .sort-button {

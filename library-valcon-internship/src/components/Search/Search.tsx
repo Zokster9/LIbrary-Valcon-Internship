@@ -5,6 +5,7 @@ import { BsSortDownAlt } from 'react-icons/bs'
 import { VscFilter } from 'react-icons/vsc'
 
 import Where from '../../models/Where'
+import Modal from '../Modals/Modal'
 import ModalFilter from '../Modals/ModalFilter/ModalFilter'
 import ModalSort from '../Modals/ModalSort/ModalSort'
 import './Search.css'
@@ -17,6 +18,7 @@ interface SearchProps {
 }
 
 const Search = ({ isSearchVisible, setSearch, setFilter, setSort }: SearchProps) => {
+  const [ showModal, setShowModal ] = useState(false)
   const [ showFilter, setShowFilter ] = useState(false)
   const [ showSort, setShowSort ] = useState(false)
 
@@ -25,6 +27,22 @@ const Search = ({ isSearchVisible, setSearch, setFilter, setSort }: SearchProps)
   }
   const handleFilterOnChange = (filter: Where[]) => setFilter(filter)
   const handleSortOnChange = (sort: string[]) => setSort(sort)
+
+  const handleToggleFilterModal = () => {
+    setShowFilter(!showFilter)
+    setShowModal(!showModal)
+  }
+
+  const handleToggleSortModal = () => {
+    setShowSort(!showSort)
+    setShowModal(!showModal)
+  }
+
+  const handleCloseModal = () => {
+    setShowFilter(false)
+    setShowSort(false)
+    setShowModal(false)
+  }
 
   const debouncedChangeHandler = useMemo(
     () => debounce(handleSearchOnChange, 500),
@@ -40,18 +58,12 @@ const Search = ({ isSearchVisible, setSearch, setFilter, setSort }: SearchProps)
         autoComplete='off'
         onChange={debouncedChangeHandler}
       />
-      <VscFilter className='icon' onClick={() => setShowFilter(true)} title='Filter' />
-      <BsSortDownAlt className='icon' onClick={() => setShowSort(true)} title='Sort' />
-      <ModalFilter
-        show={showFilter}
-        closeModal={() => setShowFilter(false)}
-        applyFilter={handleFilterOnChange}
-      />
-      <ModalSort
-        show={showSort}
-        closeModal={() => setShowSort(false)}
-        applySort={handleSortOnChange}
-      />
+      <VscFilter className='icon' onClick={handleToggleFilterModal} title='Filter' />
+      <BsSortDownAlt className='icon' onClick={handleToggleSortModal} title='Sort' />
+      <Modal show={showModal} closeModal={handleCloseModal} >
+        { showFilter && <ModalFilter closeModal={handleCloseModal} applyFilter={handleFilterOnChange} />}
+        { showSort && <ModalSort closeModal={handleCloseModal} applySort={handleSortOnChange} />}
+      </Modal>
     </div>
   )
 }
