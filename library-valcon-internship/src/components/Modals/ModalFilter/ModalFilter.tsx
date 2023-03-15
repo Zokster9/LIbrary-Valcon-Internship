@@ -69,9 +69,11 @@ const ModalFilter = ({ show, closeModal, applyFilter }: ModalFilterProps) => {
           <div className='filter-form-group'>
             <label>Description</label>
             <textarea
+              style={{ resize: 'none' }}
               rows={4}
               value={description}
               onChange={handleOnChangeDescription}
+              draggable={false}
             />
           </div>
           <div className="filter-form-group">
