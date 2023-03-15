@@ -20,6 +20,7 @@ const HomePage = ({ search, filter, sort }: HomePageProps) => {
   const [ pageNumber, setPageNumber ] = useState(1)
   const [ books, setBooks ] = useState<Book[]>([])
   const [ hasMoreBooks, setHasMoreBooks ] = useState(true)
+  const [ totalCount, setTotalCount ] = useState<number | null>(null)
   const pageLength = 10
   const currentSearch = useRef<string>(search)
   const currentFilter = useRef<Where[]>(filter)
@@ -27,9 +28,10 @@ const HomePage = ({ search, filter, sort }: HomePageProps) => {
   const fetchBooks = (pageNumber: number, pageLength: number, search: string, filter: Where[], sort: string[]) => {
     getBooks({ pageNumber, pageLength, search, filter, sort })
       .then(response => {
-        const totalCount = response.data.TotalCount
+        const totalNumOfBooks = response.data.TotalCount
         const currentCount = pageNumber * pageLength
-        setHasMoreBooks((totalCount - currentCount) > 0)
+        setHasMoreBooks((totalNumOfBooks - currentCount) > 0)
+        setTotalCount(totalNumOfBooks)
         setBooks(prevBooks => [ ...prevBooks, ...response.data.Items ])
       })
       .catch(() => {
@@ -37,6 +39,7 @@ const HomePage = ({ search, filter, sort }: HomePageProps) => {
       })
   }
   const resetPaging = () => {
+    setTotalCount(null)
     setBooks([])
     setPageNumber(1)
   }
@@ -60,7 +63,7 @@ const HomePage = ({ search, filter, sort }: HomePageProps) => {
   return (
     <div className='homePage'>
       {
-        books.length > 0 ?
+        totalCount !== 0 ?
           (
             <InfiniteScroll
               dataLength={books.length}
