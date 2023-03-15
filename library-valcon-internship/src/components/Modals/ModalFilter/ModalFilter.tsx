@@ -15,17 +15,23 @@ const ModalFilter = ({ show, closeModal, applyFilter }: ModalFilterProps) => {
   const [ firstName, setFirstName ] = useState('')
   const [ lastName, setLastName ] = useState('')
 
-  const handleOnChangeDescription = ({ currentTarget }: FormEvent<HTMLTextAreaElement>) => {
-    setDescription(currentTarget.value)
-  }
-  const handleOnChangeIsbn = ({ currentTarget }: FormEvent<HTMLInputElement>) => {
-    setIsbn(currentTarget.value)
-  }
-  const handleOnChangeFirstName = ({ currentTarget }: FormEvent<HTMLInputElement>) => {
-    setFirstName(currentTarget.value)
-  }
-  const handleOnChangeLastName = ({ currentTarget }: FormEvent<HTMLInputElement>) => {
-    setLastName(currentTarget.value)
+  const handleOnChangeInput = (value: string, state: string) => {
+    switch(state) {
+      case 'Description':
+        setDescription(value)
+        break
+      case 'Isbn':
+        setIsbn(value)
+        break
+      case 'FirstName':
+        setFirstName(value)
+        break
+      case 'LastName':
+        setLastName(value)
+        break
+      default:
+        break
+    }
   }
   const handleOnClickClear = () => {
     setDescription('')
@@ -72,7 +78,9 @@ const ModalFilter = ({ show, closeModal, applyFilter }: ModalFilterProps) => {
               style={{ resize: 'none' }}
               rows={4}
               value={description}
-              onChange={handleOnChangeDescription}
+              onChange={({ currentTarget }: FormEvent<HTMLTextAreaElement>) => {
+                handleOnChangeInput(currentTarget.value, 'Description')
+              }}
               draggable={false}
             />
           </div>
@@ -81,7 +89,9 @@ const ModalFilter = ({ show, closeModal, applyFilter }: ModalFilterProps) => {
             <input
               type='text'
               value={isbn}
-              onChange={handleOnChangeIsbn}
+              onChange={({ currentTarget }: FormEvent<HTMLInputElement>) => {
+                handleOnChangeInput(currentTarget.value, 'Isbn')
+              }}
             />
           </div>
           <div className="filter-form-group">
@@ -89,7 +99,9 @@ const ModalFilter = ({ show, closeModal, applyFilter }: ModalFilterProps) => {
             <input
               type='text'
               value={firstName}
-              onChange={handleOnChangeFirstName}
+              onChange={({ currentTarget }: FormEvent<HTMLInputElement>) => {
+                handleOnChangeInput(currentTarget.value, 'FirstName')
+              }}
             />
           </div>
           <div className="filter-form-group">
@@ -97,7 +109,9 @@ const ModalFilter = ({ show, closeModal, applyFilter }: ModalFilterProps) => {
             <input
               type='text'
               value={lastName}
-              onChange={handleOnChangeLastName}
+              onChange={({ currentTarget }: FormEvent<HTMLInputElement>) => {
+                handleOnChangeInput(currentTarget.value, 'LastName')
+              }}
             />
           </div>
           <div className='filter-form-button-group'>
