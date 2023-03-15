@@ -42,3 +42,9 @@
 .sort-button.close {
   background-color: red;
 }
+
+@media (max-width: 400px) {
+  .content.sort {
+    width: 50%;
+  }
+}
