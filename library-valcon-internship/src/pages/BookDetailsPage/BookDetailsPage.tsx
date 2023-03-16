@@ -45,14 +45,9 @@ const BookDetailsPage = () => {
         </div>
         <div className='book-details-main-content'>
           <h1 className='book-details-title'>{book?.Title}</h1>
-          <textarea
-            className='book-details-description'
-            value={book?.Description}
-            contentEditable={false}
-            readOnly={true}
-            draggable={false}
-            rows={6}
-          />
+          <p className='book-details-description'>
+            {book?.Description}
+          </p>
           <BookAvailableMessage isAvailable={book?.Available !== 0} />
           {
             token.Role !== 'User' &&

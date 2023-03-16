@@ -37,8 +37,7 @@
 
 .book-details-description {
   all: unset;
-  text-align: center;
-  width: 100%;
+  text-align: justify;
   font-size: 18px;
 }
 
@@ -82,4 +81,41 @@
 
 .delete {
   background-color: red;
+}
+
+@media (max-width: 400px) {
+  .book-details {
+    height: unset;
+  }
+  .book-details-main {
+    flex-flow: column;
+    align-items: center;
+    width: 100%;
+    gap: 0.5rem
+  }
+
+  .book-details-cover-section {
+    width: unset;
+  }
+
+  .book-details-main-content {
+    display: flex;
+    flex-flow: column;
+    justify-items: flex-start;
+    align-items: center;
+    width: 100%;
+    row-gap: 1rem;
+  }
+
+  .book-details-title {
+    font-size: 35px;
+  }
+
+  .book-details-fields{
+    all: unset;
+  }
+
+  .book-details-admin-field {
+    width: 100%;
+  }
 }
