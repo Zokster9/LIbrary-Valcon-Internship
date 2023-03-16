@@ -1,1 +1,85 @@
-.BookDetailsPage {}
+.book-details {
+  margin: 0 auto;
+  width: 80%;
+  height: 100vh;
+}
+
+.book-details-main {
+  display: flex;
+  justify-items: center;
+  gap: 5rem;
+  height: 70%;
+}
+
+.book-details-cover-section {
+  width: 30%;
+}
+
+.book-details-cover {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.book-details-main-content {
+  display: flex;
+  flex-flow: column;
+  justify-items: flex-start;
+  align-items: center;
+  width: 70%;
+  row-gap: 3rem;
+}
+
+.book-details-title {
+  font-variant: small-caps;
+  font-size: 50px;
+}
+
+.book-details-description {
+  all: unset;
+  text-align: center;
+  width: 100%;
+  font-size: 18px;
+}
+
+.book-details-fields {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 30%;
+}
+
+.book-details-field {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.book-details-label {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.book-details-admin-field {
+  display: flex;
+  width: 50%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.book-details-btn {
+  color: white;
+  border-radius: 15px;
+  padding: 1rem;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.edit {
+  background-color: rgb(107, 194, 223);
+}
+
+.delete {
+  background-color: red;
+}

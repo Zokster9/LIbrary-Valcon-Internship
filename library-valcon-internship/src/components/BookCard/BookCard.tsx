@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 
 import placeholderBook from '../../assets/icons/placeholder-book.png'
 import Book from '../../models/Book'
+import { convertAuthorsToArrayString, convertDateToString } from '../../utils/Utils'
 import './BookCard.css'
 
 interface BookCardProps {
@@ -9,13 +10,8 @@ interface BookCardProps {
 }
 
 const BookCard = ({ book }: BookCardProps) => {
-  const publishDate = new Intl.DateTimeFormat('sr-RS').format(new Date(book.PublishDate))
-  let authors = ''
-  if (book.Authors.length > 0) {
-    authors = book.Authors.map((author) => `${author.FirstName} ${author.LastName}`).join(', ')
-  } else {
-    authors = 'Unknown'
-  }
+  const publishDate = convertDateToString(book.PublishDate)
+  const authors = convertAuthorsToArrayString(book.Authors)
   const navigate = useNavigate()
   const handleOnCardClick = () => {
     navigate(`/books/${book.Id}`)

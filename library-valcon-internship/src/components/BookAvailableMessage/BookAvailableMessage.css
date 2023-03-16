@@ -1,0 +1,13 @@
+.available-message {
+  border-radius: 15px;
+  color: white;
+  padding: 1rem;
+}
+
+.available {
+  background-color: green;
+}
+
+.unavailable {
+  background-color: red;
+}
