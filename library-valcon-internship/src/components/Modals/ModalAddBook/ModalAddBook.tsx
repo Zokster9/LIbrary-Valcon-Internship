@@ -9,7 +9,6 @@ import BookFormValidation from '../../../models/BookFormValidation'
 import { addNewAuthor, getAllAuthors } from '../../../services/AuthorService'
 import { addNewBook } from '../../../services/BookService'
 import BookForm from '../../BookForm/BookForm'
-import '../Modals.css'
 import './ModalAddBook.css'
 
 interface AddBookProps {

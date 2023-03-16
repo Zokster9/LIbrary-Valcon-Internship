@@ -2,11 +2,14 @@ import { SyntheticEvent, useEffect, useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
+import AuthorForm from '../../components/AuthorForm/AuthorForm'
 import BookForm from '../../components/BookForm/BookForm'
-import ModalAddAuthor from '../../components/Modals/ModalAddAuthor/ModalAddAuthor'
+import Modal from '../../components/Modals/Modal/Modal'
+import AuthorFormType from '../../models/AuthorFormType'
+import AuthorFormValidation from '../../models/AuthorFormValidation'
 import BookFormType from '../../models/BookFormType'
 import BookFormValidation from '../../models/BookFormValidation'
-import { getAllAuthors } from '../../services/AuthorService'
+import { addNewAuthor, getAllAuthors } from '../../services/AuthorService'
 import { addNewBook } from '../../services/BookService'
 import './CreateBookPage.css'
 
@@ -31,6 +34,17 @@ const CreateBookPage = () => {
     isSelectedAuthorsValid: true,
     isDataValid: true
   })
+
+  const [ authorForm, setAuthorForm ] = useState<AuthorFormType>({
+    firstName: '',
+    lastName: ''
+  })
+  const [ authorFormValidation, setAuthorFormValidation ] = useState<AuthorFormValidation>({
+    isFirstNameValid: true,
+    isLastNameValid: true,
+    isAuthorDataValid: true
+  })
+
   const [ retrieveAuthors, setRetrieveAuthors ] = useState(false)
   const [ show, setShow ] = useState(false)
 
@@ -57,7 +71,54 @@ const CreateBookPage = () => {
     fetchAuthors()
   }, [ retrieveAuthors ])
 
-  const handleOnSubmit = (e: SyntheticEvent) => {
+  const handleOnCloseModal = () => {
+    setAuthorForm({
+      firstName: '',
+      lastName: ''
+    })
+    setAuthorFormValidation({
+      isFirstNameValid: true,
+      isLastNameValid: true,
+      isAuthorDataValid: true
+    })
+    setShow(false)
+  }
+
+  const handleOnAuthorSubmit = () => {
+    if (authorForm.firstName.trim() === '') {
+      setAuthorFormValidation(authorFormValidation => {
+        return {
+          ...authorFormValidation,
+          isFirstNameValid: false
+        }
+      })
+      return
+    }
+    if (authorForm.lastName.trim() === '') {
+      setAuthorFormValidation(authorFormValidation => {
+        return {
+          ...authorFormValidation,
+          isLastNameValid: false
+        }
+      })
+      return
+    }
+    addNewAuthor(authorForm.firstName.trim(), authorForm.lastName.trim())
+      .then(() => {
+        setRetrieveAuthors(!retrieveAuthors)
+        handleOnCloseModal()
+      })
+      .catch(() => {
+        setAuthorFormValidation(authorFormValidation => {
+          return {
+            ...authorFormValidation,
+            isAuthorDataValid: false
+          }
+        })
+      })
+  }
+
+  const handleOnBookSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
     if (bookForm.title.trim() === '') {
       setBookFormValidation(bookFormValidation => {
@@ -114,7 +175,6 @@ const CreateBookPage = () => {
       })
       return
     }
-
     const formData = new FormData()
     formData.append('title', bookForm.title.trim())
     formData.append('description', bookForm.description.trim())
@@ -143,15 +203,21 @@ const CreateBookPage = () => {
         bookFormValidation={bookFormValidation}
         setBookForm={setBookForm}
         setBookFormValidation={setBookFormValidation}
-        handleOnBookSubmit={handleOnSubmit}
+        handleOnBookSubmit={handleOnBookSubmit}
         title='Create a book'
         handleShowAuthorModal={handleShowAuthorModal}
       />
-      <ModalAddAuthor
-        retrieveAuthors={retrieveAuthors}
-        setRetrieveAuthors={setRetrieveAuthors}
-        show={show} closeModal={() => { setShow(false) }}
-      />
+      {show &&
+        <Modal closeModal={() => { setShow(false) }} confirm={handleOnAuthorSubmit}>
+          <AuthorForm
+            authorForm={authorForm}
+            authorFormValidation={authorFormValidation}
+            setAuthorForm={setAuthorForm}
+            setAuthorFormValidation={setAuthorFormValidation}
+            title='Add an author'
+          />
+        </Modal>
+      }
     </div>
   )
 }
