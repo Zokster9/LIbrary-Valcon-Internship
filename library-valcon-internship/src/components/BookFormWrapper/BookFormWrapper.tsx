@@ -1,31 +1,32 @@
-import { SyntheticEvent, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import ReactDOM from 'react-dom'
+import AuthorFormType from '../../models/AuthorFormType'
+import AuthorFormValidation from '../../models/AuthorFormValidation'
+import BookDetail from '../../models/BookDetail'
+import BookFormType from '../../models/BookFormType'
+import BookFormValidation from '../../models/BookFormValidation'
+import { addNewAuthor, getAllAuthors } from '../../services/AuthorService'
+import { addNewBook } from '../../services/BookService'
+import { convertAuthorsToAuthorDetails } from '../../utils/Utils'
+import BookForm from '../BookForm/BookForm'
+import Modal from '../Modals/Modal/Modal'
+import './BookFormWrapper.css'
 
-import AuthorFormType from '../../../models/AuthorFormType'
-import AuthorFormValidation from '../../../models/AuthorFormValidation'
-import BookFormType from '../../../models/BookFormType'
-import BookFormValidation from '../../../models/BookFormValidation'
-import { addNewAuthor, getAllAuthors } from '../../../services/AuthorService'
-import { addNewBook } from '../../../services/BookService'
-import BookForm from '../../BookForm/BookForm'
-import './ModalAddBook.css'
-
-interface AddBookProps {
-  show: boolean
+interface BookFormWrapperProps {
   closeModal: () => void
+  book?: BookDetail
 }
 
-const ModalAddBook = ({ show, closeModal }: AddBookProps) => {
+const BookFormWrapper = ({ closeModal, book }: BookFormWrapperProps) => {
   const [ bookForm, setBookForm ] = useState<BookFormType>({
     requestCover: new Blob(),
-    cover: '',
-    title: '',
-    description: '',
-    isbn: '',
-    quantity: '',
-    releaseDate: null,
-    selectedAuthors: [],
+    cover: book?.Cover ? book?.Cover : '',
+    title: book?.Title ? book?.Title : '',
+    description: book?.Description ? book?.Description : '',
+    isbn: book?.ISBN ? book?.ISBN : '',
+    quantity: book?.Quantity ? book?.Quantity.toString() : '',
+    releaseDate: book?.PublishDate ? new Date(book?.PublishDate) : null,
+    selectedAuthors: book?.Authors ? book?.Authors : [],
     authors: []
   })
   const [ bookFormValidation, setBookFormValidation ] = useState<BookFormValidation>({
@@ -53,7 +54,7 @@ const ModalAddBook = ({ show, closeModal }: AddBookProps) => {
         setBookForm(bookForm => {
           return {
             ...bookForm,
-            authors: response.data
+            authors: convertAuthorsToAuthorDetails(response.data)
           }
         })
       })
@@ -66,10 +67,7 @@ const ModalAddBook = ({ show, closeModal }: AddBookProps) => {
     fetchAuthors()
   }, [])
 
-  if (!show) return null
-
-  const handleOnBookSubmit = (e: SyntheticEvent) => {
-    e.preventDefault()
+  const handleOnBookSubmit = () => {
     if (bookForm.title.trim() === '') {
       setBookFormValidation(bookFormValidation => {
         return {
@@ -184,36 +182,23 @@ const ModalAddBook = ({ show, closeModal }: AddBookProps) => {
       })
   }
 
-  return ReactDOM.createPortal(
-    <div className='modal'>
-      <div className='overlay' onClick={closeModal} />
-      <div className='content'>
-        <div className='add-book-modal'>
-          <BookForm
-            bookForm={bookForm}
-            bookFormValidation={bookFormValidation}
-            authorForm={authorForm}
-            authorFormValidation={authorFormValidation}
-            setBookForm={setBookForm}
-            setBookFormValidation={setBookFormValidation}
-            setAuthorForm={setAuthorForm}
-            setAuthorFormValidation={setAuthorFormValidation}
-            handleOnBookSubmit={handleOnBookSubmit}
-            handleOnAuthorSubmit={handleOnAuthorSubmit}
-            title='Create a book'
-          />
-          <button
-            type='button'
-            className='add-book-close-modal'
-            onClick={closeModal}
-          >
-              Close
-          </button>
-        </div>
-      </div>
-    </div>,
-    document.getElementById('portal') as HTMLElement
+  return (
+    <Modal closeModal={closeModal} confirm={handleOnBookSubmit}>
+      <BookForm
+        bookForm={bookForm}
+        bookFormValidation={bookFormValidation}
+        authorForm={authorForm}
+        authorFormValidation={authorFormValidation}
+        setBookForm={setBookForm}
+        setBookFormValidation={setBookFormValidation}
+        setAuthorForm={setAuthorForm}
+        setAuthorFormValidation={setAuthorFormValidation}
+        handleOnBookSubmit={handleOnBookSubmit}
+        handleOnAuthorSubmit={handleOnAuthorSubmit}
+        title='Create a book'
+      />
+    </Modal>
   )
 }
 
-export default ModalAddBook
+export default BookFormWrapper
