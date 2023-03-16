@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 import AuthorForm from '../../components/AuthorForm/AuthorForm'
 import BookForm from '../../components/BookForm/BookForm'
-import Modal from '../../components/Modals/Modal/Modal'
+import Modal from '../../components/Modal/Modal'
 import AuthorFormType from '../../models/AuthorFormType'
 import AuthorFormValidation from '../../models/AuthorFormValidation'
 import BookFormType from '../../models/BookFormType'

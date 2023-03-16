@@ -9,7 +9,7 @@ import { addNewAuthor, getAllAuthors } from '../../services/AuthorService'
 import { addNewBook } from '../../services/BookService'
 import { convertAuthorsToAuthorDetails } from '../../utils/Utils'
 import BookForm from '../BookForm/BookForm'
-import Modal from '../Modals/Modal/Modal'
+import Modal from '../Modal/Modal'
 import './BookFormWrapper.css'
 
 interface BookFormWrapperProps {
@@ -195,7 +195,7 @@ const BookFormWrapper = ({ closeModal, book }: BookFormWrapperProps) => {
         setAuthorFormValidation={setAuthorFormValidation}
         handleOnBookSubmit={handleOnBookSubmit}
         handleOnAuthorSubmit={handleOnAuthorSubmit}
-        title='Create a book'
+        title={book ? 'Edit book' : 'Create a book'}
       />
     </Modal>
   )
