@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'react'
 
 import ReactDOM from 'react-dom'
+import './Modal.css'
 
 interface ModalProps {
   confirm: () => void
