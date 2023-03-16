@@ -1,13 +1,19 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 import { useLocation, useNavigate } from 'react-router-dom'
+
+import Where from '../../models/Where'
+import Search from '../Search/Search'
 import './Header.css'
 
 interface HeaderProps {
   setToken: Dispatch<SetStateAction<string | null>>
+  setSearch: Dispatch<SetStateAction<string>>
+  setFilter: Dispatch<SetStateAction<Where[]>>
+  setSort: Dispatch<SetStateAction<string[]>>
 }
 
-const Header = ({ setToken }: HeaderProps) => {
+const Header = ({ setToken, setSearch, setFilter, setSort }: HeaderProps) => {
   const [ position, setPosition ] = useState(window.scrollY)
   const [ visible, setVisible ] = useState(true)
   const location = useLocation()
@@ -33,9 +39,7 @@ const Header = ({ setToken }: HeaderProps) => {
   }
   return (
     <div className={'header ' + visibilityClass}>
-      <div className={isSearchVisible ? 'header-search' : 'hide-search'} >
-        <input className='header-search-bar' type='text' placeholder='Search...' />
-      </div>
+      <Search isSearchVisible={isSearchVisible} setSearch={setSearch} setFilter={setFilter} setSort={setSort} />
       <div className='header-user'>
         { isLoggedIn &&
           <button className='header-btn' onClick={handleSignOut}>

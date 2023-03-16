@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { NavLink } from 'react-router-dom'
@@ -6,35 +6,87 @@ import { NavLink } from 'react-router-dom'
 import addIcon from '../../assets/icons/add-icon.svg'
 import BookList from '../../components/BookList/BookList'
 import Book from '../../models/Book'
+import Where from '../../models/Where'
 import { getBooks } from '../../services/BookService'
 import './HomePage.css'
 
-const HomePage = () => {
-  const [ pageNumber, setPageNumber ] = useState(1)
+interface HomePageProps {
+  search: string,
+  filter: Where[]
+  sort: string[]
+}
+
+interface Page {
+  pageNumber: number
+  pageLength: number
+  totalCount: number | null
+}
+
+const HomePage = ({ search, filter, sort }: HomePageProps) => {
+  const [ page, setPage ] = useState<Page>({
+    pageNumber: 1,
+    pageLength: 10,
+    totalCount: null
+  })
   const [ books, setBooks ] = useState<Book[]>([])
   const [ hasMoreBooks, setHasMoreBooks ] = useState(true)
-  const fetchBooks = (pageNumber: number, pageLength: number) => {
-    getBooks(pageNumber, 10)
+  const currentSearch = useRef<string>(search)
+  const currentFilter = useRef<Where[]>(filter)
+  const currentSort = useRef<string[]>(sort)
+  const fetchBooks = (pageNumber: number, pageLength: number, search: string, filter: Where[], sort: string[]) => {
+    getBooks({ pageNumber, pageLength, search, filter, sort })
       .then(response => {
-        const totalCount = response.data.TotalCount
+        const totalNumOfBooks = response.data.TotalCount
         const currentCount = pageNumber * pageLength
-        setHasMoreBooks((totalCount - currentCount) > 0)
+        setHasMoreBooks((totalNumOfBooks - currentCount) > 0)
+        setPage(page => {
+          return {
+            ...page,
+            totalCount: totalNumOfBooks
+          }
+        })
         setBooks(prevBooks => [ ...prevBooks, ...response.data.Items ])
       })
       .catch(() => {
         setBooks([])
       })
   }
+  const resetPaging = () => {
+    setPage(page => {
+      return {
+        ...page,
+        totalCount: null,
+        pageNumber: 1
+      }
+    })
+    setBooks([])
+  }
   useEffect(() => {
-    fetchBooks(pageNumber, 10)
-  }, [ pageNumber ])
+    if (currentSearch.current !== search) {
+      currentSearch.current = search
+      resetPaging()
+    } else if (currentFilter.current !== filter) {
+      resetPaging()
+      currentFilter.current = filter
+    } else if (currentSort.current !== sort) {
+      resetPaging()
+      currentSort.current = sort
+    }
+    fetchBooks(page.pageNumber, page.pageLength, search, filter, sort)
+  }, [ page.pageNumber, page.pageLength, search, filter, sort ])
+
   const handleNextPage = () => {
-    setPageNumber(prevPageNumber => prevPageNumber + 1)
+    setPage(page => {
+      return {
+        ...page,
+        pageNumber: page.pageNumber + 1
+      }
+    })
   }
   return (
     <div className='homePage'>
       {
-        books ?
+        page.totalCount !== 0 ?
           (
             <InfiniteScroll
               dataLength={books.length}
@@ -47,7 +99,7 @@ const HomePage = () => {
             </InfiniteScroll>
           )
           :
-          <h3>No books currently available</h3>
+          <h3 style={{ textAlign: 'center' }}>No books currently available</h3>
       }
       <button className='fab'>
         <NavLink to='/create-book'>
