@@ -60,3 +60,7 @@ export const getBookById = async (id: string | undefined) => {
   if (!id) return Promise.reject()
   return axios.get<BookDetail>(baseUrl + `api/Books/${id}`)
 }
+
+export const editBook = async (formData: FormData) => {
+  return axios.put(baseUrl + 'api/Books', formData)
+}

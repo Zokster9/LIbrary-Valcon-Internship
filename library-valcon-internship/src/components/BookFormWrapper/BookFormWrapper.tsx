@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 import AuthorFormType from '../../models/AuthorFormType'
 import AuthorFormValidation from '../../models/AuthorFormValidation'
@@ -6,8 +6,8 @@ import BookDetail from '../../models/BookDetail'
 import BookFormType from '../../models/BookFormType'
 import BookFormValidation from '../../models/BookFormValidation'
 import { addNewAuthor, getAllAuthors } from '../../services/AuthorService'
-import { addNewBook } from '../../services/BookService'
-import { convertAuthorsToAuthorDetails } from '../../utils/Utils'
+import { addNewBook, editBook } from '../../services/BookService'
+import { convertAuthorsToAuthorDetails, convertBase64ToBlob } from '../../utils/Utils'
 import BookForm from '../BookForm/BookForm'
 import Modal from '../Modal/Modal'
 import './BookFormWrapper.css'
@@ -15,12 +15,14 @@ import './BookFormWrapper.css'
 interface BookFormWrapperProps {
   closeModal: () => void
   book?: BookDetail
+  retrieveBook?: boolean
+  setRetrieveBook?: Dispatch<SetStateAction<boolean>>
 }
 
-const BookFormWrapper = ({ closeModal, book }: BookFormWrapperProps) => {
+const BookFormWrapper = ({ closeModal, book, retrieveBook,  setRetrieveBook }: BookFormWrapperProps) => {
   const [ bookForm, setBookForm ] = useState<BookFormType>({
-    requestCover: new Blob(),
-    cover: book?.Cover ? book?.Cover : '',
+    requestCover: book?.Cover ? '' : new Blob(),
+    cover: book?.Cover ? 'data:image/png;base64,' + book?.Cover : '',
     title: book?.Title ? book?.Title : '',
     description: book?.Description ? book?.Description : '',
     isbn: book?.ISBN ? book?.ISBN : '',
@@ -129,21 +131,43 @@ const BookFormWrapper = ({ closeModal, book }: BookFormWrapperProps) => {
     formData.append('description', bookForm.description.trim())
     formData.append('isbn', bookForm.isbn.trim())
     formData.append('quantity', bookForm.quantity.trim())
-    formData.append('cover', bookForm.requestCover)
+    if (bookForm.requestCover === '') {
+      formData.append('cover', convertBase64ToBlob(bookForm.cover))
+    } else {
+      formData.append('cover', bookForm.requestCover)
+    }
     formData.append('publishDate', bookForm.releaseDate.toISOString())
     bookForm.selectedAuthors.forEach(author => formData.append('authorIds', author.Id.toString()))
-    addNewBook(formData)
-      .then(() => {
-        closeModal()
-      })
-      .catch(() => {
-        setBookFormValidation(bookFormValidation => {
-          return {
-            ...bookFormValidation,
-            isDataValid: false
-          }
+    if (book) {
+      formData.append('Id', book.Id.toString())
+      editBook(formData)
+        .then(() => {
+          if (retrieveBook !== undefined && setRetrieveBook)
+            setRetrieveBook(!retrieveBook)
+          closeModal()
         })
-      })
+        .catch(() => {
+          setBookFormValidation(bookFormValidation => {
+            return {
+              ...bookFormValidation,
+              isDataValid: false
+            }
+          })
+        })
+    } else {
+      addNewBook(formData)
+        .then(() => {
+          closeModal()
+        })
+        .catch(() => {
+          setBookFormValidation(bookFormValidation => {
+            return {
+              ...bookFormValidation,
+              isDataValid: false
+            }
+          })
+        })
+    }
   }
   const handleOnAuthorSubmit = () => {
     if (authorForm.firstName.trim() === '') {

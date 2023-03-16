@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 
 import placeholder from '../../assets/icons/placeholder-book.png'
 import BookAvailableMessage from '../../components/BookAvailableMessage/BookAvailableMessage'
+import BookFormWrapper from '../../components/BookFormWrapper/BookFormWrapper'
 import BookDetail from '../../models/BookDetail'
 import Token from '../../models/Token'
 import { getBookById } from '../../services/BookService'
@@ -14,6 +15,8 @@ const BookDetailsPage = () => {
   const [ book, setBook ] = useState<BookDetail>()
   const [ publishDate, setPublishDate ] = useState('')
   const [ authors, setAuthors ] = useState('')
+  const [ showModal, setShowModal ] = useState(false)
+  const [ retrieveBook, setRetrieveBook ] = useState(false)
   const { bookId } = useParams()
   const stringToken = localStorage.getItem('token')
   const token: Token = JSON.parse(stringToken ? stringToken : '') as Token
@@ -24,7 +27,7 @@ const BookDetailsPage = () => {
         setBook(response.data)
       })
       .catch(error => console.error(error))
-  }, [ bookId ])
+  }, [ bookId, retrieveBook ])
 
   useEffect(() => {
     if (book) {
@@ -32,6 +35,8 @@ const BookDetailsPage = () => {
       setAuthors(convertAuthorDetailsToArrayString(book.Authors))
     }
   }, [ book ])
+
+  const handleCloseModal = () => setShowModal(false)
 
   return (
     <div className='book-details'>
@@ -77,11 +82,20 @@ const BookDetailsPage = () => {
             <h3>{authors}</h3>
           </div>
           <div className='book-details-admin-field'>
-            <button type='button' className='book-details-btn edit'>Edit book</button>
+            <button
+              type='button'
+              className='book-details-btn edit'
+              onClick={() => setShowModal(true)}
+            >
+              Edit book
+            </button>
             <button type='button' className='book-details-btn delete'>Delete book</button>
           </div>
         </div>
       </div>
+      {showModal &&
+        <BookFormWrapper retrieveBook={retrieveBook} setRetrieveBook={setRetrieveBook} book={book} closeModal={handleCloseModal} />
+      }
     </div>
   )
 }

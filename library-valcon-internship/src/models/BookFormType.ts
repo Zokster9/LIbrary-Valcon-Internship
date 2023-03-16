@@ -1,7 +1,7 @@
 import AuthorDetail from './AuthorDetail'
 
 export default interface BookFormType {
-  requestCover: Blob
+  requestCover: Blob | string
   cover: string
   authors: AuthorDetail[]
   title: string
