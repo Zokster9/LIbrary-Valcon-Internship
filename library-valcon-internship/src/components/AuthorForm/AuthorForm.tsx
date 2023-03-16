@@ -15,40 +15,52 @@ interface AuthorFormProps {
 
 const AuthorForm = ({ authorForm, authorFormValidation,
   setAuthorForm, setAuthorFormValidation, title, onSubmit }: AuthorFormProps) => {
-  const handleOnChangeFirstName = ({ currentTarget }: FormEvent<HTMLInputElement>) => {
-    setAuthorForm((authorForm) => {
-      return {
-        ...authorForm,
-        firstName: currentTarget.value
-      }
-    })
-  }
-  const handleOnBlurFirstName = () => {
-    if (authorForm.firstName.trim() === '') {
-      setAuthorFormValidation(authorFormValidation => {
-        return {
-          ...authorFormValidation,
-          isFirstNameValid: false
-        }
-      })
+  const handleOnChangeInput = (value: string, formProperty: string) => {
+    switch (formProperty) {
+      case 'FirstName':
+        setAuthorForm((authorForm) => {
+          return {
+            ...authorForm,
+            firstName: value
+          }
+        })
+        break
+      case 'LastName':
+        setAuthorForm((authorForm) => {
+          return {
+            ...authorForm,
+            lastName: value
+          }
+        })
+        break
+      default:
+        break
     }
   }
-  const handleOnChangeLastName = ({ currentTarget }: FormEvent<HTMLInputElement>) => {
-    setAuthorForm((authorForm) => {
-      return {
-        ...authorForm,
-        lastName: currentTarget.value
-      }
-    })
-  }
-  const handleOnBlurLastName = () => {
-    if (authorForm.lastName.trim() === '') {
-      setAuthorFormValidation(authorFormValidation => {
-        return {
-          ...authorFormValidation,
-          isLastNameValid: false
+  const handleOnBlurInput = (formProperty: string) => {
+    switch (formProperty) {
+      case 'FirstName':
+        if (authorForm.firstName.trim() === '') {
+          setAuthorFormValidation(authorFormValidation => {
+            return {
+              ...authorFormValidation,
+              isFirstNameValid: false
+            }
+          })
         }
-      })
+        break
+      case 'LastName':
+        if (authorForm.lastName.trim() === '') {
+          setAuthorFormValidation(authorFormValidation => {
+            return {
+              ...authorFormValidation,
+              isLastNameValid: false
+            }
+          })
+        }
+        break
+      default:
+        break
     }
   }
   return (
@@ -67,8 +79,10 @@ const AuthorForm = ({ authorForm, authorFormValidation,
             value={authorForm.firstName}
             form='authorForm'
             placeholder='Enter first name...'
-            onChange={handleOnChangeFirstName}
-            onBlur={handleOnBlurFirstName}
+            onChange={({ currentTarget }: FormEvent<HTMLInputElement>) => {
+              handleOnChangeInput(currentTarget.value, 'FirstName')
+            }}
+            onBlur={() => handleOnBlurInput('FirstName')}
             onFocus={
               () => {
                 setAuthorFormValidation(authorFormValidation => {
@@ -91,8 +105,10 @@ const AuthorForm = ({ authorForm, authorFormValidation,
             value={authorForm.lastName}
             form='authorForm'
             placeholder='Enter last name...'
-            onChange={handleOnChangeLastName}
-            onBlur={handleOnBlurLastName}
+            onChange={({ currentTarget }: FormEvent<HTMLInputElement>) => {
+              handleOnChangeInput(currentTarget.value, 'LastName')
+            }}
+            onBlur={() => handleOnBlurInput('LastName')}
             onFocus={
               () => {
                 setAuthorFormValidation(authorFormValidation => {
@@ -103,25 +119,27 @@ const AuthorForm = ({ authorForm, authorFormValidation,
             onClick={(e: FormEvent<HTMLInputElement>) => e.stopPropagation()}
           />
         </div>
-        <div className='add-author-button-field'>
-          <div className={!authorFormValidation.isAuthorDataValid ? 'error-author-modal' : 'author-modal-message'}>
-            Something went wrong!
+        {onSubmit &&
+          <div className='add-author-button-field'>
+            <div className={!authorFormValidation.isAuthorDataValid ? 'error-author-modal' : 'author-modal-message'}>
+              Something went wrong!
+            </div>
+            <div className='modal-btn'>
+              <button
+                type='button'
+                id='create'
+                form='authorForm'
+                className='add-author-button modal-btn'
+                onClick={(e: FormEvent<HTMLButtonElement>) => {
+                  e.stopPropagation()
+                  onSubmit()
+                }}
+              >
+                Create
+              </button>
+            </div>
           </div>
-          <div className='modal-btn'>
-            <button
-              type='button'
-              id='create'
-              form='authorForm'
-              className='add-author-button modal-btn'
-              onClick={(e: FormEvent<HTMLButtonElement>) => {
-                e.stopPropagation()
-                if (onSubmit) onSubmit()
-              }}
-            >
-              Create
-            </button>
-          </div>
-        </div>
+        }
       </div>
     </>
   )
