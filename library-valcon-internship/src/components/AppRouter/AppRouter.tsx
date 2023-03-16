@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
 import Where from '../../models/Where'
+import BookDetailsPage from '../../pages/BookDetailsPage/BookDetailsPage'
 import CreateBookPage from '../../pages/CreateBookPage/CreateBookPage'
 import HomePage from '../../pages/HomePage/HomePage'
 import SignIn from '../../pages/SignIn/SignIn'
@@ -23,6 +24,7 @@ const AppRouter = ({ token, setToken, search, filter, sort }: AppRouterProps) =>
       <Route element={<PrivateRoutes token={token} />}>
         <Route path='/profile' element={<HomePage search={search} filter={filter} sort={sort} />} />
         <Route path='/' element={<HomePage search={search} filter={filter} sort={sort} />} />
+        <Route path='/books/:bookId' element={<BookDetailsPage />} />
         <Route element={<AdminPrivateRoutes token={token} />}>
           <Route path='/create-book' element={<CreateBookPage />} />
         </Route>

@@ -10,6 +10,7 @@
   box-shadow: 5px 0 20px 2px #666;
   transition: box-shadow 0.2s ease-in-out, opacity 0.2s ease-in-out;
   justify-content: space-evenly;
+  cursor: pointer;
 }
 
 .book-card:active {

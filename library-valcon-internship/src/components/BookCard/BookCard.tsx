@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom'
+
 import placeholderBook from '../../assets/icons/placeholder-book.png'
 import Book from '../../models/Book'
 import './BookCard.css'
@@ -14,8 +16,12 @@ const BookCard = ({ book }: BookCardProps) => {
   } else {
     authors = 'Unknown'
   }
+  const navigate = useNavigate()
+  const handleOnCardClick = () => {
+    navigate(`/books/${book.Id}`)
+  }
   return (
-    <div className='book-card'>
+    <div className='book-card' onClick={handleOnCardClick}>
       <img
         className='book-card-cover'
         src=
