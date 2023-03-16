@@ -9,8 +9,9 @@ interface ModalProps {
 }
 
 const Modal = ({ children, show, closeModal, confirm }: PropsWithChildren<ModalProps>) => {
+  if (!show) return null
   return ReactDOM.createPortal(
-    <div style={!show ? { visibility: 'hidden' } : {}} className='modal'>
+    <div className='modal'>
       <div className='overlay' onClick={closeModal} />
       <div className='content'>
         { children }
