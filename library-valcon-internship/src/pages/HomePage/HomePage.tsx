@@ -16,20 +16,35 @@ interface HomePageProps {
   sort: string[]
 }
 
+interface Page {
+  pageNumber: number
+  pageLength: number
+  totalCount: number | null
+}
+
 const HomePage = ({ search, filter, sort }: HomePageProps) => {
-  const [ pageNumber, setPageNumber ] = useState(1)
+  const [ page, setPage ] = useState<Page>({
+    pageNumber: 1,
+    pageLength: 10,
+    totalCount: null
+  })
   const [ books, setBooks ] = useState<Book[]>([])
   const [ hasMoreBooks, setHasMoreBooks ] = useState(true)
-  const pageLength = 10
   const currentSearch = useRef<string>(search)
   const currentFilter = useRef<Where[]>(filter)
   const currentSort = useRef<string[]>(sort)
   const fetchBooks = (pageNumber: number, pageLength: number, search: string, filter: Where[], sort: string[]) => {
     getBooks({ pageNumber, pageLength, search, filter, sort })
       .then(response => {
-        const totalCount = response.data.TotalCount
+        const totalNumOfBooks = response.data.TotalCount
         const currentCount = pageNumber * pageLength
-        setHasMoreBooks((totalCount - currentCount) > 0)
+        setHasMoreBooks((totalNumOfBooks - currentCount) > 0)
+        setPage(page => {
+          return {
+            ...page,
+            totalCount: totalNumOfBooks
+          }
+        })
         setBooks(prevBooks => [ ...prevBooks, ...response.data.Items ])
       })
       .catch(() => {
@@ -37,8 +52,14 @@ const HomePage = ({ search, filter, sort }: HomePageProps) => {
       })
   }
   const resetPaging = () => {
+    setPage(page => {
+      return {
+        ...page,
+        totalCount: null,
+        pageNumber: 1
+      }
+    })
     setBooks([])
-    setPageNumber(1)
   }
   useEffect(() => {
     if (currentSearch.current !== search) {
@@ -51,16 +72,21 @@ const HomePage = ({ search, filter, sort }: HomePageProps) => {
       resetPaging()
       currentSort.current = sort
     }
-    fetchBooks(pageNumber, pageLength, search, filter, sort)
-  }, [ pageNumber, search, filter, sort ])
+    fetchBooks(page.pageNumber, page.pageLength, search, filter, sort)
+  }, [ page.pageNumber, page.pageLength, search, filter, sort ])
 
   const handleNextPage = () => {
-    setPageNumber(prevPageNumber => prevPageNumber + 1)
+    setPage(page => {
+      return {
+        ...page,
+        pageNumber: page.pageNumber + 1
+      }
+    })
   }
   return (
     <div className='homePage'>
       {
-        books.length > 0 ?
+        page.totalCount !== 0 ?
           (
             <InfiniteScroll
               dataLength={books.length}

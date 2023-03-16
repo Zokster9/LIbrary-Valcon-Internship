@@ -1,12 +1,14 @@
-import { createRef, FormEvent, RefObject, SyntheticEvent, useState } from 'react'
+import { createRef, Dispatch, RefObject, SetStateAction, useState } from 'react'
 
-import { BsSortAlphaDown, BsSortAlphaUp } from 'react-icons/bs'
+
+import Sort from '../../../models/Sort'
+import SortIconButtons from '../../SortIconButtons/SortIconButtons'
+import SortRadioButtons from '../../SortRadioButtons/SortRadioButtons'
 import './ModalSort.css'
 
 interface ModalSortProps {
-  show: boolean,
-  closeModal: () => void
-  applySort: (sort: string[]) => void
+  sortForm: Sort
+  setSortForm: Dispatch<SetStateAction<Sort>>
 }
 
 interface RadioButtonsClicked {
@@ -31,21 +33,17 @@ interface RadioButtons {
   descriptionDesc: RefObject<HTMLInputElement>
 }
 
-const ModalSort = ({ show, closeModal, applySort }: ModalSortProps) => {
-  const [ titleSort, setTitleSort ] = useState('')
-  const [ isbnSort, setIsbnSort ] = useState('')
-  const [ publishDateSort, setPublishDateSort ] = useState('')
-  const [ descriptionSort, setDescriptionSort ] = useState('')
+const ModalSort = ({ sortForm, setSortForm }: ModalSortProps) => {
 
   const [ whichRadioButtonsClicked, setWhichRadioButtonsClicked ] = useState<RadioButtonsClicked>({
-    isTitleAscClicked: false,
-    isTitleDescClicked: false,
-    isIsbnAscClicked: false,
-    isIsbnDescClicked: false,
-    isPublishDateAscClicked: false,
-    isPublishDateDescClicked: false,
-    isDescriptionAscClicked: false,
-    isDescriptionDescClicked: false
+    isTitleAscClicked: sortForm.titleSort === 'Title ASC',
+    isTitleDescClicked: sortForm.titleSort === 'Title DESC',
+    isIsbnAscClicked: sortForm.isbnSort === 'Isbn ASC',
+    isIsbnDescClicked: sortForm.isbnSort === 'Isbn DESC',
+    isPublishDateAscClicked: sortForm.publishDateSort === 'PublishDate ASC',
+    isPublishDateDescClicked: sortForm.publishDateSort === 'PublishDate DESC',
+    isDescriptionAscClicked: sortForm.descriptionSort === 'Description ASC',
+    isDescriptionDescClicked: sortForm.descriptionSort === 'Description DESC'
   })
 
   const radioButtons: RadioButtons = {
@@ -59,326 +57,151 @@ const ModalSort = ({ show, closeModal, applySort }: ModalSortProps) => {
     descriptionDesc: createRef<HTMLInputElement>()
   }
 
-  const handleOnClickTitleAscending = ({ currentTarget }: FormEvent<HTMLInputElement>) => {
-    if (titleSort === 'Title ASC') {
-      setTitleSort('')
-      setWhichRadioButtonsClicked(whichRadioButtonsClicked => {
-        return {
-          ...whichRadioButtonsClicked,
-          isTitleAscClicked: false
-        }
-      })
-    } else {
-      setTitleSort(currentTarget.value)
-      setWhichRadioButtonsClicked(whichRadioButtonsClicked => {
-        return {
-          ...whichRadioButtonsClicked,
-          isTitleAscClicked: true,
-          isTitleDescClicked: false
-        }
-      })
+  const handleOnClickSort = (value: string, sortProperty: string, isAsc: boolean) => {
+    let isButtonClicked = false
+    switch(sortProperty) {
+      case 'Title':
+        isButtonClicked = sortForm.titleSort === value
+        setSortForm(sortForm => {
+          return {
+            ...sortForm,
+            titleSort: isButtonClicked ? '' : value
+          }
+        })
+        setWhichRadioButtonsClicked(whichRadioButtonsClicked => {
+          return {
+            ...whichRadioButtonsClicked,
+            isTitleAscClicked: isAsc && !isButtonClicked,
+            isTitleDescClicked: !isAsc && !isButtonClicked
+          }
+        })
+        break
+      case 'Isbn':
+        isButtonClicked = sortForm.isbnSort === value
+        setSortForm(sortForm => {
+          return {
+            ...sortForm,
+            isbnSort: isButtonClicked ? '' : value
+          }
+        })
+        setWhichRadioButtonsClicked(whichRadioButtonsClicked => {
+          return {
+            ...whichRadioButtonsClicked,
+            isIsbnAscClicked: isAsc && !isButtonClicked,
+            isIsbnDescClicked: !isAsc && !isButtonClicked
+          }
+        })
+        break
+      case 'PublishDate':
+        isButtonClicked = sortForm.publishDateSort === value
+        setSortForm(sortForm => {
+          return {
+            ...sortForm,
+            publishDateSort: isButtonClicked ? '' : value
+          }
+        })
+        setWhichRadioButtonsClicked(whichRadioButtonsClicked => {
+          return {
+            ...whichRadioButtonsClicked,
+            isPublishDateAscClicked: isAsc && !isButtonClicked,
+            isPublishDateDescClicked: !isAsc && !isButtonClicked
+          }
+        })
+        break
+      case 'Description':
+        isButtonClicked = sortForm.descriptionSort === value
+        setSortForm(sortForm => {
+          return {
+            ...sortForm,
+            descriptionSort: isButtonClicked ? '' : value
+          }
+        })
+        setWhichRadioButtonsClicked(whichRadioButtonsClicked => {
+          return {
+            ...whichRadioButtonsClicked,
+            isDescriptionAscClicked: isAsc && !isButtonClicked,
+            isDescriptionDescClicked: !isAsc && !isButtonClicked
+          }
+        })
+        break
+      default:
+        break
     }
-  }
-  const handleOnClickTitleDescending = ({ currentTarget }: FormEvent<HTMLInputElement>) => {
-    if (titleSort === 'Title DESC') {
-      setTitleSort('')
-      setWhichRadioButtonsClicked(whichRadioButtonsClicked => {
-        return {
-          ...whichRadioButtonsClicked,
-          isTitleDescClicked: false
-        }
-      })
-    } else {
-      setTitleSort(currentTarget.value)
-      setWhichRadioButtonsClicked(whichRadioButtonsClicked => {
-        return {
-          ...whichRadioButtonsClicked,
-          isTitleDescClicked: true,
-          isTitleAscClicked: false
-        }
-      })
-    }
-  }
-
-  const handleOnClickIsbnAscending = ({ currentTarget }: FormEvent<HTMLInputElement>) => {
-    if (isbnSort === 'Isbn ASC') {
-      setIsbnSort('')
-      setWhichRadioButtonsClicked(whichRadioButtonsClicked => {
-        return {
-          ...whichRadioButtonsClicked,
-          isIsbnAscClicked: false
-        }
-      })
-    } else {
-      setIsbnSort(currentTarget.value)
-      setWhichRadioButtonsClicked(whichRadioButtonsClicked => {
-        return {
-          ...whichRadioButtonsClicked,
-          isIsbnAscClicked: true,
-          isIsbnDescClicked: false
-        }
-      })
-    }
-  }
-  const handleOnClickIsbnDescending = ({ currentTarget }: FormEvent<HTMLInputElement>) => {
-    if (isbnSort === 'Isbn DESC') {
-      setIsbnSort('')
-      setWhichRadioButtonsClicked(whichRadioButtonsClicked => {
-        return {
-          ...whichRadioButtonsClicked,
-          isIsbnDescClicked: false
-        }
-      })
-    } else {
-      setIsbnSort(currentTarget.value)
-      setWhichRadioButtonsClicked(whichRadioButtonsClicked => {
-        return {
-          ...whichRadioButtonsClicked,
-          isIsbnDescClicked: true,
-          isIsbnAscClicked: false
-        }
-      })
-    }
-  }
-
-  const handleOnClickPublishDateAscending = ({ currentTarget }: FormEvent<HTMLInputElement>) => {
-    if (publishDateSort === 'PublishDate ASC') {
-      setPublishDateSort('')
-      setWhichRadioButtonsClicked(whichRadioButtonsClicked => {
-        return {
-          ...whichRadioButtonsClicked,
-          isPublishDateAscClicked: false
-        }
-      })
-    } else {
-      setPublishDateSort(currentTarget.value)
-      setWhichRadioButtonsClicked(whichRadioButtonsClicked => {
-        return {
-          ...whichRadioButtonsClicked,
-          isPublishDateAscClicked: true,
-          isPublishDateDescClicked: false
-        }
-      })
-    }
-  }
-  const handleOnClickPublishDateDescending = ({ currentTarget }: FormEvent<HTMLInputElement>) => {
-    if (publishDateSort === 'PublishDate DESC') {
-      setPublishDateSort('')
-      setWhichRadioButtonsClicked(whichRadioButtonsClicked => {
-        return {
-          ...whichRadioButtonsClicked,
-          isPublishDateDescClicked: false
-        }
-      })
-    } else {
-      setPublishDateSort(currentTarget.value)
-      setWhichRadioButtonsClicked(whichRadioButtonsClicked => {
-        return {
-          ...whichRadioButtonsClicked,
-          isPublishDateDescClicked: true,
-          isPublishDateAscClicked: false
-        }
-      })
-    }
-  }
-
-  const handleOnClickDescriptionAscending = ({ currentTarget }: FormEvent<HTMLInputElement>) => {
-    if (descriptionSort === 'Description ASC') {
-      setDescriptionSort('')
-      setWhichRadioButtonsClicked(whichRadioButtonsClicked => {
-        return {
-          ...whichRadioButtonsClicked,
-          isDescriptionAscClicked: false
-        }
-      })
-    } else {
-      setDescriptionSort(currentTarget.value)
-      setWhichRadioButtonsClicked(whichRadioButtonsClicked => {
-        return {
-          ...whichRadioButtonsClicked,
-          isDescriptionAscClicked: true,
-          isDescriptionDescClicked: false
-        }
-      })
-    }
-  }
-  const handleOnClickDescriptionDescending = ({ currentTarget }: FormEvent<HTMLInputElement>) => {
-    if (descriptionSort === 'Description DESC') {
-      setDescriptionSort('')
-      setWhichRadioButtonsClicked(whichRadioButtonsClicked => {
-        return {
-          ...whichRadioButtonsClicked,
-          isDescriptionDescClicked: false
-        }
-      })
-    } else {
-      setDescriptionSort(currentTarget.value)
-      setWhichRadioButtonsClicked(whichRadioButtonsClicked => {
-        return {
-          ...whichRadioButtonsClicked,
-          isDescriptionDescClicked: true,
-          isDescriptionAscClicked: false
-        }
-      })
-    }
-  }
-
-  const handleOnSubmit = (e: SyntheticEvent) => {
-    e.preventDefault()
-    const sort: string[] = [
-      titleSort,
-      isbnSort,
-      publishDateSort,
-      descriptionSort
-    ]
-    applySort(sort)
-    closeModal()
   }
   return (
-    <div style={!show ? { visibility: 'hidden' } : {}} className="modal">
-      <div className="overlay" onClick={closeModal} />
-      <div className="content sort">
-        <h1>Sort</h1>
-        <form className='sort-form' onSubmit={handleOnSubmit}>
-          <fieldset className="sort-radio-group">
-            <legend>Title</legend>
-            <div className='sort-radio-options'>
-              <button
-                className={whichRadioButtonsClicked.isTitleAscClicked ? 'sort-radio clicked' : 'sort-radio'}
-                type='button'
-                onClick={() => { radioButtons.titleAsc.current?.click() }}
-              >
-                <BsSortAlphaUp size='2rem' />
-              </button>
-              <button
-                className={whichRadioButtonsClicked.isTitleDescClicked ? 'sort-radio clicked' : 'sort-radio'}
-                type='button'
-                onClick={() => { radioButtons.titleDesc.current?.click() }}
-              >
-                <BsSortAlphaDown size='2rem' />
-              </button>
-            </div>
-            <input
-              style={{ display: 'none' }}
-              type='radio'
-              value='Title ASC'
-              ref={radioButtons.titleAsc}
-              onClick={handleOnClickTitleAscending}
+    <>
+      <h1>Sort</h1>
+      <form className='sort-form'>
+        <div className="sort-radio-group">
+          <label className='sort-radio-label'>Title</label>
+          <div className='sort-radio-options'>
+            <SortIconButtons
+              isAscClicked={whichRadioButtonsClicked.isTitleAscClicked}
+              isDescClicked={whichRadioButtonsClicked.isTitleDescClicked}
+              ascInputRef={radioButtons.titleAsc}
+              descInputRef={radioButtons.titleDesc}
             />
-            <input
-              style={{ display: 'none' }}
-              type='radio'
-              value='Title DESC'
-              ref={radioButtons.titleDesc}
-              onClick={handleOnClickTitleDescending}
-            />
-          </fieldset>
-          <fieldset className="sort-radio-group">
-            <legend>ISBN</legend>
-            <div className='sort-radio-options'>
-              <button
-                className={whichRadioButtonsClicked.isIsbnAscClicked ? 'sort-radio clicked' : 'sort-radio'}
-                type='button'
-                onClick={() => { radioButtons.isbnAsc.current?.click() }}
-              >
-                <BsSortAlphaUp size='2rem' />
-              </button>
-              <button
-                className={whichRadioButtonsClicked.isIsbnDescClicked ? 'sort-radio clicked' : 'sort-radio'}
-                type='button'
-                onClick={() => { radioButtons.isbnDesc.current?.click() }}
-              >
-                <BsSortAlphaDown size='2rem' />
-              </button>
-            </div>
-            <input
-              style={{ display: 'none' }}
-              type='radio'
-              value='Isbn ASC'
-              ref={radioButtons.isbnAsc}
-              onClick={handleOnClickIsbnAscending}
-            />
-            <input
-              style={{ display: 'none' }}
-              type='radio'
-              value='Isbn DESC'
-              ref={radioButtons.isbnDesc}
-              onClick={handleOnClickIsbnDescending}
-            />
-          </fieldset>
-          <fieldset className="sort-radio-group">
-            <legend>Publish Date</legend>
-            <div className='sort-radio-options'>
-              <button
-                className={whichRadioButtonsClicked.isPublishDateAscClicked ? 'sort-radio clicked' : 'sort-radio'}
-                type='button'
-                onClick={() => { radioButtons.publishDateAsc.current?.click() }}
-              >
-                <BsSortAlphaUp size='2rem' />
-              </button>
-              <button
-                className={whichRadioButtonsClicked.isPublishDateDescClicked ? 'sort-radio clicked' : 'sort-radio'}
-                type='button'
-                onClick={() => { radioButtons.publishDateDesc.current?.click() }}
-              >
-                <BsSortAlphaDown size='2rem' />
-              </button>
-            </div>
-            <input
-              style={{ display: 'none' }}
-              type='radio'
-              value='PublishDate ASC'
-              ref={radioButtons.publishDateAsc}
-              onClick={handleOnClickPublishDateAscending}
-            />
-            <input
-              style={{ display: 'none' }}
-              type='radio'
-              value='PublishDate DESC'
-              ref={radioButtons.publishDateDesc}
-              onClick={handleOnClickPublishDateDescending}
-            />
-          </fieldset>
-          <fieldset className="sort-radio-group">
-            <legend>Description</legend>
-            <div className='sort-radio-options'>
-              <button
-                className={whichRadioButtonsClicked.isDescriptionAscClicked ? 'sort-radio clicked' : 'sort-radio'}
-                type='button'
-                onClick={() => { radioButtons.descriptionAsc.current?.click() }}
-              >
-                <BsSortAlphaUp size='2rem' />
-              </button>
-              <button
-                className={whichRadioButtonsClicked.isDescriptionDescClicked ? 'sort-radio clicked' : 'sort-radio'}
-                type='button'
-                onClick={() => { radioButtons.descriptionDesc.current?.click() }}
-              >
-                <BsSortAlphaDown size='2rem' />
-              </button>
-            </div>
-            <input
-              style={{ display: 'none' }}
-              type='radio'
-              value='Description ASC'
-              ref={radioButtons.descriptionAsc}
-              onClick={handleOnClickDescriptionAscending}
-            />
-            <input
-              style={{ display: 'none' }}
-              type='radio'
-              value='Description DESC'
-              ref={radioButtons.descriptionDesc}
-              onClick={handleOnClickDescriptionDescending}
-            />
-          </fieldset>
-          <div className='sort-button-group'>
-            <button className='sort-button'>Apply sort</button>
-            <button className='sort-button close' type='button' onClick={closeModal}>Close</button>
           </div>
-        </form>
-      </div>
-    </div>
+          <SortRadioButtons
+            value='Title'
+            ascButtonRef={radioButtons.titleAsc}
+            descButtonRef={radioButtons.titleDesc}
+            handleOnClickSort={handleOnClickSort}
+          />
+        </div>
+        <div className="sort-radio-group">
+          <label className='sort-radio-label'>ISBN</label>
+          <div className='sort-radio-options'>
+            <SortIconButtons
+              isAscClicked={whichRadioButtonsClicked.isIsbnAscClicked}
+              isDescClicked={whichRadioButtonsClicked.isIsbnDescClicked}
+              ascInputRef={radioButtons.isbnAsc}
+              descInputRef={radioButtons.isbnDesc}
+            />
+          </div>
+          <SortRadioButtons
+            value='Isbn'
+            ascButtonRef={radioButtons.isbnAsc}
+            descButtonRef={radioButtons.isbnDesc}
+            handleOnClickSort={handleOnClickSort}
+          />
+        </div>
+        <div className="sort-radio-group">
+          <label className='sort-radio-label'>Publish Date</label>
+          <div className='sort-radio-options'>
+            <SortIconButtons
+              isAscClicked={whichRadioButtonsClicked.isPublishDateAscClicked}
+              isDescClicked={whichRadioButtonsClicked.isPublishDateDescClicked}
+              ascInputRef={radioButtons.publishDateAsc}
+              descInputRef={radioButtons.publishDateDesc}
+            />
+          </div>
+          <SortRadioButtons
+            value='PublishDate'
+            ascButtonRef={radioButtons.publishDateAsc}
+            descButtonRef={radioButtons.publishDateDesc}
+            handleOnClickSort={handleOnClickSort}
+          />
+        </div>
+        <div className="sort-radio-group">
+          <label className='sort-radio-label'>Description</label>
+          <div className='sort-radio-options'>
+            <SortIconButtons
+              isAscClicked={whichRadioButtonsClicked.isDescriptionAscClicked}
+              isDescClicked={whichRadioButtonsClicked.isDescriptionDescClicked}
+              ascInputRef={radioButtons.descriptionAsc}
+              descInputRef={radioButtons.descriptionDesc}
+            />
+          </div>
+          <SortRadioButtons
+            value='Description'
+            ascButtonRef={radioButtons.descriptionAsc}
+            descButtonRef={radioButtons.descriptionDesc}
+            handleOnClickSort={handleOnClickSort}
+          />
+        </div>
+      </form>
+    </>
   )
 }
 
