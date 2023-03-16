@@ -101,7 +101,6 @@ const Search = ({ isSearchVisible, setSearch, setFilter, setSort }: SearchProps)
   const handleConfirm = () => {
     if (showFilter) {
       handleConfirmFilter()
-      handleCloseModals()
     } else {
       handleConfirmSort()
     }
