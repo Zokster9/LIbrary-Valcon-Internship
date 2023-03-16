@@ -16,7 +16,7 @@ const SortIconButton = ({ isClicked, inputRef, isAsc }: SortIconButtonProps) => 
       type='button'
       onClick={() => { inputRef.current?.click() }}
     >
-      {isAsc ? <BsSortAlphaUp size='2rem' /> : <BsSortAlphaDown size='2rem' />}
+      {isAsc ? <BsSortAlphaDown size='2rem' /> : <BsSortAlphaUp size='2rem' />}
     </button>
   )
 }
