@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import Book from '../models/Book'
+import BookDetail from '../models/BookDetail'
 import Where from '../models/Where'
 import { baseUrl } from './AxiosConfiguration'
 
@@ -53,4 +54,9 @@ export const getBooks = async ({ pageNumber, pageLength, search, filter, sort }:
 
 export const addNewBook = async (formData: FormData) => {
   return axios.post(baseUrl + 'api/Books', formData)
+}
+
+export const getBookById = async (id: string | undefined) => {
+  if (!id) return Promise.reject()
+  return axios.get<BookDetail>(baseUrl + `api/Books/${id}`)
 }
