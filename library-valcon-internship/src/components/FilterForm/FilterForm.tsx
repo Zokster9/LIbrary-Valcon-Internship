@@ -1,15 +1,15 @@
 import { Dispatch, FormEvent, SetStateAction } from 'react'
 
-import Filter from '../../../models/Filter'
+import Filter from '../../models/Filter'
 
-import './ModalFilter.css'
+import './FilterForm.css'
 
-interface ModalFilterProps {
+interface FilterFormProps {
   filterForm: Filter,
   setFilterForm: Dispatch<SetStateAction<Filter>>
 }
 
-const ModalFilter = ({ filterForm, setFilterForm }: ModalFilterProps) => {
+const FilterForm = ({ filterForm, setFilterForm }: FilterFormProps) => {
 
   const handleOnChangeInput = (value: string, state: string) => {
     switch(state) {
@@ -117,4 +117,4 @@ const ModalFilter = ({ filterForm, setFilterForm }: ModalFilterProps) => {
   )
 }
 
-export default ModalFilter
+export default FilterForm
