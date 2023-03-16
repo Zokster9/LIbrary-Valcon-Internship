@@ -3,7 +3,7 @@ import { useState } from 'react'
 import hamburgerMenuIcon from '../../assets/icons/hamburger-menu-icon.svg'
 import home from '../../assets/icons/home-icon.svg'
 import profile from '../../assets/icons/profile-icon.svg'
-import ModalAddBook from '../Modals/ModalAddBook/ModalAddBook'
+import BookFormWrapper from '../BookFormWrapper/BookFormWrapper'
 import NavbarLink from '../NavbarLink/NavbarLink'
 import './Navbar.css'
 
@@ -35,7 +35,9 @@ const Navbar = ({ handleMenuClick, token }: NavbarProps) => {
       <NavbarLink to='option3' className='navbar-options-link' color='#F56211'>
         Option 3
       </NavbarLink>
-      <ModalAddBook show={showAddBookModal} closeModal={() => setShowAddBookModal(false)} />
+      {showAddBookModal &&
+        <BookFormWrapper closeModal={() => setShowAddBookModal(false)} />
+      }
     </nav>
   ) : (
     <></>

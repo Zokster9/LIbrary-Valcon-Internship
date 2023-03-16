@@ -11,6 +11,7 @@ import BookFormType from '../../models/BookFormType'
 import BookFormValidation from '../../models/BookFormValidation'
 import { addNewAuthor, getAllAuthors } from '../../services/AuthorService'
 import { addNewBook } from '../../services/BookService'
+import { convertAuthorsToAuthorDetails } from '../../utils/Utils'
 import './CreateBookPage.css'
 
 const CreateBookPage = () => {
@@ -58,7 +59,7 @@ const CreateBookPage = () => {
         setBookForm(bookForm => {
           return {
             ...bookForm,
-            authors: response.data
+            authors: convertAuthorsToAuthorDetails(response.data)
           }
         })
       })

@@ -20,3 +20,13 @@ export const convertAuthorDetailsToArrayString = (authors: AuthorDetail[]) => {
     return 'Unknown'
   }
 }
+
+export const convertAuthorsToAuthorDetails = (authors: Author[]) => {
+  return authors.map((author) => {
+    return {
+      Id: author.Id,
+      Firstname: author.FirstName,
+      Lastname: author.LastName
+    }
+  })
+}
