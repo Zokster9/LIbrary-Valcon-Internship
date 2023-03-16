@@ -117,10 +117,12 @@ const Search = ({ isSearchVisible, setSearch, setFilter, setSort }: SearchProps)
       />
       <VscFilter className='icon' onClick={handleShowFilterToggle} title='Filter' />
       <BsSortDown className='icon' onClick={handleShowSortToggle} title='Sort' />
-      <Modal show={showModal} closeModal={handleCloseModals} confirm={handleConfirm} >
-        {showFilter && <ModalFilter filterForm={filterForm} setFilterForm={setFilterForm} />}
-        {showSort && <ModalSort sortForm={sortForm} setSortForm={setSortForm} />}
-      </Modal>
+      {showModal &&
+        <Modal closeModal={handleCloseModals} confirm={handleConfirm} >
+          {showFilter && <ModalFilter filterForm={filterForm} setFilterForm={setFilterForm} />}
+          {showSort && <ModalSort sortForm={sortForm} setSortForm={setSortForm} />}
+        </Modal>
+      }
     </div>
   )
 }

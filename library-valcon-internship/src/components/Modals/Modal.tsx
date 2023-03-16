@@ -3,13 +3,11 @@ import { PropsWithChildren } from 'react'
 import ReactDOM from 'react-dom'
 
 interface ModalProps {
-  show: boolean,
   confirm: () => void
   closeModal: () => void
 }
 
-const Modal = ({ children, show, closeModal, confirm }: PropsWithChildren<ModalProps>) => {
-  if (!show) return null
+const Modal = ({ children, closeModal, confirm }: PropsWithChildren<ModalProps>) => {
   return ReactDOM.createPortal(
     <div className='modal'>
       <div className='overlay' onClick={closeModal} />
