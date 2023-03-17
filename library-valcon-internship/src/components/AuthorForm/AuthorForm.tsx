@@ -1,7 +1,10 @@
 import { Dispatch, FormEvent, SetStateAction } from 'react'
 
+import _ from 'lodash'
+
 import AuthorFormType from '../../models/AuthorFormType'
 import AuthorFormValidation from '../../models/AuthorFormValidation'
+
 import './AuthorForm.css'
 
 interface AuthorFormProps {
@@ -39,58 +42,50 @@ const AuthorForm = ({ authorForm, authorFormValidation,
     <>
       <h1 className='add-author-header'>{title}</h1>
       <div className='add-author-form'>
-        <div className='add-author-form-field'>
-          <label className={!authorFormValidation.isFirstNameValid ? 'add-author-error-label' : ''}>
-            {!authorFormValidation.isFirstNameValid ? 'Please enter first name' : 'First name'}
-          </label>
-          <input
-            className={!authorFormValidation.isFirstNameValid ? 'add-author-error-input' : ''}
-            id='firstName'
-            name='firstName'
-            type='text'
-            value={authorForm.firstName}
-            form='authorForm'
-            placeholder='Enter first name...'
-            onChange={({ currentTarget }: FormEvent<HTMLInputElement>) => {
-              handleOnChangeInput(currentTarget.value, 'firstName')
-            }}
-            onBlur={() => handleOnBlurInput('firstName', 'isFirstNameValid')}
-            onFocus={
-              () => {
-                setAuthorFormValidation(authorFormValidation => {
-                  return { ...authorFormValidation, isFirstNameValid: true }
-                })
+        {
+          Object.keys(authorForm).map(property => { return(
+            <div key={property} className='add-author-form-field'>
+              <label className={!authorFormValidation[`is${_.upperFirst(property)}Valid` as keyof AuthorFormValidation]
+                ?
+                'add-author-error-label':
+                ''
               }
-            }
-            onClick={(e: FormEvent<HTMLInputElement>) => e.stopPropagation()}
-          />
-        </div>
-        <div className='add-author-form-field'>
-          <label className={!authorFormValidation.isLastNameValid ? 'add-author-error-label' : ''}>
-            {!authorFormValidation.isLastNameValid ? 'Please enter last name' : 'Last name'}
-          </label>
-          <input
-            className={!authorFormValidation.isLastNameValid ? 'add-author-error-input' : ''}
-            id='lastName'
-            name='lastName'
-            type='text'
-            value={authorForm.lastName}
-            form='authorForm'
-            placeholder='Enter last name...'
-            onChange={({ currentTarget }: FormEvent<HTMLInputElement>) => {
-              handleOnChangeInput(currentTarget.value, 'lastName')
-            }}
-            onBlur={() => handleOnBlurInput('lastName', 'isLastNameValid')}
-            onFocus={
-              () => {
-                setAuthorFormValidation(authorFormValidation => {
-                  return { ...authorFormValidation, isLastNameValid: true }
-                })
-              }
-            }
-            onClick={(e: FormEvent<HTMLInputElement>) => e.stopPropagation()}
-          />
-        </div>
+              >
+                {
+                  !authorFormValidation[`is${_.upperFirst(property)}Valid` as keyof AuthorFormValidation]
+                    ? `Please enter ${_.startCase(property)}`
+                    : `${_.startCase(property)}`
+                }
+              </label>
+              <input
+                className=
+                  {
+                    !authorFormValidation[`is${_.upperFirst(property)}Valid` as keyof AuthorFormValidation]
+                      ? 'add-author-error-input'
+                      : ''
+                  }
+                id={property}
+                name={property}
+                type='text'
+                value={authorForm[property as keyof AuthorFormType]}
+                placeholder={`Enter ${_.startCase(property)}...`}
+                onChange={({ currentTarget }: FormEvent<HTMLInputElement>) => {
+                  handleOnChangeInput(currentTarget.value, property as keyof AuthorFormType)
+                }}
+                onBlur={() => handleOnBlurInput(property as keyof AuthorFormType,
+                  `is${_.upperFirst(property)}Valid` as keyof AuthorFormValidation)}
+                onFocus={
+                  () => {
+                    setAuthorFormValidation(authorFormValidation => {
+                      return { ...authorFormValidation, [`is${_.upperFirst(property)}Valid`]: true }
+                    })
+                  }
+                }
+                onClick={(e: FormEvent<HTMLInputElement>) => e.stopPropagation()}
+              />
+            </div>
+          )})
+        }
         {onSubmit &&
           <div className='add-author-button-field'>
             <div className={!authorFormValidation.isAuthorDataValid ? 'error-author-modal' : 'author-modal-message'}>
