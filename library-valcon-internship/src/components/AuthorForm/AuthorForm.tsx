@@ -15,52 +15,24 @@ interface AuthorFormProps {
 
 const AuthorForm = ({ authorForm, authorFormValidation,
   setAuthorForm, setAuthorFormValidation, title, onSubmit }: AuthorFormProps) => {
-  const handleOnChangeInput = (value: string, formProperty: string) => {
-    switch (formProperty) {
-      case 'FirstName':
-        setAuthorForm((authorForm) => {
-          return {
-            ...authorForm,
-            firstName: value
-          }
-        })
-        break
-      case 'LastName':
-        setAuthorForm((authorForm) => {
-          return {
-            ...authorForm,
-            lastName: value
-          }
-        })
-        break
-      default:
-        break
-    }
+
+  const handleOnChangeInput = (value: string, formProperty: keyof AuthorFormType) => {
+    setAuthorForm((authorForm) => {
+      return {
+        ...authorForm,
+        [formProperty]: value
+      }
+    })
   }
-  const handleOnBlurInput = (formProperty: string) => {
-    switch (formProperty) {
-      case 'FirstName':
-        if (authorForm.firstName.trim() === '') {
-          setAuthorFormValidation(authorFormValidation => {
-            return {
-              ...authorFormValidation,
-              isFirstNameValid: false
-            }
-          })
+  const handleOnBlurInput = (formProperty: keyof AuthorFormType,
+    validationProperty: keyof AuthorFormValidation) => {
+    if (authorForm[formProperty].trim() === '') {
+      setAuthorFormValidation(authorFormValidation => {
+        return {
+          ...authorFormValidation,
+          [validationProperty]: false
         }
-        break
-      case 'LastName':
-        if (authorForm.lastName.trim() === '') {
-          setAuthorFormValidation(authorFormValidation => {
-            return {
-              ...authorFormValidation,
-              isLastNameValid: false
-            }
-          })
-        }
-        break
-      default:
-        break
+      })
     }
   }
   return (
@@ -80,9 +52,9 @@ const AuthorForm = ({ authorForm, authorFormValidation,
             form='authorForm'
             placeholder='Enter first name...'
             onChange={({ currentTarget }: FormEvent<HTMLInputElement>) => {
-              handleOnChangeInput(currentTarget.value, 'FirstName')
+              handleOnChangeInput(currentTarget.value, 'firstName')
             }}
-            onBlur={() => handleOnBlurInput('FirstName')}
+            onBlur={() => handleOnBlurInput('firstName', 'isFirstNameValid')}
             onFocus={
               () => {
                 setAuthorFormValidation(authorFormValidation => {
@@ -106,9 +78,9 @@ const AuthorForm = ({ authorForm, authorFormValidation,
             form='authorForm'
             placeholder='Enter last name...'
             onChange={({ currentTarget }: FormEvent<HTMLInputElement>) => {
-              handleOnChangeInput(currentTarget.value, 'LastName')
+              handleOnChangeInput(currentTarget.value, 'lastName')
             }}
-            onBlur={() => handleOnBlurInput('LastName')}
+            onBlur={() => handleOnBlurInput('lastName', 'isLastNameValid')}
             onFocus={
               () => {
                 setAuthorFormValidation(authorFormValidation => {
