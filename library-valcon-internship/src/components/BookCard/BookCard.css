@@ -63,7 +63,7 @@
   align-self: center;
 }
 
-.hide {
+.book-card-info-content--hide {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
