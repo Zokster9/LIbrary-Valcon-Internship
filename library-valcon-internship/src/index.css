@@ -18,4 +18,5 @@ code {
 
 button {
   border: unset;
+  cursor: pointer;
 }

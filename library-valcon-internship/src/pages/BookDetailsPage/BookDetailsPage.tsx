@@ -1,13 +1,15 @@
-import { useEffect, useState } from 'react'
+import { createRef, useEffect, useState } from 'react'
 
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import placeholder from '../../assets/icons/placeholder-book.png'
 import BookAvailableMessage from '../../components/BookAvailableMessage/BookAvailableMessage'
 import BookFormWrapper from '../../components/BookFormWrapper/BookFormWrapper'
+import DeleteBookDialog from '../../components/DeleteBookDialog/DeleteBookDialog'
 import BookDetail from '../../models/BookDetail'
 import Token from '../../models/Token'
-import { getBookById } from '../../services/BookService'
+import { deleteBook, getBookById } from '../../services/BookService'
 import { convertAuthorDetailsToArrayString, convertDateToString } from '../../utils/Utils'
 import './BookDetailsPage.css'
 
@@ -18,6 +20,9 @@ const BookDetailsPage = () => {
   const [ showModal, setShowModal ] = useState(false)
   const [ retrieveBook, setRetrieveBook ] = useState(false)
   const { bookId } = useParams()
+  const navigate = useNavigate()
+  const notifyBookCantBeDeleted = () => toast.warn('Book cannot be deleted! Return the books first')
+  const dialogRef = createRef<HTMLDialogElement>()
   const stringToken = localStorage.getItem('token')
   const token: Token = JSON.parse(stringToken ? stringToken : '') as Token
 
@@ -37,6 +42,24 @@ const BookDetailsPage = () => {
   }, [ book ])
 
   const handleCloseModal = () => setShowModal(false)
+  const handleDeleteBook = () => {
+    if (book?.Quantity === book?.Available) {
+      if (dialogRef)
+        dialogRef.current?.showModal()
+    } else {
+      notifyBookCantBeDeleted()
+    }
+  }
+
+  const removeBook = () => {
+    deleteBook(bookId)
+      .then(() => {
+        navigate('/')
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  }
 
   return (
     <div className='book-details'>
@@ -89,10 +112,17 @@ const BookDetailsPage = () => {
             >
               Edit book
             </button>
-            <button type='button' className='book-details-btn delete'>Delete book</button>
+            <button
+              type='button'
+              className='book-details-btn delete'
+              onClick={handleDeleteBook}
+            >
+              Delete book
+            </button>
           </div>
         </div>
       </div>
+      <DeleteBookDialog dialogRef={dialogRef} handleConfirm={removeBook} />
       {showModal &&
         <BookFormWrapper retrieveBook={retrieveBook} setRetrieveBook={setRetrieveBook} book={book} closeModal={handleCloseModal} />
       }
