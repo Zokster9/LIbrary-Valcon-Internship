@@ -79,6 +79,10 @@
   background-color: rgb(107, 194, 223);
 }
 
+.edit.mobile {
+  display: none;
+}
+
 .delete {
   background-color: red;
 }
@@ -117,5 +121,13 @@
 
   .book-details-admin-field {
     width: 100%;
+  }
+
+  .edit.mobile {
+    display: unset;
+  }
+
+  .edit.desktop {
+    display: none;
   }
 }

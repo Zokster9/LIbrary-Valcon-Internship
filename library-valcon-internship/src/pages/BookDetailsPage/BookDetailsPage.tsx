@@ -107,8 +107,15 @@ const BookDetailsPage = () => {
           <div className='book-details-admin-field'>
             <button
               type='button'
-              className='book-details-btn edit'
+              className='book-details-btn edit desktop'
               onClick={() => setShowModal(true)}
+            >
+              Edit book
+            </button>
+            <button
+              type='button'
+              className='book-details-btn edit mobile'
+              onClick={() => navigate(`/edit-book/${bookId ? bookId : ''}`)}
             >
               Edit book
             </button>
