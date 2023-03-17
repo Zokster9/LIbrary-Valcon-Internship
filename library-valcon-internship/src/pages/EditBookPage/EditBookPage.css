@@ -1,0 +1,13 @@
+.edit-book-page {
+  margin: 0 auto;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #555;
+  border-radius: 15px;
+  padding-inline: 3rem;
+  padding-bottom: 3rem;
+  padding-top: 2rem;
+}

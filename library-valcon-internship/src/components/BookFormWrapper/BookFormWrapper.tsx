@@ -1,5 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
+import { useNavigate } from 'react-router-dom'
+
 import AuthorFormType from '../../models/AuthorFormType'
 import AuthorFormValidation from '../../models/AuthorFormValidation'
 import BookDetail from '../../models/BookDetail'
@@ -8,12 +10,13 @@ import BookFormValidation from '../../models/BookFormValidation'
 import { addNewAuthor, getAllAuthors } from '../../services/AuthorService'
 import { addNewBook, editBook } from '../../services/BookService'
 import { convertAuthorsToAuthorDetails, convertBase64ToBlob } from '../../utils/Utils'
+import AuthorForm from '../AuthorForm/AuthorForm'
 import BookForm from '../BookForm/BookForm'
 import Modal from '../Modal/Modal'
 import './BookFormWrapper.css'
 
 interface BookFormWrapperProps {
-  closeModal: () => void
+  closeModal?: () => void
   book?: BookDetail
   retrieveBook?: boolean
   setRetrieveBook?: Dispatch<SetStateAction<boolean>>
@@ -49,6 +52,10 @@ const BookFormWrapper = ({ closeModal, book, retrieveBook,  setRetrieveBook }: B
     isLastNameValid: true,
     isAuthorDataValid: true
   })
+
+  const [ showAuthorModal, setShowAuthorModal ] = useState(false)
+  const navigate = useNavigate()
+  const handleShowAuthorModal = () => setShowAuthorModal(true)
 
   const fetchAuthors = () => {
     getAllAuthors()
@@ -144,7 +151,11 @@ const BookFormWrapper = ({ closeModal, book, retrieveBook,  setRetrieveBook }: B
         .then(() => {
           if (retrieveBook !== undefined && setRetrieveBook)
             setRetrieveBook(!retrieveBook)
-          closeModal()
+          if (closeModal) {
+            closeModal()
+          } else {
+            navigate(`/books/${book.Id}`)
+          }
         })
         .catch(() => {
           setBookFormValidation(bookFormValidation => {
@@ -157,7 +168,11 @@ const BookFormWrapper = ({ closeModal, book, retrieveBook,  setRetrieveBook }: B
     } else {
       addNewBook(formData)
         .then(() => {
-          closeModal()
+          if (closeModal) {
+            closeModal()
+          } else {
+            navigate('/')
+          }
         })
         .catch(() => {
           setBookFormValidation(bookFormValidation => {
@@ -195,6 +210,7 @@ const BookFormWrapper = ({ closeModal, book, retrieveBook,  setRetrieveBook }: B
           firstName: '',
           lastName: ''
         })
+        setShowAuthorModal(false)
       })
       .catch(() => {
         setAuthorFormValidation(authorFormValidation => {
@@ -207,21 +223,55 @@ const BookFormWrapper = ({ closeModal, book, retrieveBook,  setRetrieveBook }: B
   }
 
   return (
-    <Modal closeModal={closeModal} confirm={handleOnBookSubmit}>
-      <BookForm
-        bookForm={bookForm}
-        bookFormValidation={bookFormValidation}
-        authorForm={authorForm}
-        authorFormValidation={authorFormValidation}
-        setBookForm={setBookForm}
-        setBookFormValidation={setBookFormValidation}
-        setAuthorForm={setAuthorForm}
-        setAuthorFormValidation={setAuthorFormValidation}
-        handleOnBookSubmit={handleOnBookSubmit}
-        handleOnAuthorSubmit={handleOnAuthorSubmit}
-        title={book ? 'Edit book' : 'Create a book'}
-      />
-    </Modal>
+    <>
+      {
+        closeModal ?
+          <Modal closeModal={closeModal} confirm={handleOnBookSubmit}>
+            <BookForm
+              bookForm={bookForm}
+              bookFormValidation={bookFormValidation}
+              authorForm={authorForm}
+              authorFormValidation={authorFormValidation}
+              setBookForm={setBookForm}
+              setBookFormValidation={setBookFormValidation}
+              setAuthorForm={setAuthorForm}
+              setAuthorFormValidation={setAuthorFormValidation}
+              handleOnBookSubmit={handleOnBookSubmit}
+              handleOnAuthorSubmit={handleOnAuthorSubmit}
+              title={book ? 'Edit book' : 'Create a book'}
+            />
+          </Modal> :
+          <>
+            <BookForm
+              bookForm={bookForm}
+              bookFormValidation={bookFormValidation}
+              setBookForm={setBookForm}
+              setBookFormValidation={setBookFormValidation}
+              handleOnBookSubmit={handleOnBookSubmit}
+              title={book ? 'Edit book' : 'Create a book'}
+              handleShowAuthorModal={handleShowAuthorModal}
+            />
+            <button
+              className='book-wrapper-confirm-button'
+              type='button'
+              onClick={handleOnBookSubmit}
+            >
+              {book ? 'Confirm' : 'Create a book'}
+            </button>
+            {showAuthorModal &&
+          <Modal closeModal={() => { setShowAuthorModal(false) }} confirm={handleOnAuthorSubmit}>
+            <AuthorForm
+              authorForm={authorForm}
+              authorFormValidation={authorFormValidation}
+              setAuthorForm={setAuthorForm}
+              setAuthorFormValidation={setAuthorFormValidation}
+              title='Add an author'
+            />
+          </Modal>
+            }
+          </>
+      }
+    </>
   )
 }
 
