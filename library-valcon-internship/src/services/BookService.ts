@@ -56,8 +56,7 @@ export const addNewBook = async (formData: FormData) => {
   return axios.post(baseUrl + 'api/Books', formData)
 }
 
-export const getBookById = async (id: string | undefined) => {
-  if (!id) return Promise.reject()
+export const getBookById = async (id: string) => {
   return axios.get<BookDetail>(baseUrl + `api/Books/${id}`)
 }
 
@@ -65,7 +64,6 @@ export const editBook = async (formData: FormData) => {
   return axios.put(baseUrl + 'api/Books', formData)
 }
 
-export const deleteBook = async (id: string | undefined) => {
-  if (!id) return Promise.reject()
+export const deleteBook = async (id: string) => {
   return axios.delete(baseUrl + `api/Books/${id}`)
 }

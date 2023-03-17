@@ -27,11 +27,12 @@ const BookDetailsPage = () => {
   const token: Token = JSON.parse(stringToken ? stringToken : '') as Token
 
   useEffect(() => {
-    getBookById(bookId)
-      .then(response => {
-        setBook(response.data)
-      })
-      .catch(error => console.error(error))
+    if (bookId)
+      getBookById(bookId)
+        .then(response => {
+          setBook(response.data)
+        })
+        .catch(error => console.error(error))
   }, [ bookId, retrieveBook ])
 
   useEffect(() => {
@@ -52,13 +53,14 @@ const BookDetailsPage = () => {
   }
 
   const removeBook = () => {
-    deleteBook(bookId)
-      .then(() => {
-        navigate('/')
-      })
-      .catch(error => {
-        console.error(error)
-      })
+    if (bookId)
+      deleteBook(bookId)
+        .then(() => {
+          navigate('/')
+        })
+        .catch(error => {
+          console.error(error)
+        })
   }
 
   return (

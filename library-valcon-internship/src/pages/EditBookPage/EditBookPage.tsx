@@ -11,11 +11,12 @@ const EditBookPage = () => {
   const { bookId } = useParams()
   const [ book, setBook ] = useState<BookDetail>()
   useEffect(() => {
-    getBookById(bookId)
-      .then(response => {
-        setBook(response.data)
-      })
-      .catch(error => console.warn(error))
+    if (bookId)
+      getBookById(bookId)
+        .then(response => {
+          setBook(response.data)
+        })
+        .catch(error => console.warn(error))
   }, [ bookId ])
   return (
     <div className='edit-book-page'>
