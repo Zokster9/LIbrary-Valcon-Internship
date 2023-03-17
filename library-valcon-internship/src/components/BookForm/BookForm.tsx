@@ -64,99 +64,24 @@ const BookForm = ({
     }
   }
 
-  const handleOnChangeInput = (value: string, formProperty: string) => {
-    switch (formProperty) {
-      case 'Title':
-        setBookForm(bookForm => {
-          return {
-            ...bookForm,
-            title: value
-          }
-        })
-        break
-      case 'Description':
-        setBookForm(bookForm => {
-          return {
-            ...bookForm,
-            description: value
-          }
-        })
-        break
-      case 'Isbn':
-        setBookForm(bookForm => {
-          return {
-            ...bookForm,
-            isbn: value
-          }
-        })
-        break
-      case 'Release date':
-        setBookForm(bookForm => {
-          return {
-            ...bookForm,
-            releaseDate: new Date(value)
-          }
-        })
-        break
-      case 'Quantity':
-        setBookForm(bookForm => {
-          return {
-            ...bookForm,
-            quantity: value
-          }
-        })
-        break
-      default:
-        break
-    }
+  const handleOnChangeInput = (value: string, formProperty: keyof BookFormType) => {
+    setBookForm(bookForm => {
+      return {
+        ...bookForm,
+        [formProperty]: value
+      }
+    })
   }
-  const handleOnBlurInput = (formProperty: string) => {
-    switch (formProperty) {
-      case 'Title':
-        if (bookForm.title.trim() === '')
-          setBookFormValidation(bookFormValidation => {
-            return {
-              ...bookFormValidation,
-              isTitleValid: false
-            }
-          })
-        break
-      case 'Description':
-        if (bookForm.description.trim() === '')
-          setBookFormValidation(bookFormValidation => {
-            return {
-              ...bookFormValidation,
-              isDescriptionValid: false
-            }
-          })
-        break
-      case 'Release date':
-        if (!bookForm.releaseDate)
-          setBookFormValidation(bookFormValidation => {
-            return {
-              ...bookFormValidation,
-              isReleaseDateValid: false
-            }
-          })
-        break
-      case 'Isbn':
-        if (bookForm.isbn.trim() === '')
-          setBookFormValidation(bookFormValidation => {
-            return {
-              ...bookFormValidation,
-              isIsbnValid: false
-            }
-          })
-        break
-      case 'Quantity':
-        if (bookForm.quantity.trim() === '')
-          setBookFormValidation(bookFormValidation => {
-            return {
-              ...bookFormValidation,
-              isQuantityValid: false
-            }
-          })
-        break
+  const handleOnBlurInput = (formProperty: keyof BookFormType,
+    validationProperty: keyof BookFormValidation) => {
+    const formValue: string = bookForm[formProperty] as string
+    if (formValue.trim() === '') {
+      setBookFormValidation(bookFormValidation => {
+        return {
+          ...bookFormValidation,
+          [validationProperty]: false
+        }
+      })
     }
   }
 
@@ -207,9 +132,9 @@ const BookForm = ({
               placeholder='Enter title...'
               value={bookForm.title}
               onChange={({ currentTarget }: FormEvent<HTMLInputElement>) => {
-                handleOnChangeInput(currentTarget.value, 'Title')
+                handleOnChangeInput(currentTarget.value, 'title')
               }}
-              onBlur={() => handleOnBlurInput('Title')}
+              onBlur={() => handleOnBlurInput('title', 'isTitleValid')}
               onFocus={
                 () => {
                   setBookFormValidation(bookFormValidation => {
@@ -231,9 +156,9 @@ const BookForm = ({
               placeholder='Enter ISBN...'
               value={bookForm.isbn}
               onChange={({ currentTarget }: FormEvent<HTMLInputElement>) => {
-                handleOnChangeInput(currentTarget.value, 'Isbn')
+                handleOnChangeInput(currentTarget.value, 'isbn')
               }}
-              onBlur={() => handleOnBlurInput('Isbn')}
+              onBlur={() => handleOnBlurInput('isbn', 'isIsbnValid')}
               onFocus={
                 () => {
                   setBookFormValidation(bookFormValidation => {
@@ -260,9 +185,9 @@ const BookForm = ({
             placeholder='Enter description...'
             value={bookForm.description}
             onChange={({ currentTarget }: FormEvent<HTMLTextAreaElement>) => {
-              handleOnChangeInput(currentTarget.value, 'Description')
+              handleOnChangeInput(currentTarget.value, 'description')
             }}
-            onBlur={() => handleOnBlurInput('Description')}
+            onBlur={() => handleOnBlurInput('description', 'isDescriptionValid')}
             onFocus={
               () => {
                 setBookFormValidation(bookFormValidation => {
@@ -286,9 +211,9 @@ const BookForm = ({
               min={1}
               value={bookForm.quantity}
               onChange={({ currentTarget }: FormEvent<HTMLInputElement>) => {
-                handleOnChangeInput(currentTarget.value, 'Quantity')
+                handleOnChangeInput(currentTarget.value, 'quantity')
               }}
-              onBlur={() => handleOnBlurInput('Quantity')}
+              onBlur={() => handleOnBlurInput('quantity', 'isQuantityValid')}
               onFocus={
                 () => {
                   setBookFormValidation(bookFormValidation => {
@@ -308,9 +233,9 @@ const BookForm = ({
               }
               type='date'
               onChange={({ currentTarget }: FormEvent<HTMLInputElement>) => {
-                handleOnChangeInput(currentTarget.value, 'Release date')
+                handleOnChangeInput(currentTarget.value, 'releaseDate')
               }}
-              onBlur={() => handleOnBlurInput('Release date')}
+              onBlur={() => handleOnBlurInput('releaseDate', 'isReleaseDateValid')}
               onFocus={
                 () => {
                   setBookFormValidation(bookFormValidation => {
