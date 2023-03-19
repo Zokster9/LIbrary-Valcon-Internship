@@ -69,6 +69,18 @@
   white-space: nowrap;
 }
 
+.book-card-title--hide {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.book-card-description--hide {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 @media (max-width: 400px) {
   .book-card {
     justify-content: unset;

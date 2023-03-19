@@ -3,11 +3,12 @@ import { Dispatch, FormEvent, SetStateAction, SyntheticEvent, useRef, useState }
 import Select, { MultiValue } from 'react-select'
 
 import placeholderBook from '../../assets/icons/placeholder-book.png'
-import AuthorDetail from '../../models/AuthorDetail'
+import Author from '../../models/Author'
 import AuthorFormType from '../../models/AuthorFormType'
 import AuthorFormValidation from '../../models/AuthorFormValidation'
 import BookFormType from '../../models/BookFormType'
 import BookFormValidation from '../../models/BookFormValidation'
+import { setDefaultCoverValue } from '../../utils/Utils'
 import AuthorForm from '../AuthorForm/AuthorForm'
 import './BookForm.css'
 
@@ -31,6 +32,7 @@ const BookForm = ({
   setBookForm, setBookFormValidation, setAuthorForm, setAuthorFormValidation,
   handleOnAuthorSubmit, handleOnBookSubmit, title, handleShowAuthorModal
 }: BookFormProps) => {
+  const [ cover, setCover ] = useState(setDefaultCoverValue(bookForm.requestCover))
   const hiddenFileInput = useRef<HTMLInputElement>(null)
   const [ showAccordion, setShowAccordion ] = useState(false)
 
@@ -53,12 +55,7 @@ const BookForm = ({
         reader.onloadend = function () {
           const base64data = reader.result
           if (base64data)
-            setBookForm(bookForm => {
-              return {
-                ...bookForm,
-                cover: base64data as string
-              }
-            })
+            setCover(base64data as string)
         }
       }
     }
@@ -85,11 +82,11 @@ const BookForm = ({
     }
   }
 
-  const handleOnSelectedAuthorsChange = (authorsData: MultiValue<AuthorDetail>) => {
+  const handleOnSelectedAuthorsChange = (authorsData: MultiValue<Author>) => {
     setBookForm(bookForm => {
       return {
         ...bookForm,
-        selectedAuthors: authorsData as AuthorDetail[]
+        selectedAuthors: authorsData as Author[]
       }
     })
   }
@@ -103,7 +100,7 @@ const BookForm = ({
           <button className='book-placeholder' type='button' onClick={handleCoverClick}>
             <img
               className='book-cover'
-              src={bookForm.cover ? bookForm.cover : placeholderBook}
+              src={cover ? cover : placeholderBook}
               alt='placeholder-book'
             />
           </button>
@@ -257,8 +254,8 @@ const BookForm = ({
                   'book-author-select'
               }
               options={bookForm.authors}
-              getOptionLabel={(option: AuthorDetail) => `${option.Firstname} ${option.Lastname}`}
-              getOptionValue={(option: AuthorDetail) => option.Id.toString()}
+              getOptionLabel={(option: Author) => `${option.FirstName} ${option.LastName}`}
+              getOptionValue={(option: Author) => option.Id.toString()}
               value={bookForm.selectedAuthors}
               onChange={handleOnSelectedAuthorsChange}
               onFocus={
