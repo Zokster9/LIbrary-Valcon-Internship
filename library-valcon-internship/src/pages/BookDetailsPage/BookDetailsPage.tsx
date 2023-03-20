@@ -7,6 +7,7 @@ import placeholder from '../../assets/icons/placeholder-book.png'
 import BookAvailableMessage from '../../components/BookAvailableMessage/BookAvailableMessage'
 import BookFormWrapper from '../../components/BookFormWrapper/BookFormWrapper'
 import DeleteBookDialog from '../../components/DeleteBookDialog/DeleteBookDialog'
+import RentHistoryTable from '../../components/RentHistoryTable/RentHistoryTable'
 import Book from '../../models/Book'
 import Token from '../../models/Token'
 import { deleteBook, getBookById } from '../../services/BookService'
@@ -170,6 +171,7 @@ const BookDetailsPage = () => {
       {showModal &&
         <BookFormWrapper retrieveBook={retrieveBook} setRetrieveBook={setRetrieveBook} book={book} closeModal={handleCloseModal} />
       }
+      <RentHistoryTable bookId={bookId} />
     </div>
   )
 }
