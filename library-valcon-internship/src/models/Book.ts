@@ -10,4 +10,5 @@ export default interface Book {
   Cover: string
   PublishDate: Date
   Authors: Author[]
+  RentCount?: number
 }
