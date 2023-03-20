@@ -7,15 +7,15 @@ import placeholder from '../../assets/icons/placeholder-book.png'
 import BookAvailableMessage from '../../components/BookAvailableMessage/BookAvailableMessage'
 import BookFormWrapper from '../../components/BookFormWrapper/BookFormWrapper'
 import DeleteBookDialog from '../../components/DeleteBookDialog/DeleteBookDialog'
-import BookDetail from '../../models/BookDetail'
+import Book from '../../models/Book'
 import Token from '../../models/Token'
 import { deleteBook, getBookById } from '../../services/BookService'
 import { rentBook } from '../../services/RentService'
-import { convertAuthorDetailsToArrayString, convertDateToString } from '../../utils/Utils'
+import { convertAuthorsToArrayString, convertBookIdResponseToBook, convertDateToString } from '../../utils/Utils'
 import './BookDetailsPage.css'
 
 const BookDetailsPage = () => {
-  const [ book, setBook ] = useState<BookDetail>()
+  const [ book, setBook ] = useState<Book>()
   const [ publishDate, setPublishDate ] = useState('')
   const [ authors, setAuthors ] = useState('')
   const [ showModal, setShowModal ] = useState(false)
@@ -31,21 +31,23 @@ const BookDetailsPage = () => {
   const token: Token = JSON.parse(stringToken ? stringToken : '') as Token
 
   useEffect(() => {
-    getBookById(bookId)
-      .then(response => {
-        setBook(response.data)
-      })
-      .catch(error => console.error(error))
+    if (bookId)
+      getBookById(bookId)
+        .then(response => {
+          setBook(convertBookIdResponseToBook(response.data))
+        })
+        .catch(error => console.error(error))
   }, [ bookId, retrieveBook ])
 
   useEffect(() => {
     if (book) {
       setPublishDate(convertDateToString(book.PublishDate))
-      setAuthors(convertAuthorDetailsToArrayString(book.Authors))
+      setAuthors(convertAuthorsToArrayString(book.Authors))
     }
   }, [ book ])
 
   const handleCloseModal = () => setShowModal(false)
+
   const handleDeleteBook = () => {
     if (book?.Quantity === book?.Available) {
       if (dialogRef)
@@ -71,13 +73,14 @@ const BookDetailsPage = () => {
   }
 
   const removeBook = () => {
-    deleteBook(bookId)
-      .then(() => {
-        navigate('/')
-      })
-      .catch(error => {
-        console.error(error)
-      })
+    if (bookId)
+      deleteBook(bookId)
+        .then(() => {
+          navigate('/')
+        })
+        .catch(error => {
+          console.error(error)
+        })
   }
 
   return (
@@ -112,7 +115,7 @@ const BookDetailsPage = () => {
           <div className='book-details-fields'>
             <div className='book-details-field'>
               <label className='book-details-label'>ISBN</label>
-              <h3>{book?.ISBN}</h3>
+              <h3>{book?.Isbn}</h3>
             </div>
             <div className='book-details-field'>
               <label className='book-details-label'>Publish date</label>

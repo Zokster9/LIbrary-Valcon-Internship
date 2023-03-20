@@ -63,7 +63,19 @@
   align-self: center;
 }
 
-.hide {
+.book-card-info-content--hide {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.book-card-title--hide {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.book-card-description--hide {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;

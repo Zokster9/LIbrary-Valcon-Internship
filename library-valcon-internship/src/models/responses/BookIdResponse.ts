@@ -1,6 +1,6 @@
-import AuthorDetail from './AuthorDetail'
+import AuthorIdResponse from './AuthorIdResponse'
 
-export default interface BookDetail {
+export default interface BookIdResponse {
   Id: number
   Title: string
   Description: string
@@ -9,5 +9,5 @@ export default interface BookDetail {
   Available: number
   Cover: string
   PublishDate: string
-  Authors: AuthorDetail[]
+  Authors: AuthorIdResponse[]
 }

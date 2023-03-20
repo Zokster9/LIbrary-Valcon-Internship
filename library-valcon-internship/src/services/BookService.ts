@@ -1,14 +1,9 @@
 import axios from 'axios'
 
-import Book from '../models/Book'
-import BookDetail from '../models/BookDetail'
+import BookIdResponse from '../models/responses/BookIdResponse'
+import BooksPagedResponse from '../models/responses/BooksPagedResponse'
 import Where from '../models/Where'
 import { baseUrl } from './AxiosConfiguration'
-
-interface BooksResponse {
-  Items: Book[],
-  TotalCount: number
-}
 
 interface GetBooksProps {
   pageNumber: number,
@@ -45,7 +40,7 @@ const convertParamsToQueryString = ({ pageNumber, pageLength, search, filter, so
 }
 
 export const getBooks = async ({ pageNumber, pageLength, search, filter, sort }: GetBooksProps) => {
-  return axios.get<BooksResponse>(baseUrl + 'api/Books/paged' + convertParamsToQueryString(
+  return axios.get<BooksPagedResponse>(baseUrl + 'api/Books/paged' + convertParamsToQueryString(
     {
       pageNumber, pageLength, search, filter, sort
     }
@@ -56,16 +51,14 @@ export const addNewBook = async (formData: FormData) => {
   return axios.post(baseUrl + 'api/Books', formData)
 }
 
-export const getBookById = async (id: string | undefined) => {
-  if (!id) return Promise.reject()
-  return axios.get<BookDetail>(baseUrl + `api/Books/${id}`)
+export const getBookById = async (id: string) => {
+  return axios.get<BookIdResponse>(baseUrl + `api/Books/${id}`)
 }
 
 export const editBook = async (formData: FormData) => {
   return axios.put(baseUrl + 'api/Books', formData)
 }
 
-export const deleteBook = async (id: string | undefined) => {
-  if (!id) return Promise.reject()
+export const deleteBook = async (id: string) => {
   return axios.delete(baseUrl + `api/Books/${id}`)
 }

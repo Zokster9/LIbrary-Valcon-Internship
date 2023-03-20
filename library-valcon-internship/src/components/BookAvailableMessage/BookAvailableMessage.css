@@ -4,10 +4,10 @@
   padding: 1rem;
 }
 
-.available {
+.book-is-available {
   background-color: green;
 }
 
-.unavailable {
+.book-is-unavailable {
   background-color: red;
 }
