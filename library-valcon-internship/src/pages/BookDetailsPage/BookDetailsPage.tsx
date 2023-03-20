@@ -10,6 +10,7 @@ import DeleteBookDialog from '../../components/DeleteBookDialog/DeleteBookDialog
 import BookDetail from '../../models/BookDetail'
 import Token from '../../models/Token'
 import { deleteBook, getBookById } from '../../services/BookService'
+import { rentBook } from '../../services/RentService'
 import { convertAuthorDetailsToArrayString, convertDateToString } from '../../utils/Utils'
 import './BookDetailsPage.css'
 
@@ -22,6 +23,9 @@ const BookDetailsPage = () => {
   const { bookId } = useParams()
   const navigate = useNavigate()
   const notifyBookCantBeDeleted = () => toast.warn('Book cannot be deleted! Return the books first')
+  const notifyBookCantBeRented = () => toast.warn('Book cannot be rented! There are no available copies!')
+  const notifyBookRented = () => toast.success('Book successfully rented!')
+  const notifyBookRentFailed = () => toast.error('Something went wrong!')
   const dialogRef = createRef<HTMLDialogElement>()
   const stringToken = localStorage.getItem('token')
   const token: Token = JSON.parse(stringToken ? stringToken : '') as Token
@@ -48,6 +52,21 @@ const BookDetailsPage = () => {
         dialogRef.current?.showModal()
     } else {
       notifyBookCantBeDeleted()
+    }
+  }
+  const handleRentBook = () => {
+    if (!bookId) return
+    if (book?.Available !== 0) {
+      rentBook(bookId)
+        .then(() => {
+          setRetrieveBook(!retrieveBook)
+          notifyBookRented()
+        })
+        .catch(() => {
+          notifyBookRentFailed()
+        })
+    } else {
+      notifyBookCantBeRented()
     }
   }
 
@@ -110,6 +129,7 @@ const BookDetailsPage = () => {
               <button
                 type='button'
                 className='book-details-btn rent'
+                onClick={handleRentBook}
               >
                 Rent the book
               </button>
