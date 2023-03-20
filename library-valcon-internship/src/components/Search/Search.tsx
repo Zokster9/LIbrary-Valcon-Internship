@@ -7,9 +7,9 @@ import { VscFilter } from 'react-icons/vsc'
 import Filter from '../../models/Filter'
 import Sort from '../../models/Sort'
 import Where from '../../models/Where'
-import Modal from '../Modals/Modal'
-import ModalFilter from '../Modals/ModalFilter/ModalFilter'
-import ModalSort from '../Modals/ModalSort/ModalSort'
+import FilterForm from '../FilterForm/FilterForm'
+import Modal from '../Modal/Modal'
+import SortForm from '../SortForm/SortForm'
 import './Search.css'
 
 interface SearchProps {
@@ -119,8 +119,8 @@ const Search = ({ isSearchVisible, setSearch, setFilter, setSort }: SearchProps)
       <BsSortDown className='icon' onClick={handleShowSortToggle} title='Sort' />
       {showModal &&
         <Modal closeModal={handleCloseModals} confirm={handleConfirm} >
-          {showFilter && <ModalFilter filterForm={filterForm} setFilterForm={setFilterForm} />}
-          {showSort && <ModalSort sortForm={sortForm} setSortForm={setSortForm} />}
+          {showFilter && <FilterForm filterForm={filterForm} setFilterForm={setFilterForm} />}
+          {showSort && <SortForm sortForm={sortForm} setSortForm={setSortForm} />}
         </Modal>
       }
     </div>

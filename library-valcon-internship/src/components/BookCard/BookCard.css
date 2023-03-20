@@ -1,7 +1,6 @@
 .book-card {
   display: flex;
   flex-flow: column;
-  margin: 5rem;
   width: 20%;
   padding: 1rem;
   border: 1px solid black;
@@ -11,9 +10,16 @@
   box-shadow: 5px 0 20px 2px #666;
   transition: box-shadow 0.2s ease-in-out, opacity 0.2s ease-in-out;
   justify-content: space-evenly;
+  cursor: pointer;
 }
 
 .book-card:active {
+  opacity: 0.8;
+  box-shadow: 0 0 30px 30px #666;
+  transition: box-shadow 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+
+.book-card:hover {
   opacity: 0.8;
   box-shadow: 0 0 30px 30px #666;
   transition: box-shadow 0.2s ease-in-out, opacity 0.2s ease-in-out;
@@ -24,6 +30,20 @@
   object-fit: fill;
   align-self: center;
   aspect-ratio: 4 / 3;
+}
+
+.book-card-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-variant: small-caps;
+}
+
+.book-card-description {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
 }
 
 .book-card-info {
@@ -43,7 +63,19 @@
   align-self: center;
 }
 
-.book-card-info-content.hide {
+.book-card-info-content--hide {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.book-card-title--hide {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.book-card-description--hide {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;

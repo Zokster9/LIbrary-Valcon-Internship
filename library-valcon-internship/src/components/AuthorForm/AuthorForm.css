@@ -1,6 +1,7 @@
 .add-author-form {
   display: flex;
   flex-flow: column;
+  color: white;
 }
 
 .add-author-form-field {
@@ -12,25 +13,8 @@
 
 .add-author-button {
   background-color: rgb(199, 149, 10);
-}
-
-.modal-btn {
-  color: white;
-  border-radius: 10px;
-  padding-block: 7px;
-  padding-inline: 12px;
-  font-size: 14px;
-}
-
-.modal-btns {
-  display: flex;
-  flex-flow: row;
-  justify-content: space-around;
-  width: 200px;
-}
-
-.author-modal-message {
-  display: none;
+  margin-bottom: 5px;
+  cursor: pointer;
 }
 
 .error-author-modal {
@@ -48,10 +32,40 @@
   align-items: center;
 }
 
+.modal-btn {
+  color: white;
+  border-radius: 10px;
+  padding-block: 7px;
+  padding-inline: 12px;
+  font-size: 14px;
+}
+
 .add-author-error-label {
   color: red;
 }
 
 .add-author-error-input {
   border: 2px solid red;
+}
+
+.author-modal-message {
+  display: none;
+}
+
+@media (max-width: 400px) {
+  .add-author-header {
+    font-size: 18px;
+  }
+
+  .add-author-form {
+    color: black;
+  }
+  
+  .add-author-button-field {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-end;
+    text-align: center;
+    align-items: center;
+  }
 }

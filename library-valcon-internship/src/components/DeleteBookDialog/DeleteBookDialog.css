@@ -1,0 +1,28 @@
+.delete-dialog {
+  text-align: center;
+  border-radius: 15px;
+}
+
+.delete-dialog-btns {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 3rem;
+}
+
+.delete-dialog-btn {
+  border-radius: 15px;
+  color: white;
+  padding: 1rem;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.delete-dialog-btn.confirm {
+  background-color: green;
+}
+
+.delete-dialog-btn.close {
+  background-color: white;
+  color:tomato
+}

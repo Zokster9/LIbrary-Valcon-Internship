@@ -8,6 +8,7 @@ import BookList from '../../components/BookList/BookList'
 import Book from '../../models/Book'
 import Where from '../../models/Where'
 import { getBooks } from '../../services/BookService'
+import { convertBooksPagedResponseToBooks } from '../../utils/Utils'
 import './HomePage.css'
 
 interface HomePageProps {
@@ -38,6 +39,7 @@ const HomePage = ({ search, filter, sort }: HomePageProps) => {
       .then(response => {
         const totalNumOfBooks = response.data.TotalCount
         const currentCount = pageNumber * pageLength
+        const newBooks = convertBooksPagedResponseToBooks(response.data.Items)
         setHasMoreBooks((totalNumOfBooks - currentCount) > 0)
         setPage(page => {
           return {
@@ -45,7 +47,7 @@ const HomePage = ({ search, filter, sort }: HomePageProps) => {
             totalCount: totalNumOfBooks
           }
         })
-        setBooks(prevBooks => [ ...prevBooks, ...response.data.Items ])
+        setBooks(prevBooks => [ ...prevBooks, ...newBooks ])
       })
       .catch(() => {
         setBooks([])

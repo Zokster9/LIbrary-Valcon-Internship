@@ -1,0 +1,13 @@
+.available-message {
+  border-radius: 15px;
+  color: white;
+  padding: 1rem;
+}
+
+.book-is-available {
+  background-color: green;
+}
+
+.book-is-unavailable {
+  background-color: red;
+}

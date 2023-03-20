@@ -1,26 +1,9 @@
-.modal {
-  overflow-y: auto;
-}
-
-.content {
-  padding: 12px 12px;
-}
-
-.add-book-modal {
-  margin: 0 auto;
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.add-book-form {
+.book-form {
   display: flex;
   flex-flow: column;
 }
 
-.add-book-form-fields {
+.book-form-fields {
   display: flex;
   flex-flow: row;
   justify-content: space-around;
@@ -29,7 +12,7 @@
   margin-bottom: 1rem;
 }
 
-.add-book-form-field {
+.book-form-field {
   display: flex;
   flex-flow: column;
   align-items: center;
@@ -37,7 +20,7 @@
   font-size: 18px;
 }
 
-.add-book-placeholder {
+.book-placeholder {
   all: unset;
   background-color: white;
   cursor: pointer;
@@ -46,88 +29,69 @@
 .book-cover {
   height: 200px;
   width: 200px;
-  object-fit: cover;
+  object-fit: fill;
 }
 
-.add-book-input {
+.book-input {
   width: 220px;
   height: 25px;
   font-size: 15px;
 }
 
-.add-book-error-label {
+.book-error-label {
   color: red;
 }
 
-.add-book-error-input {
+.book-error-input {
   border: 2px solid red;
 }
 
-.add-book-text-area {
+.book-text-area {
   font-size: 14px;
   width: 525px;
 }
 
-.add-book-author-select {
+.book-author-select {
   color: #444;
   width: 220px;
   max-width: 220px;
 }
 
-.add-book-accordion {
+.book-accordion {
   width: 200px;
   cursor: pointer;
 }
 
-.add-book-accordion-item {
+.book-accordion-item {
   background-color: #444;
 }
 
-.add-book-accordion-title {
+.book-accordion-title {
   color: whitesmoke;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
 
-.add-book-accordion-content {
+.book-accordion-content {
   max-height: 0;
   overflow: hidden;
   transition: all 0.5s cubic-bezier(0, 1, 0, 1);
 }
 
-.add-book-accordion-content.show {
+.book-accordion-content.show {
   height: auto;
   max-height: 9999px;
   transition: all 0.5s cubic-bezier(0, 1, 0, 1);
 }
 
-.add-author-form {
-  display: flex;
-  flex-flow: column;
-  color: white;
-}
-
-.add-author-form-field {
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.add-author-button {
-  background-color: rgb(199, 149, 10);
-  margin-bottom: 5px;
-  cursor: pointer;
-}
-
-.add-book-btns {
+.book-btns {
   display: flex;
   justify-content: flex-end;
   width: 100%;
 }
 
-.add-book-btn {
+.book-btn {
   color: white;
   border-radius: 10px;
   padding-block: 7px;
@@ -144,24 +108,74 @@
 .submit-book-btn {
   flex-grow: 1;
   justify-items: center;
-  margin-left: 4rem;
 }
 
-.add-book-submit-area {
+.book-submit-area {
   margin-top: 2rem;
   display: flex;
   flex-flow: column;
   justify-content: flex-end;
   align-items: center;
-  height: 5rem;
+  height: 2rem;
 }
 
-.add-book-error-message {
+.book-error-message {
   color: red;
   margin-bottom: 1rem;
   font-size: 16px;
 }
 
-.add-book-error-message.hidden {
+.book-error-message.hidden {
   display: none;
+}
+
+.author-add-btn {
+  display: none;
+}
+
+@media (max-width: 400px) {
+  .book-header {
+    color: whitesmoke;
+  }
+
+  .book-form {
+    color: white;
+  }
+
+  .book-accordion {
+    display: none;
+  }
+
+  .book-form-fields {
+    all: unset;
+  }
+
+  .author-add-btn {
+    display: inline;
+    border-style: none;
+    margin-top: 10px;
+    border-radius: 15px;
+    font-size: 14px;
+    background-color: #D5BF81;
+    color: #666;
+  }
+
+  .book-form-field {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 16px;
+  }
+
+  .book-author-select {
+    color: #444;
+    width: 220px;
+    max-width: 220px;
+  }
+
+  .book-text-area {
+    font-size: 14px;
+    width: 220px;
+  }
 }

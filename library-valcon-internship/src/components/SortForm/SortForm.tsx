@@ -1,12 +1,12 @@
 import { createRef, Dispatch, RefObject, SetStateAction, useState } from 'react'
 
 
-import Sort from '../../../models/Sort'
-import SortIconButtons from '../../SortIconButtons/SortIconButtons'
-import SortRadioButtons from '../../SortRadioButtons/SortRadioButtons'
-import './ModalSort.css'
+import Sort from '../../models/Sort'
+import SortIconButtons from '../SortIconButtons/SortIconButtons'
+import SortRadioButtons from '../SortRadioButtons/SortRadioButtons'
+import './SortForm.css'
 
-interface ModalSortProps {
+interface SortFormProps {
   sortForm: Sort
   setSortForm: Dispatch<SetStateAction<Sort>>
 }
@@ -33,7 +33,7 @@ interface RadioButtons {
   descriptionDesc: RefObject<HTMLInputElement>
 }
 
-const ModalSort = ({ sortForm, setSortForm }: ModalSortProps) => {
+const SortForm = ({ sortForm, setSortForm }: SortFormProps) => {
 
   const [ whichRadioButtonsClicked, setWhichRadioButtonsClicked ] = useState<RadioButtonsClicked>({
     isTitleAscClicked: sortForm.titleSort === 'Title ASC',
@@ -205,4 +205,4 @@ const ModalSort = ({ sortForm, setSortForm }: ModalSortProps) => {
   )
 }
 
-export default ModalSort
+export default SortForm
