@@ -1,6 +1,9 @@
 import Author from '../models/Author'
+import AuthorFormType from '../models/AuthorFormType'
+import AuthorFormValidation from '../models/AuthorFormValidation'
 import Book from '../models/Book'
 import BookFormType from '../models/BookFormType'
+import BookFormValidation from '../models/BookFormValidation'
 import AuthorIdResponse from '../models/responses/AuthorIdResponse'
 import AuthorPagedResponse from '../models/responses/AuthorPagedResponse'
 import BookIdResponse from '../models/responses/BookIdResponse'
@@ -109,5 +112,32 @@ export const initBookForm = (book: Book | undefined): BookFormType => {
       selectedAuthors: [],
       authors: []
     }
+  }
+}
+
+export const initBookFormValidation = (): BookFormValidation => {
+  return {
+    isTitleValid: true,
+    isDescriptionValid: true,
+    isIsbnValid: true,
+    isQuantityValid: true,
+    isReleaseDateValid: true,
+    isSelectedAuthorsValid: true,
+    isDataValid: true
+  }
+}
+
+export const initAuthorForm = (): AuthorFormType => {
+  return {
+    firstName: '',
+    lastName: ''
+  }
+}
+
+export const initAuthorFormValidation = (): AuthorFormValidation => {
+  return {
+    isFirstNameValid: true,
+    isLastNameValid: true,
+    isAuthorDataValid: true
   }
 }

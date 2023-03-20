@@ -9,7 +9,7 @@ import BookFormType from '../../models/BookFormType'
 import BookFormValidation from '../../models/BookFormValidation'
 import { addNewAuthor, getAllAuthors } from '../../services/AuthorService'
 import { addNewBook, editBook } from '../../services/BookService'
-import { BASE_64_EXTENSION, convertBase64ToBlob, initBookForm } from '../../utils/Utils'
+import { BASE_64_EXTENSION, convertBase64ToBlob, initAuthorForm, initAuthorFormValidation, initBookForm, initBookFormValidation } from '../../utils/Utils'
 import AuthorForm from '../AuthorForm/AuthorForm'
 import BookForm from '../BookForm/BookForm'
 import Modal from '../Modal/Modal'
@@ -24,24 +24,9 @@ interface BookFormWrapperProps {
 
 const BookFormWrapper = ({ closeModal, book, retrieveBook,  setRetrieveBook }: BookFormWrapperProps) => {
   const [ bookForm, setBookForm ] = useState<BookFormType>(initBookForm(book))
-  const [ bookFormValidation, setBookFormValidation ] = useState<BookFormValidation>({
-    isTitleValid: true,
-    isDescriptionValid: true,
-    isIsbnValid: true,
-    isQuantityValid: true,
-    isReleaseDateValid: true,
-    isSelectedAuthorsValid: true,
-    isDataValid: true
-  })
-  const [ authorForm, setAuthorForm ] = useState<AuthorFormType>({
-    firstName: '',
-    lastName: ''
-  })
-  const [ authorFormValidation, setAuthorFormValidation ] = useState<AuthorFormValidation>({
-    isFirstNameValid: true,
-    isLastNameValid: true,
-    isAuthorDataValid: true
-  })
+  const [ bookFormValidation, setBookFormValidation ] = useState<BookFormValidation>(initBookFormValidation())
+  const [ authorForm, setAuthorForm ] = useState<AuthorFormType>(initAuthorForm())
+  const [ authorFormValidation, setAuthorFormValidation ] = useState<AuthorFormValidation>(initAuthorFormValidation())
 
   const [ showAuthorModal, setShowAuthorModal ] = useState(false)
   const navigate = useNavigate()
