@@ -154,3 +154,9 @@ export const initAuthorFormValidation = (): AuthorFormValidation => {
     isAuthorDataValid: true
   }
 }
+
+export const getBookRentLastUserId = (bookRentHistories: BookRentHistory[]): number => {
+  return bookRentHistories
+    .filter(bookRentHistory => !bookRentHistory.IsReturned)
+    .reverse()[0].User.Id
+}

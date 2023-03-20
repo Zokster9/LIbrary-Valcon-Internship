@@ -21,6 +21,7 @@ const BookDetailsPage = () => {
   const [ authors, setAuthors ] = useState('')
   const [ showModal, setShowModal ] = useState(false)
   const [ retrieveBook, setRetrieveBook ] = useState(false)
+  const [ retrieveBookHistory, setRetrieveBookHistory ] = useState(false)
   const { bookId } = useParams()
   const navigate = useNavigate()
   const notifyBookCantBeDeleted = () => toast.warn('Book cannot be deleted! Return the books first')
@@ -63,6 +64,7 @@ const BookDetailsPage = () => {
       rentBook(bookId)
         .then(() => {
           setRetrieveBook(!retrieveBook)
+          setRetrieveBookHistory(!retrieveBookHistory)
           notifyBookRented()
         })
         .catch(() => {
@@ -171,7 +173,15 @@ const BookDetailsPage = () => {
       {showModal &&
         <BookFormWrapper retrieveBook={retrieveBook} setRetrieveBook={setRetrieveBook} book={book} closeModal={handleCloseModal} />
       }
-      <RentHistoryTable bookId={bookId} />
+      {
+        token.Role !== 'User' &&
+        <RentHistoryTable
+          bookId={bookId}
+          retrieveBook={retrieveBook}
+          setRetrieveBook={setRetrieveBook}
+          retrieveBookHistory={retrieveBookHistory}
+        />
+      }
     </div>
   )
 }
