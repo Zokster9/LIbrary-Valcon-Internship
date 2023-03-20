@@ -43,6 +43,7 @@ const BookDetailsPage = () => {
   }, [ book ])
 
   const handleCloseModal = () => setShowModal(false)
+
   const handleDeleteBook = () => {
     if (book?.Quantity === book?.Available) {
       if (dialogRef)
