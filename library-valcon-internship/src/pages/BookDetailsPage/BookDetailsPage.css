@@ -60,7 +60,7 @@
   font-weight: bold;
 }
 
-.book-details-admin-field {
+.book-details-actions-field {
   display: flex;
   width: 50%;
   justify-content: space-around;
@@ -85,6 +85,10 @@
 
 .delete {
   background-color: red;
+}
+
+.rent {
+  background-color: rgb(199, 149, 10);
 }
 
 @media (max-width: 400px) {

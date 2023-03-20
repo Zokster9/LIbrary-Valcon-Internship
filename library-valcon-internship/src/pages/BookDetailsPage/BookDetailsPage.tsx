@@ -104,28 +104,42 @@ const BookDetailsPage = () => {
             <label className='book-details-label'>Authors</label>
             <h3>{authors}</h3>
           </div>
-          <div className='book-details-admin-field'>
-            <button
-              type='button'
-              className='book-details-btn edit desktop'
-              onClick={() => setShowModal(true)}
-            >
-              Edit book
-            </button>
-            <button
-              type='button'
-              className='book-details-btn edit mobile'
-              onClick={() => navigate(`/edit-book/${bookId ? bookId : ''}`)}
-            >
-              Edit book
-            </button>
-            <button
-              type='button'
-              className='book-details-btn delete'
-              onClick={handleDeleteBook}
-            >
-              Delete book
-            </button>
+          <div className='book-details-actions-field'>
+            {
+              token.Role !== 'Librarian' &&
+              <button
+                type='button'
+                className='book-details-btn rent'
+              >
+                Rent the book
+              </button>
+            }
+            {
+              token.Role !== 'User' &&
+              <>
+                <button
+                  type='button'
+                  className='book-details-btn edit desktop'
+                  onClick={() => setShowModal(true)}
+                >
+                Edit book
+                </button>
+                <button
+                  type='button'
+                  className='book-details-btn edit mobile'
+                  onClick={() => navigate(`/edit-book/${bookId ? bookId : ''}`)}
+                >
+                  Edit book
+                </button>
+                <button
+                  type='button'
+                  className='book-details-btn delete'
+                  onClick={handleDeleteBook}
+                >
+                  Delete book
+                </button>
+              </>
+            }
           </div>
         </div>
       </div>
