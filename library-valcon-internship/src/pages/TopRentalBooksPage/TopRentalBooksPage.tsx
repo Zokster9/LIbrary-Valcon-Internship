@@ -6,7 +6,6 @@ import BookList from '../../components/BookList/BookList'
 import Book from '../../models/Book'
 import { getTopRentalBooks } from '../../services/RentService'
 import { convertTopRentalBooksToBooks } from '../../utils/Utils'
-import './TopRentalBooksPage.css'
 
 const TopRentalBooksPage = () => {
   const [ books, setBooks ] = useState<Book[]>([])
