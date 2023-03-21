@@ -10,6 +10,7 @@ import AuthorPagedResponse from '../models/responses/AuthorPagedResponse'
 import BookIdResponse from '../models/responses/BookIdResponse'
 import BookPagedResponse from '../models/responses/BookPagedResponse'
 import BookRentHistoryResponse from '../models/responses/BookRentHistoryResponse'
+import TopBookRentalsResponse from '../models/responses/TopBookRentalsResponse'
 
 export const BASE_64_EXTENSION = 'data:image/png;base64,'
 
@@ -159,4 +160,21 @@ export const getBookRentLastUserId = (bookRentHistories: BookRentHistory[]): num
   return bookRentHistories
     .filter(bookRentHistory => !bookRentHistory.IsReturned)
     .reverse()[0].User.Id
+}
+
+export const convertTopRentalBooksToBooks = (topRentalBooks: TopBookRentalsResponse[]): Book[] => {
+  return topRentalBooks.map(topRentalBook => {
+    return {
+      Id: topRentalBook.Id,
+      Title: topRentalBook.Title,
+      Description: topRentalBook.Description,
+      Cover: topRentalBook.Cover,
+      Isbn: topRentalBook.ISBN,
+      PublishDate: new Date(topRentalBook.PublishDate),
+      Quantity: 0,
+      Available: 0,
+      Authors: [],
+      RentCount: topRentalBook.RentCount
+    }
+  })
 }

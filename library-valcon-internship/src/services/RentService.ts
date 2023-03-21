@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import BookRentHistoryResponse from '../models/responses/BookRentHistoryResponse'
+import TopBookRentalsResponse from '../models/responses/TopBookRentalsResponse'
 import { baseUrl } from './AxiosConfiguration'
 
 export const rentBook = async (bookId: string) => {
@@ -13,4 +14,8 @@ export const getBookRentHistory = async (bookId: string) => {
 
 export const returnBook = async (bookId: string, userId: number) => {
   return axios.post(`${baseUrl}api/Rental/return/${bookId}/${userId}`)
+}
+
+export const getTopRentalBooks = async (count: number) => {
+  return axios.get<TopBookRentalsResponse[]>(`${baseUrl}api/Rental/top/${count}`)
 }

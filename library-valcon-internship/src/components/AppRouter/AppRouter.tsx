@@ -8,6 +8,7 @@ import CreateBookPage from '../../pages/CreateBookPage/CreateBookPage'
 import EditBookPage from '../../pages/EditBookPage/EditBookPage'
 import HomePage from '../../pages/HomePage/HomePage'
 import SignIn from '../../pages/SignIn/SignIn'
+import TopRentalBooksPage from '../../pages/TopRentalBooksPage/TopRentalBooksPage'
 import AdminPrivateRoutes from './AdminPrivateRoutes'
 import PrivateRoutes from './PrivateRoutes'
 
@@ -29,6 +30,7 @@ const AppRouter = ({ token, setToken, search, filter, sort }: AppRouterProps) =>
         <Route element={<AdminPrivateRoutes token={token} />}>
           <Route path='/create-book' element={<CreateBookPage />} />
           <Route path='/edit-book/:bookId' element={<EditBookPage />} />
+          <Route path='/top-rental-books' element={<TopRentalBooksPage />} />
         </Route>
       </Route>
       <Route path='/sign-in' element={<SignIn setToken={setToken} />} />
