@@ -17,5 +17,5 @@ export const returnBook = async (bookId: string, userId: number) => {
 }
 
 export const getTopRentalBooks = async (count: number) => {
-  return axios.get<TopBookRentalsResponse[]>(baseUrl + `api/Rental/top/${count}`)
+  return axios.get<TopBookRentalsResponse[]>(`${baseUrl}api/Rental/top/${count}`)
 }
