@@ -27,7 +27,7 @@
 
 .book-card-cover {
   width: 100%;
-  object-fit: fill;
+  object-fit: cover;
   align-self: center;
   aspect-ratio: 4 / 3;
 }

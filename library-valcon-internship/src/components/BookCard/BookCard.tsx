@@ -46,11 +46,19 @@ const BookCard = ({ book }: BookCardProps) => {
           }
         </p>
       </div>
-      <div className="book-card-info">
-        <h4 className='book-card-info-title'>Authors:</h4>
-        <p className='book-card-info-content--hide'>{authors}
-        </p>
-      </div>
+      {
+        book.RentCount ?
+          <div className="book-card-info">
+            <h4 className='book-card-info-title'>Rent count:</h4>
+            <p className='book-card-info-content--hide'>{book.RentCount}
+            </p>
+          </div> :
+          <div className="book-card-info">
+            <h4 className='book-card-info-title'>Authors:</h4>
+            <p className='book-card-info-content--hide'>{authors}
+            </p>
+          </div>
+      }
     </div>
   )
 }
