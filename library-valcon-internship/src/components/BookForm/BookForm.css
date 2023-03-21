@@ -29,7 +29,7 @@
 .book-cover {
   height: 200px;
   width: 200px;
-  object-fit: fill;
+  object-fit: cover;
 }
 
 .book-input {
@@ -126,6 +126,15 @@
   display: none;
 }
 
+.book-remove-cover-btn {
+  margin-top: 5px;
+  color: black;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid black;
+  padding: 8px 12px;
+}
+
 @media (max-width: 400px) {
   .book-header {
     color: whitesmoke;
@@ -170,5 +179,10 @@
   .book-text-area {
     font-size: 14px;
     width: 220px;
+  }
+
+  .book-remove-cover-btn {
+    color: white;
+    border-color: white;
   }
 }

@@ -65,20 +65,31 @@ const BookForm = ({
     setBookForm(bookForm => {
       return {
         ...bookForm,
-        [formProperty]: value
+        [formProperty]: formProperty === 'releaseDate' ? new Date(value) : value
       }
     })
   }
   const handleOnBlurInput = (formProperty: keyof BookFormType,
     validationProperty: keyof BookFormValidation) => {
-    const formValue: string = bookForm[formProperty] as string
-    if (formValue.trim() === '') {
-      setBookFormValidation(bookFormValidation => {
-        return {
-          ...bookFormValidation,
-          [validationProperty]: false
-        }
-      })
+    if (formProperty === 'releaseDate') {
+      if (!bookForm[formProperty]) {
+        setBookFormValidation(bookFormValidation => {
+          return {
+            ...bookFormValidation,
+            [validationProperty]: false
+          }
+        })
+      }
+    } else {
+      const formValue: string = bookForm[formProperty] as string
+      if (formValue.trim() === '') {
+        setBookFormValidation(bookFormValidation => {
+          return {
+            ...bookFormValidation,
+            [validationProperty]: false
+          }
+        })
+      }
     }
   }
 
@@ -90,6 +101,17 @@ const BookForm = ({
       }
     })
   }
+
+  const handleRemoveCover = () => {
+    setCover('')
+    setBookForm(bookForm => {
+      return {
+        ...bookForm,
+        requestCover: new Blob()
+      }
+    })
+  }
+
   return (
     <>
       <h1 className='book-header'>{title}</h1>
@@ -104,6 +126,7 @@ const BookForm = ({
               alt='placeholder-book'
             />
           </button>
+          <button className='book-remove-cover-btn' type='button' onClick={handleRemoveCover}>Remove cover</button>
           <input
             className='book-text-area'
             type='file'
