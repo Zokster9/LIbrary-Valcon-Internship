@@ -76,7 +76,7 @@ const BookCard = ({ book, token, handleEditBookDesktop, handleEditBookMobile, ha
           </div> :
           <div className="book-card-info">
             <h4 className='book-card-content book-card-info-title'>Authors:</h4>
-            <p className='book-card-content book-card-info-content--hide'>{authors}
+            <p className='book-card-content book-card-info-authors--hide'>{authors}
             </p>
           </div>
       }

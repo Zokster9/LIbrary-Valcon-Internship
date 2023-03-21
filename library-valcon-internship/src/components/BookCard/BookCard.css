@@ -120,6 +120,14 @@
   margin: unset;
 }
 
+.book-card-info-authors--hide {
+  min-width: 250px;
+  text-align: right;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 @media (max-width: 400px) {
   .book-card {
     justify-content: unset;
