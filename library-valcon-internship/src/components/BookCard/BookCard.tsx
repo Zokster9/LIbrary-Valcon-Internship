@@ -70,8 +70,8 @@ const BookCard = ({ book, token, handleEditBookDesktop, handleEditBookMobile, ha
       {
         book.RentCount ?
           <div className="book-card-info">
-            <h4 className='book-card-content book-card-info-title'>Rent count:</h4>
-            <p className='book-card-content book-card-info-content--hide'>{book.RentCount}
+            <h4 className='book-card-info-title'>Rent count:</h4>
+            <p className='book-card-info-content'>{book.RentCount}
             </p>
           </div> :
           <div className="book-card-info">
