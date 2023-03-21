@@ -50,7 +50,7 @@ const BookCard = ({ book }: BookCardProps) => {
         book.RentCount ?
           <div className="book-card-info">
             <h4 className='book-card-info-title'>Rent count:</h4>
-            <p className='book-card-info-content--hide'>{book.RentCount}
+            <p className='book-card-info-content'>{book.RentCount}
             </p>
           </div> :
           <div className="book-card-info">
