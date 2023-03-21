@@ -59,8 +59,8 @@ const BookDetailsPage = () => {
     }
   }
   const handleRentBook = () => {
-    if (!bookId) return
-    if (book?.Available !== 0) {
+    if (!bookId || !book) return
+    if (book.Available > 0) {
       rentBook(bookId)
         .then(() => {
           setRetrieveBook(!retrieveBook)
@@ -103,7 +103,7 @@ const BookDetailsPage = () => {
           </p>
           <BookAvailableMessage isAvailable={book?.Available !== 0} />
           {
-            token.Role !== 'User' &&
+            (token.Role === 'Admin' || token.Role === 'Librarian') &&
               <div className='book-details-fields'>
                 <div className='book-details-field'>
                   <label className='book-details-label'>Quantity</label>
@@ -131,7 +131,7 @@ const BookDetailsPage = () => {
           </div>
           <div className='book-details-actions-field'>
             {
-              token.Role !== 'Librarian' &&
+              (token.Role === 'Admin' || token.Role === 'User') &&
               <button
                 type='button'
                 className='book-details-btn rent'
@@ -141,7 +141,7 @@ const BookDetailsPage = () => {
               </button>
             }
             {
-              token.Role !== 'User' &&
+              (token.Role === 'Admin' || token.Role === 'Librarian') &&
               <>
                 <button
                   type='button'
@@ -174,7 +174,7 @@ const BookDetailsPage = () => {
         <BookFormWrapper retrieveBook={retrieveBook} setRetrieveBook={setRetrieveBook} book={book} closeModal={handleCloseModal} />
       }
       {
-        token.Role !== 'User' &&
+        (token.Role === 'Admin' || token.Role === 'Librarian') &&
         <RentHistoryTable
           bookId={bookId}
           retrieveBook={retrieveBook}
