@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import AuthorFormType from '../../models/AuthorFormType'
 import AuthorFormValidation from '../../models/AuthorFormValidation'
@@ -126,12 +127,14 @@ const BookFormWrapper = ({ closeModal, book, retrieveBook,  setRetrieveBook }: B
         .then(() => {
           if (retrieveBook !== undefined && setRetrieveBook)
             setRetrieveBook(!retrieveBook)
+          toast.success('Successful book edit!')
           if (closeModal) {
             closeModal()
           }
           navigate(`/books/${book.Id}`)
         })
         .catch(() => {
+          toast.error('Wrong book information!')
           setBookFormValidation(bookFormValidation => {
             return {
               ...bookFormValidation,
@@ -142,6 +145,7 @@ const BookFormWrapper = ({ closeModal, book, retrieveBook,  setRetrieveBook }: B
     } else {
       addNewBook(formData)
         .then(() => {
+          toast.success('Book successfully added!')
           if (closeModal) {
             closeModal()
           } else {
@@ -149,6 +153,7 @@ const BookFormWrapper = ({ closeModal, book, retrieveBook,  setRetrieveBook }: B
           }
         })
         .catch(() => {
+          toast.error('Wrong book information!')
           setBookFormValidation(bookFormValidation => {
             return {
               ...bookFormValidation,
@@ -179,6 +184,7 @@ const BookFormWrapper = ({ closeModal, book, retrieveBook,  setRetrieveBook }: B
     }
     addNewAuthor(authorForm.firstName.trim(), authorForm.lastName.trim())
       .then(() => {
+        toast.success('Author successfully added!')
         fetchAuthors()
         setAuthorForm({
           firstName: '',
@@ -187,6 +193,7 @@ const BookFormWrapper = ({ closeModal, book, retrieveBook,  setRetrieveBook }: B
         setShowAuthorModal(false)
       })
       .catch(() => {
+        toast.error('Wrong author information!')
         setAuthorFormValidation(authorFormValidation => {
           return {
             ...authorFormValidation,
