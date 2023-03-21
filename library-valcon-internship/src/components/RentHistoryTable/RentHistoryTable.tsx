@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 
 import BookRentHistory from '../../models/BookRentHistory'
 import { getBookRentHistory, returnBook } from '../../services/RentService'
-import { convertBookHistoryResponseToBookHistory, convertDateToString, getBookRentLastUserId } from '../../utils/Utils'
+import { convertBookHistoryResponseToBookHistory, convertDateToString } from '../../utils/Utils'
 import './RentHistoryTable.css'
 
 interface RentHistoryTableProps {
@@ -33,23 +33,20 @@ const RentHistoryTable = ({ bookId, retrieveBook, retrieveBookHistory, setRetrie
     fetchBookRentHistory()
   }, [ retrieveBookHistory ])
 
-  const handleReturnBook = () => {
-    if (bookId) {
-      try {
-        const returnUserId = getBookRentLastUserId(bookRentHistories)
-        returnBook(bookId, returnUserId)
-          .then(() => {
-            toast.success('You have successfully returned a book!')
-            fetchBookRentHistory()
-            setRetrieveBook(!retrieveBook)
-          })
-          .catch(() => {
-            toast.warn('You have already returned all books!')
-          })
-      } catch (error) {
-        toast.warn('You have already returned all books!')
-        return
-      }
+  const handleReturnBook = (bookRentId: number) => {
+    try {
+      returnBook(bookRentId)
+        .then(() => {
+          toast.success('You have successfully returned a book!')
+          fetchBookRentHistory()
+          setRetrieveBook(!retrieveBook)
+        })
+        .catch(() => {
+          toast.warn('You have already returned all books!')
+        })
+    } catch (error) {
+      toast.warn('You have already returned all books!')
+      return
     }
   }
 
@@ -66,7 +63,7 @@ const RentHistoryTable = ({ bookId, retrieveBook, retrieveBookHistory, setRetrie
               <tr>
                 <th className='rent-history-table-header' scope='col'>Rent date</th>
                 <th className='rent-history-table-header' scope='col'>User email</th>
-                <th className='rent-history-table-header' scope='col'>Is Returned</th>
+                <th className='rent-history-table-header' scope='col'>Status</th>
               </tr>
             </thead>
             <tbody>
@@ -87,7 +84,13 @@ const RentHistoryTable = ({ bookId, retrieveBook, retrieveBookHistory, setRetrie
                           </td> :
                           (
                             <td className='rent-history-table-data'>
-                              Not returned
+                              <button
+                                type='button'
+                                className='return-book-btn'
+                                onClick={() => { handleReturnBook(bookRentHistory.Id) }}
+                              >
+                                Return a book
+                              </button>
                             </td>
                           )
                       }
@@ -97,13 +100,6 @@ const RentHistoryTable = ({ bookId, retrieveBook, retrieveBookHistory, setRetrie
               }
             </tbody>
           </table>
-          <button
-            type='button'
-            className='return-book-btn'
-            onClick={handleReturnBook}
-          >
-            Return a book
-          </button>
         </>
       }
     </div>

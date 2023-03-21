@@ -23,9 +23,9 @@
 }
 
 .return-book-btn {
-  border-radius: 15px;
+  border-radius: 8px;
   background-color: rgb(199, 149, 10);
   color: white;
-  padding: 0.5rem;
+  padding: 5px;
   text-transform: uppercase;
 }

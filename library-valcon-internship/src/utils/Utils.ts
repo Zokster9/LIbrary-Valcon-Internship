@@ -79,7 +79,7 @@ const convertAuthorIdResponseToAuthors = (authors: AuthorIdResponse[]): Author[]
 export const convertBookHistoryResponseToBookHistory = (bookHistories: BookRentHistoryResponse[]): BookRentHistory[] => {
   return bookHistories.map(bookHistory => {
     return {
-      Id: `${bookHistory.User.Email}${new Date(bookHistory.RentDate).getMilliseconds()}`,
+      Id: bookHistory.Id,
       User: bookHistory.User,
       RentDate: new Date(bookHistory.RentDate),
       IsReturned: bookHistory.IsReturned
@@ -154,12 +154,6 @@ export const initAuthorFormValidation = (): AuthorFormValidation => {
     isLastNameValid: true,
     isAuthorDataValid: true
   }
-}
-
-export const getBookRentLastUserId = (bookRentHistories: BookRentHistory[]): number => {
-  return bookRentHistories
-    .filter(bookRentHistory => !bookRentHistory.IsReturned)
-    .reverse()[0].User.Id
 }
 
 export const convertTopRentalBooksToBooks = (topRentalBooks: TopBookRentalsResponse[]): Book[] => {
