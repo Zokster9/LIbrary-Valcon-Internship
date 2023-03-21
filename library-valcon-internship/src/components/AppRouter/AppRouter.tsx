@@ -23,8 +23,8 @@ const AppRouter = ({ token, setToken, search, filter, sort }: AppRouterProps) =>
   return (
     <Routes>
       <Route element={<PrivateRoutes token={token} />}>
-        <Route path='/profile' element={<HomePage search={search} filter={filter} sort={sort} />} />
-        <Route path='/' element={<HomePage search={search} filter={filter} sort={sort} />} />
+        <Route path='/profile' element={<HomePage token={token} search={search} filter={filter} sort={sort} />} />
+        <Route path='/' element={<HomePage token={token} search={search} filter={filter} sort={sort} />} />
         <Route path='/books/:bookId' element={<BookDetailsPage />} />
         <Route element={<AdminPrivateRoutes token={token} />}>
           <Route path='/create-book' element={<CreateBookPage />} />

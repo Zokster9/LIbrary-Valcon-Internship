@@ -4,10 +4,12 @@ import AuthorFormValidation from '../models/AuthorFormValidation'
 import Book from '../models/Book'
 import BookFormType from '../models/BookFormType'
 import BookFormValidation from '../models/BookFormValidation'
+import BookRentHistory from '../models/BookRentHistory'
 import AuthorIdResponse from '../models/responses/AuthorIdResponse'
 import AuthorPagedResponse from '../models/responses/AuthorPagedResponse'
 import BookIdResponse from '../models/responses/BookIdResponse'
 import BookPagedResponse from '../models/responses/BookPagedResponse'
+import BookRentHistoryResponse from '../models/responses/BookRentHistoryResponse'
 
 export const BASE_64_EXTENSION = 'data:image/png;base64,'
 
@@ -69,6 +71,17 @@ const convertAuthorIdResponseToAuthors = (authors: AuthorIdResponse[]): Author[]
       Id: author.Id,
       FirstName: author.Firstname,
       LastName: author.Lastname
+    }
+  })
+}
+
+export const convertBookHistoryResponseToBookHistory = (bookHistories: BookRentHistoryResponse[]): BookRentHistory[] => {
+  return bookHistories.map(bookHistory => {
+    return {
+      Id: `${bookHistory.User.Email}${new Date(bookHistory.RentDate).getMilliseconds()}`,
+      User: bookHistory.User,
+      RentDate: new Date(bookHistory.RentDate),
+      IsReturned: bookHistory.IsReturned
     }
   })
 }
@@ -140,4 +153,10 @@ export const initAuthorFormValidation = (): AuthorFormValidation => {
     isLastNameValid: true,
     isAuthorDataValid: true
   }
+}
+
+export const getBookRentLastUserId = (bookRentHistories: BookRentHistory[]): number => {
+  return bookRentHistories
+    .filter(bookRentHistory => !bookRentHistory.IsReturned)
+    .reverse()[0].User.Id
 }
