@@ -15,7 +15,18 @@ import TopBookRentalsResponse from '../models/responses/TopBookRentalsResponse'
 export const BASE_64_EXTENSION = 'data:image/png;base64,'
 
 export const convertDateToString = (date: Date) => {
-  return new Intl.DateTimeFormat('sr-RS').format(date)
+  return new Intl.DateTimeFormat('sr-RS',{ month: '2-digit', day: '2-digit', year: 'numeric' }).format(date)
+}
+
+export const convertDateToInputDate = (date: Date | null, format: 'yyyy-MM-dd' | 'dd.MM.yyyy') => {
+  if (!date) return ''
+  const parts = date.toISOString().split('T')
+  const dashSplit = parts[0].split('-')
+  const year = dashSplit[0]
+  const month = dashSplit[1].padStart(2, '0')
+  const day = dashSplit[2].padStart(2, '0')
+  const mydate = (format === 'yyyy-MM-dd') ? (`${year}-${month}-${day}`) : (`${day}.${month}.${year}`)
+  return mydate
 }
 
 export const convertAuthorsToArrayString = (authors: Author[]) => {

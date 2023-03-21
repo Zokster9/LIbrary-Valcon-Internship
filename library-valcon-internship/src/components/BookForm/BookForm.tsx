@@ -8,7 +8,7 @@ import AuthorFormType from '../../models/AuthorFormType'
 import AuthorFormValidation from '../../models/AuthorFormValidation'
 import BookFormType from '../../models/BookFormType'
 import BookFormValidation from '../../models/BookFormValidation'
-import { setDefaultCoverValue } from '../../utils/Utils'
+import { convertDateToInputDate, setDefaultCoverValue } from '../../utils/Utils'
 import AuthorForm from '../AuthorForm/AuthorForm'
 import './BookForm.css'
 
@@ -229,6 +229,7 @@ const BookForm = ({
                 !bookFormValidation.isReleaseDateValid ? 'book-input book-error-input' : 'book-input'
               }
               type='date'
+              value={convertDateToInputDate(bookForm.releaseDate, 'yyyy-MM-dd')}
               onChange={({ currentTarget }: FormEvent<HTMLInputElement>) => {
                 handleOnChangeInput(currentTarget.value, 'releaseDate')
               }}
