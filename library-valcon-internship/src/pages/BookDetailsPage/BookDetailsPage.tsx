@@ -38,7 +38,7 @@ const BookDetailsPage = () => {
         .then(response => {
           setBook(convertBookIdResponseToBook(response.data))
         })
-        .catch(error => console.error(error))
+        .catch(() => navigate('/'))
   }, [ bookId, retrieveBook ])
 
   useEffect(() => {

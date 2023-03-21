@@ -128,9 +128,8 @@ const BookFormWrapper = ({ closeModal, book, retrieveBook,  setRetrieveBook }: B
             setRetrieveBook(!retrieveBook)
           if (closeModal) {
             closeModal()
-          } else {
-            navigate(`/books/${book.Id}`)
           }
+          navigate(`/books/${book.Id}`)
         })
         .catch(() => {
           setBookFormValidation(bookFormValidation => {

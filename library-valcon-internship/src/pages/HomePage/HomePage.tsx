@@ -100,7 +100,7 @@ const HomePage = ({ search, filter, sort, token }: HomePageProps) => {
               loader={<h4 style={{ textAlign: 'center' }}>Loading...</h4>}
               endMessage={<h4 style={{ textAlign: 'center' }}>You have browsed all books</h4>}
             >
-              <BookList books={books} />
+              <BookList books={books} token={token} />
             </InfiniteScroll>
           )
           :

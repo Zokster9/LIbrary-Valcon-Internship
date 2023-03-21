@@ -36,8 +36,8 @@ export const convertBooksPagedResponseToBooks = (books: BookPagedResponse[]): Bo
       Cover: book.Cover,
       Authors: convertAuthorPagedResponseToAuthors(book.Authors),
       PublishDate: new Date(book.PublishDate),
-      Quantity: 0,
-      Available: 0
+      Quantity: book.Quantity,
+      Available: book.Available
     }
   })
 }
