@@ -306,15 +306,6 @@ const BookForm = ({
             </div>
           </div>
         </div>
-        <div className='book-submit-area'>
-          <h4 className=
-            { !bookFormValidation.isDataValid ? 'book-error-message' :
-              'book-error-message hidden'
-            }
-          >
-            Wrong book data!
-          </h4>
-        </div>
       </form>
     </>
   )

@@ -2,6 +2,7 @@
   border-radius: 15px;
   color: white;
   padding: 1rem;
+  max-height: 70px;
 }
 
 .book-is-available {

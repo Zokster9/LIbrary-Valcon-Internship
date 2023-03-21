@@ -48,20 +48,20 @@ const BookCard = ({ book, token, handleEditBookDesktop, handleEditBookMobile, ha
         alt='Book Cover'
       />
       <div className="book-card-title">
-        <h2 className='book-card-title--hide' title={book.Title}>{book.Title}</h2>
+        <h2 className='book-card-content book-card-title--hide' title={book.Title}>{book.Title}</h2>
       </div>
-      <div className="book-card-description">
-        <p className='book-card-description--hide'>
+      <div className='book-card-description'>
+        <p className='book-card-content book-card-description--hide'>
           {book.Description ? book.Description : 'No description'}
         </p>
       </div>
       <div className="book-card-info">
-        <h4 className='book-card-info-title'>ISBN:</h4>
-        <p className='book-card-info-content'>{book.Isbn}</p>
+        <h4 className='book-card-content book-card-info-title'>ISBN:</h4>
+        <p className='book-card-content book-card-info-content'>{book.Isbn}</p>
       </div>
       <div className="book-card-info">
-        <h4 className='book-card-info-title'>Publish date:</h4>
-        <p className='book-card-info-content'>
+        <h4 className='book-card-content book-card-info-title'>Publish date:</h4>
+        <p className='book-card-content book-card-info-content'>
           {
             book.PublishDate ? publishDate : 'Unknown'
           }
@@ -70,13 +70,13 @@ const BookCard = ({ book, token, handleEditBookDesktop, handleEditBookMobile, ha
       {
         book.RentCount ?
           <div className="book-card-info">
-            <h4 className='book-card-info-title'>Rent count:</h4>
-            <p className='book-card-info-content--hide'>{book.RentCount}
+            <h4 className='book-card-content book-card-info-title'>Rent count:</h4>
+            <p className='book-card-content book-card-info-content--hide'>{book.RentCount}
             </p>
           </div> :
           <div className="book-card-info">
-            <h4 className='book-card-info-title'>Authors:</h4>
-            <p className='book-card-info-content--hide'>{authors}
+            <h4 className='book-card-content book-card-info-title'>Authors:</h4>
+            <p className='book-card-content book-card-info-content--hide'>{authors}
             </p>
           </div>
       }

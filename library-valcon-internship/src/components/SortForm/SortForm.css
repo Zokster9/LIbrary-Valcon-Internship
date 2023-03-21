@@ -13,14 +13,17 @@
 
 .sort-radio-group {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding-inline: 2rem;
+  column-gap: 50px;
 }
 
 .sort-radio-label {
   font-size: 18px;
   font-weight: bold;
+  width: 120px;
+  max-width: 120px;
 }
 
 .sort-radio-options {

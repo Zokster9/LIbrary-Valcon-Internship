@@ -37,9 +37,6 @@ const Navbar = ({ handleMenuClick, token }: NavbarProps) => {
           <NavbarLink to='top-rental-books' className='navbar-options-link' color='#F56211'>
             Top 10 Rental Books
           </NavbarLink>
-          <NavbarLink to='option3' className='navbar-options-link' color='#F56211'>
-            Option 3
-          </NavbarLink>
           {showAddBookModal &&
             <BookFormWrapper closeModal={() => setShowAddBookModal(false)} />
           }

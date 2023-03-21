@@ -1,7 +1,7 @@
 .navbar {
   padding-top: 1%;
   height: 100%;
-  width: 10rem;
+  width: 7rem;
   display: flex;
   background-color: rgb(199, 149, 10);
   overflow: hidden;
@@ -45,6 +45,7 @@ button.navbar-link {
 
 .navbar-options-link:hover {
   background-color: #444;
+  color: white;
 }
 
 @media (max-width: 400px) {

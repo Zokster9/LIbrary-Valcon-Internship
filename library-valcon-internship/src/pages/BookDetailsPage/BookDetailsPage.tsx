@@ -89,42 +89,42 @@ const BookDetailsPage = () => {
   return (
     <div className='book-details'>
       <div className='book-details-main'>
-        <div className='book-details-cover-section'>
+        <div className='book-details-sidecontent'>
           <img
             className='book-details-cover'
             src={book?.Cover ? 'data:image/png;base64,' + book.Cover : placeholder}
             alt='Book cover'
           />
+          <div className='book-details-field-sidecontent'>
+            <label className='book-details-label-sidecontent'>ISBN:</label>
+            <h4>{book?.Isbn}</h4>
+          </div>
+          <div className='book-details-field-sidecontent'>
+            <label className='book-details-label-sidecontent'>Publish date:</label>
+            <h4>{publishDate}</h4>
+          </div>
+          {
+            (token.Role === 'Admin' || token.Role === 'Librarian') &&
+              <>
+                <div className='book-details-field-sidecontent'>
+                  <label className='book-details-label-sidecontent'>Quantity:</label>
+                  <h4>{book?.Quantity}</h4>
+                </div>
+                <div className='book-details-field-sidecontent'>
+                  <label className='book-details-label-sidecontent'>Available:</label>
+                  <h4>{book?.Available}</h4>
+                </div>
+              </>
+          }
         </div>
         <div className='book-details-main-content'>
-          <h1 className='book-details-title'>{book?.Title}</h1>
+          <div className='book-details-title-section'>
+            <h1 className='book-details-title'>{book?.Title}</h1>
+            <BookAvailableMessage isAvailable={book?.Available !== 0} />
+          </div>
           <p className='book-details-description'>
             {book?.Description}
           </p>
-          <BookAvailableMessage isAvailable={book?.Available !== 0} />
-          {
-            (token.Role === 'Admin' || token.Role === 'Librarian') &&
-              <div className='book-details-fields'>
-                <div className='book-details-field'>
-                  <label className='book-details-label'>Quantity</label>
-                  <h3>{book?.Quantity}</h3>
-                </div>
-                <div className='book-details-field'>
-                  <label className='book-details-label'>Available</label>
-                  <h3>{book?.Available}</h3>
-                </div>
-              </div>
-          }
-          <div className='book-details-fields'>
-            <div className='book-details-field'>
-              <label className='book-details-label'>ISBN</label>
-              <h3>{book?.Isbn}</h3>
-            </div>
-            <div className='book-details-field'>
-              <label className='book-details-label'>Publish date</label>
-              <h3>{publishDate}</h3>
-            </div>
-          </div>
           <div className='book-details-field'>
             <label className='book-details-label'>Authors</label>
             <h3>{authors}</h3>

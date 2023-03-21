@@ -11,10 +11,10 @@ const BookAvailableMessage = ({ isAvailable }: BookAvailableMessageProps) => {
     <>
       {isAvailable ?
         <div className='available-message book-is-available'>
-          <Available /> Book is available for renting!
+          <Available /> Available for rent!
         </div> :
         <div className='available-message book-is-unavailable'>
-          <NotAvailable /> Book is not available for renting!
+          <NotAvailable /> Not available for rent!
         </div>
       }
     </>

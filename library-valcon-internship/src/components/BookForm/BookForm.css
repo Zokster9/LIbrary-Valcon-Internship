@@ -71,6 +71,8 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+  height: 40px;
+  max-height: 40px;
 }
 
 .book-accordion-content {
@@ -108,15 +110,6 @@
 .submit-book-btn {
   flex-grow: 1;
   justify-items: center;
-}
-
-.book-submit-area {
-  margin-top: 2rem;
-  display: flex;
-  flex-flow: column;
-  justify-content: flex-end;
-  align-items: center;
-  height: 2rem;
 }
 
 .book-error-message {
