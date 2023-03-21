@@ -8,9 +8,9 @@
 }
 
 .rent-history-table {
-  width: 50%;
   border-collapse: collapse;
   margin-bottom: 3rem;
+  width: 100%;
 }
 
 .rent-history-table td, .rent-history-table th {
@@ -37,5 +37,10 @@
 }
 
 @media (max-width: 400px) {
-
+  .rent-history-table {
+    overflow-x: auto;
+    white-space: nowrap;
+    display: block;
+    width: 100%;
+  }
 }

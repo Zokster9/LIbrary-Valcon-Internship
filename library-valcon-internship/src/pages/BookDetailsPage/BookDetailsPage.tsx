@@ -95,16 +95,17 @@ const BookDetailsPage = () => {
             src={book?.Cover ? 'data:image/png;base64,' + book.Cover : placeholder}
             alt='Book cover'
           />
-          <div className='book-details-field-sidecontent'>
-            <label className='book-details-label-sidecontent'>ISBN:</label>
-            <h4>{book?.Isbn}</h4>
-          </div>
-          <div className='book-details-field-sidecontent'>
-            <label className='book-details-label-sidecontent'>Publish date:</label>
-            <h4>{publishDate}</h4>
-          </div>
-          {
-            (token.Role === 'Admin' || token.Role === 'Librarian') &&
+          <div className='book-details-fields-sidecontent'>
+            <div className='book-details-field-sidecontent'>
+              <label className='book-details-label-sidecontent'>ISBN:</label>
+              <h4>{book?.Isbn}</h4>
+            </div>
+            <div className='book-details-field-sidecontent'>
+              <label className='book-details-label-sidecontent'>Publish date:</label>
+              <h4>{publishDate}</h4>
+            </div>
+            {
+              (token.Role === 'Admin' || token.Role === 'Librarian') &&
               <>
                 <div className='book-details-field-sidecontent'>
                   <label className='book-details-label-sidecontent'>Quantity:</label>
@@ -115,7 +116,8 @@ const BookDetailsPage = () => {
                   <h4>{book?.Available}</h4>
                 </div>
               </>
-          }
+            }
+          </div>
         </div>
         <div className='book-details-main-content'>
           <div className='book-details-title-section'>
@@ -128,6 +130,29 @@ const BookDetailsPage = () => {
           <div className='book-details-field'>
             <label className='book-details-label'>Authors</label>
             <h3>{authors}</h3>
+          </div>
+          <div className='book-details-mobile-fields'>
+            <div className='book-details-field'>
+              <label className='book-details-label-sidecontent'>ISBN</label>
+              <h4>{book?.Isbn}</h4>
+            </div>
+            <div className='book-details-field'>
+              <label className='book-details-label-sidecontent'>Publish Date</label>
+              <h4>{publishDate}</h4>
+            </div>
+            {
+              (token.Role === 'Admin' || token.Role === 'Librarian') &&
+              <>
+                <div className='book-details-field'>
+                  <label className='book-details-label-sidecontent'>Quantity</label>
+                  <h4>{book?.Quantity}</h4>
+                </div>
+                <div className='book-details-field'>
+                  <label className='book-details-label-sidecontent'>Available</label>
+                  <h4>{book?.Available}</h4>
+                </div>
+              </>
+            }
           </div>
           <div className='book-details-actions-field'>
             {
