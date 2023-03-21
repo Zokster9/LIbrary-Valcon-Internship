@@ -59,8 +59,8 @@ const BookDetailsPage = () => {
     }
   }
   const handleRentBook = () => {
-    if (!bookId) return
-    if (book?.Available !== 0) {
+    if (!bookId || !book) return
+    if (book.Available > 0) {
       rentBook(bookId)
         .then(() => {
           setRetrieveBook(!retrieveBook)
