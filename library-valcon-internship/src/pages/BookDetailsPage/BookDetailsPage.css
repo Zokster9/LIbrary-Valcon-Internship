@@ -64,6 +64,7 @@
   all: unset;
   text-align: justify;
   font-size: 18px;
+  padding-inline: 40px;
 }
 
 .book-details-fields {
@@ -174,7 +175,7 @@ h3, label, h4 {
   }
 
   .book-details-description {
-    padding-inline: 10px;
+    padding-inline: 20px;
   }
 
   .book-details-fields{
@@ -206,5 +207,9 @@ h3, label, h4 {
     display: flex;
     flex-flow: column;
     row-gap: 10px;
+  }
+
+  .book-details-actions-field {
+    flex-flow: column;
   }
 }

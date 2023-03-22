@@ -21,13 +21,13 @@
 
 .book-card:active {
   opacity: 0.8;
-  box-shadow: 0 0 30px 30px #666;
+  box-shadow: 0 0 20px 15px #666;
   transition: box-shadow 0.2s ease-in-out, opacity 0.2s ease-in-out;
 }
 
 .book-card:hover {
   opacity: 0.8;
-  box-shadow: 0 0 30px 30px #666;
+  box-shadow: 0 0 20px 15px #666;
   transition: box-shadow 0.2s ease-in-out, opacity 0.2s ease-in-out;
 }
 
