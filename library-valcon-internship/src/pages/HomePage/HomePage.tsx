@@ -104,7 +104,7 @@ const HomePage = ({ search, filter, sort, token }: HomePageProps) => {
               dataLength={books.length}
               next={handleNextPage}
               hasMore={hasMoreBooks}
-              loader={<>{isLoading && <LoadingSpinner />}</>}
+              loader={<>{isLoading && <div className='loader'><LoadingSpinner /></div>}</>}
               endMessage={<h4 style={{ textAlign: 'center', marginTop: 30 }}>You have browsed all books</h4>}
             >
               <BookList books={books} token={token} />

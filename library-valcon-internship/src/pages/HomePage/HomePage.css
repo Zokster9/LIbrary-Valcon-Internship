@@ -7,7 +7,7 @@
   display: none;
 }
 
-.spinner-container {
+.loader > .spinner-container {
   all: unset;
   display: flex;
   align-items: center;
@@ -33,7 +33,7 @@
     box-shadow: 0 0 10px #cdc3c3;
   }
 
-  .spinner-container {
+  .loader > .spinner-container {
     margin-top: unset;
   }
 }
