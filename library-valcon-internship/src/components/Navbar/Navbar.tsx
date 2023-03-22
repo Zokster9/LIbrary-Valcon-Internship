@@ -28,15 +28,15 @@ const Navbar = ({ handleMenuClick, token }: NavbarProps) => {
       <button className='navbar-link' onClick={() => handleMenuClick()}>
         <img src={hamburgerMenuIcon} alt='moreOptions-icon' />
       </button>
+      <NavbarLink to='top-rental-books' className='navbar-options-link' color='#F56211'>
+            Top 10 Rental Books
+      </NavbarLink>
       {
         jsonToken?.Role !== 'User' &&
         <>
           <button className='navbar-options-link' onClick={() => setShowAddBookModal(true)}>
             Add a new book
           </button>
-          <NavbarLink to='top-rental-books' className='navbar-options-link' color='#F56211'>
-            Top 10 Rental Books
-          </NavbarLink>
           {showAddBookModal &&
             <BookFormWrapper closeModal={() => setShowAddBookModal(false)} />
           }
