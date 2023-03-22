@@ -1,6 +1,8 @@
 .book-details {
   margin: 0 auto;
-  width: 1000px;
+  width: 100%;
+  padding-inline: 200px;
+  min-width: 500px;
   max-height: 1000px;
   height: 1000px;
 }
@@ -106,8 +108,13 @@
   cursor: pointer;
 }
 
+.book-details-authors {
+  text-align: center;
+  padding-inline: 5px;
+}
+
 .edit {
-  background-color: rgb(107, 194, 223);
+  background-color: #6E654C;
 }
 
 .edit.mobile {
@@ -132,16 +139,13 @@ h3, label, h4 {
 
 @media (max-width: 400px) {
   .book-details {
-    margin: 0 auto;
-    width: 1000px;
-    max-height: 1000px;
-    height: 1000px;
-  }
-  .book-details {
     height: unset;
     max-height: unset;
     width: 100%;
+    padding-inline: unset;
+    min-width: unset;
   }
+
   .book-details-main {
     flex-flow: column;
     align-items: center;

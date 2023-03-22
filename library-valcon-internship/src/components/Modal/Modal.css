@@ -41,7 +41,7 @@
 .modal-btns {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   width: 100%;
   margin-top: 2rem;
   gap: 1rem;
@@ -55,11 +55,14 @@
 }
 
 .modal-btn.close {
-  background-color: red;
+  color: tomato;
+  text-transform: uppercase;
+  background: none;
 }
 
 .modal-btn.confirm {
   background-color: rgb(199, 149, 10);
+  text-transform: uppercase;
 }
 
 @media (max-width: 400px) {

@@ -17,17 +17,17 @@ const Modal = ({ children, closeModal, confirm }: PropsWithChildren<ModalProps>)
         <div className='modal-btns'>
           <button
             type='button'
-            className='modal-btn confirm'
-            onClick={confirm}
-          >
-            Confirm
-          </button>
-          <button
-            type='button'
             className='modal-btn close'
             onClick={closeModal}
           >
             Close
+          </button>
+          <button
+            type='button'
+            className='modal-btn confirm'
+            onClick={confirm}
+          >
+            Confirm
           </button>
         </div>
       </div>

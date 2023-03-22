@@ -38,7 +38,10 @@ const BookDetailsPage = () => {
         .then(response => {
           setBook(convertBookIdResponseToBook(response.data))
         })
-        .catch(() => navigate('/'))
+        .catch(() => {
+          toast.error('Book doesn\'t exist!')
+          navigate('/')
+        })
   }, [ bookId, retrieveBook ])
 
   useEffect(() => {
@@ -129,7 +132,7 @@ const BookDetailsPage = () => {
           </p>
           <div className='book-details-field'>
             <label className='book-details-label'>Authors</label>
-            <h3>{authors}</h3>
+            <h3 className='book-details-authors'>{authors}</h3>
           </div>
           <div className='book-details-mobile-fields'>
             <div className='book-details-field'>
