@@ -7,6 +7,7 @@ import placeholder from '../../assets/icons/placeholder-book.png'
 import BookAvailableMessage from '../../components/BookAvailableMessage/BookAvailableMessage'
 import BookFormWrapper from '../../components/BookFormWrapper/BookFormWrapper'
 import DeleteBookDialog from '../../components/DeleteBookDialog/DeleteBookDialog'
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner'
 import RentHistoryTable from '../../components/RentHistoryTable/RentHistoryTable'
 import Book from '../../models/Book'
 import Token from '../../models/Token'
@@ -22,6 +23,7 @@ const BookDetailsPage = () => {
   const [ showModal, setShowModal ] = useState(false)
   const [ retrieveBook, setRetrieveBook ] = useState(false)
   const [ retrieveBookHistory, setRetrieveBookHistory ] = useState(false)
+  const [ isLoading, setIsLoading ] = useState(true)
   const { bookId } = useParams()
   const navigate = useNavigate()
   const notifyBookCantBeDeleted = () => toast.warn('Book cannot be deleted! Return the books first')
@@ -36,9 +38,11 @@ const BookDetailsPage = () => {
     if (bookId)
       getBookById(bookId)
         .then(response => {
+          setIsLoading(false)
           setBook(convertBookIdResponseToBook(response.data))
         })
         .catch(() => {
+          setIsLoading(false)
           toast.error('Book doesn\'t exist!')
           navigate('/')
         })
@@ -64,13 +68,16 @@ const BookDetailsPage = () => {
   const handleRentBook = () => {
     if (!bookId || !book) return
     if (book.Available > 0) {
+      setIsLoading(true)
       rentBook(bookId)
         .then(() => {
+          setIsLoading(false)
           setRetrieveBook(!retrieveBook)
           setRetrieveBookHistory(!retrieveBookHistory)
           notifyBookRented()
         })
         .catch(() => {
+          setIsLoading(false)
           notifyBookRentFailed()
         })
     } else {
@@ -79,18 +86,24 @@ const BookDetailsPage = () => {
   }
 
   const removeBook = () => {
-    if (bookId)
+    if (bookId) {
+      setIsLoading(true)
       deleteBook(bookId)
         .then(() => {
+          setIsLoading(false)
+          toast.success('Book successfully deleted!')
           navigate('/')
         })
-        .catch(error => {
-          console.error(error)
+        .catch(() => {
+          setIsLoading(false)
+          toast.error('Something went wrong!')
         })
+    }
   }
 
   return (
     <div className='book-details'>
+      {isLoading && <LoadingSpinner />}
       <div className='book-details-main'>
         <div className='book-details-sidecontent'>
           <img
@@ -164,6 +177,7 @@ const BookDetailsPage = () => {
                 type='button'
                 className='book-details-btn rent'
                 onClick={handleRentBook}
+                disabled={isLoading}
               >
                 Rent the book
               </button>
@@ -175,6 +189,7 @@ const BookDetailsPage = () => {
                   type='button'
                   className='book-details-btn edit desktop'
                   onClick={() => setShowModal(true)}
+                  disabled={isLoading}
                 >
                 Edit book
                 </button>
@@ -182,6 +197,7 @@ const BookDetailsPage = () => {
                   type='button'
                   className='book-details-btn edit mobile'
                   onClick={() => navigate(`/edit-book/${bookId ? bookId : ''}`)}
+                  disabled={isLoading}
                 >
                   Edit book
                 </button>
@@ -189,6 +205,7 @@ const BookDetailsPage = () => {
                   type='button'
                   className='book-details-btn delete'
                   onClick={handleDeleteBook}
+                  disabled={isLoading}
                 >
                   Delete book
                 </button>
@@ -208,6 +225,8 @@ const BookDetailsPage = () => {
           retrieveBook={retrieveBook}
           setRetrieveBook={setRetrieveBook}
           retrieveBookHistory={retrieveBookHistory}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
         />
       }
     </div>

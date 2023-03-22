@@ -45,10 +45,11 @@ const BookList = ({ books, token }: BookListProps) => {
     if (book)
       deleteBook(book.Id.toString())
         .then(() => {
+          toast.success('Book successfully deleted!')
           navigate(`/books/${book.Id}`)
         })
-        .catch(error => {
-          console.error(error)
+        .catch(() => {
+          toast.error('Something went wrong!')
         })
   }
   return (

@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom'
 
 import addIcon from '../../assets/icons/add-icon.svg'
 import BookList from '../../components/BookList/BookList'
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner'
 import Book from '../../models/Book'
 import Token from '../../models/Token'
 import Where from '../../models/Where'
@@ -22,22 +23,25 @@ interface HomePageProps {
 interface Page {
   pageNumber: number
   pageLength: number
-  totalCount: number | null
+  totalCount: number
 }
 
 const HomePage = ({ search, filter, sort, token }: HomePageProps) => {
   const [ page, setPage ] = useState<Page>({
     pageNumber: 1,
     pageLength: 10,
-    totalCount: null
+    totalCount: -1
   })
   const [ books, setBooks ] = useState<Book[]>([])
   const [ hasMoreBooks, setHasMoreBooks ] = useState(true)
+  const [ isLoading, setIsLoading ] = useState(true)
   const currentSearch = useRef<string>(search)
   const currentFilter = useRef<Where[]>(filter)
   const currentSort = useRef<string[]>(sort)
   const jsonToken: Token | null = token ? JSON.parse(token) as Token : null
+
   const fetchBooks = (pageNumber: number, pageLength: number, search: string, filter: Where[], sort: string[]) => {
+    setIsLoading(true)
     getBooks({ pageNumber, pageLength, search, filter, sort })
       .then(response => {
         const totalNumOfBooks = response.data.TotalCount
@@ -51,19 +55,22 @@ const HomePage = ({ search, filter, sort, token }: HomePageProps) => {
           }
         })
         setBooks(prevBooks => [ ...prevBooks, ...newBooks ])
+        setIsLoading(false)
       })
       .catch(() => {
         setBooks([])
+        setIsLoading(false)
       })
   }
   const resetPaging = () => {
     setPage(page => {
       return {
         ...page,
-        totalCount: null,
+        totalCount: -1,
         pageNumber: 1
       }
     })
+    setHasMoreBooks(true)
     setBooks([])
   }
   useEffect(() => {
@@ -97,7 +104,7 @@ const HomePage = ({ search, filter, sort, token }: HomePageProps) => {
               dataLength={books.length}
               next={handleNextPage}
               hasMore={hasMoreBooks}
-              loader={<h4 style={{ textAlign: 'center', marginTop: 30 }}>Loading...</h4>}
+              loader={<>{isLoading && <LoadingSpinner />}</>}
               endMessage={<h4 style={{ textAlign: 'center', marginTop: 30 }}>You have browsed all books</h4>}
             >
               <BookList books={books} token={token} />
