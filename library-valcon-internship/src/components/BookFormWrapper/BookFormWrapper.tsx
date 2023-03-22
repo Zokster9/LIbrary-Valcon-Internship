@@ -13,6 +13,7 @@ import { addNewBook, editBook } from '../../services/BookService'
 import { BASE_64_EXTENSION, convertBase64ToBlob, initAuthorForm, initAuthorFormValidation, initBookForm, initBookFormValidation } from '../../utils/Utils'
 import AuthorForm from '../AuthorForm/AuthorForm'
 import BookForm from '../BookForm/BookForm'
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 import Modal from '../Modal/Modal'
 import './BookFormWrapper.css'
 
@@ -30,6 +31,7 @@ const BookFormWrapper = ({ closeModal, book, retrieveBook,  setRetrieveBook }: B
   const [ authorFormValidation, setAuthorFormValidation ] = useState<AuthorFormValidation>(initAuthorFormValidation())
 
   const [ showAuthorModal, setShowAuthorModal ] = useState(false)
+  const [ isLoading, setIsLoading ] = useState(false)
   const navigate = useNavigate()
   const handleShowAuthorModal = () => setShowAuthorModal(true)
 
@@ -121,10 +123,12 @@ const BookFormWrapper = ({ closeModal, book, retrieveBook,  setRetrieveBook }: B
     }
     formData.append('publishDate', bookForm.releaseDate.toISOString())
     bookForm.selectedAuthors.forEach(author => formData.append('authorIds', author.Id.toString()))
+    setIsLoading(true)
     if (book) {
       formData.append('Id', book.Id.toString())
       editBook(formData)
         .then(() => {
+          setIsLoading(false)
           if (retrieveBook !== undefined && setRetrieveBook)
             setRetrieveBook(!retrieveBook)
           toast.success('Successful book edit!')
@@ -134,6 +138,7 @@ const BookFormWrapper = ({ closeModal, book, retrieveBook,  setRetrieveBook }: B
           navigate(`/books/${book.Id}`)
         })
         .catch(() => {
+          setIsLoading(false)
           toast.error('Wrong book information!')
           setBookFormValidation(bookFormValidation => {
             return {
@@ -145,6 +150,7 @@ const BookFormWrapper = ({ closeModal, book, retrieveBook,  setRetrieveBook }: B
     } else {
       addNewBook(formData)
         .then(() => {
+          setIsLoading(false)
           toast.success('Book successfully added!')
           if (closeModal) {
             closeModal()
@@ -153,6 +159,7 @@ const BookFormWrapper = ({ closeModal, book, retrieveBook,  setRetrieveBook }: B
           }
         })
         .catch(() => {
+          setIsLoading(false)
           toast.error('Wrong book information!')
           setBookFormValidation(bookFormValidation => {
             return {
@@ -182,8 +189,10 @@ const BookFormWrapper = ({ closeModal, book, retrieveBook,  setRetrieveBook }: B
       })
       return
     }
+    setIsLoading(true)
     addNewAuthor(authorForm.firstName.trim(), authorForm.lastName.trim())
       .then(() => {
+        setIsLoading(false)
         toast.success('Author successfully added!')
         fetchAuthors()
         setAuthorForm({
@@ -193,6 +202,7 @@ const BookFormWrapper = ({ closeModal, book, retrieveBook,  setRetrieveBook }: B
         setShowAuthorModal(false)
       })
       .catch(() => {
+        setIsLoading(false)
         toast.error('Wrong author information!')
         setAuthorFormValidation(authorFormValidation => {
           return {
@@ -205,6 +215,7 @@ const BookFormWrapper = ({ closeModal, book, retrieveBook,  setRetrieveBook }: B
 
   return (
     <>
+      {isLoading && <LoadingSpinner />}
       {
         closeModal ?
           <Modal closeModal={closeModal} confirm={handleOnBookSubmit}>

@@ -4,6 +4,7 @@ import axios, { AxiosError } from 'axios'
 import jwtDecode from 'jwt-decode'
 import { useNavigate } from 'react-router-dom'
 
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner'
 import JwtRole from '../../models/JwtRole'
 import Token from '../../models/Token'
 import { login } from '../../services/AuthorizationService'
@@ -20,6 +21,7 @@ const SignIn = ({ setToken }: SignInProps) => {
   const [ emailError, setEmailError ] = useState(false)
   const [ passwordError, setPasswordError ] = useState(false)
   const [ invalidCredentials, setInvalidCredentials ] = useState(false)
+  const [ isLoading, setIsLoading ] = useState(false)
   const navigate = useNavigate()
   const handleOnChangeEmail = ({ currentTarget }: FormEvent<HTMLInputElement>) => {
     const newEmail = currentTarget.value
@@ -51,8 +53,10 @@ const SignIn = ({ setToken }: SignInProps) => {
       setPasswordError(true)
       return
     }
+    setIsLoading(true)
     login(email, password)
       .then((response) => {
+        setIsLoading(false)
         const decodedJwt = jwtDecode<JwtRole>(response.data.AccessToken)
         const token: Token = {
           AccessToken: response.data.AccessToken,
@@ -65,6 +69,7 @@ const SignIn = ({ setToken }: SignInProps) => {
         navigate('/')
       })
       .catch((error: Error | AxiosError) => {
+        setIsLoading(false)
         if (axios.isAxiosError(error)) {
           if (error.response?.status === 401) {
             setInvalidCredentials(true)
@@ -74,6 +79,7 @@ const SignIn = ({ setToken }: SignInProps) => {
   }
   return (
     <div className='sign-in'>
+      {isLoading && <LoadingSpinner />}
       <h1 className='title'>Sign in</h1>
       <form className='form' onSubmit={handleOnSubmit}>
         <div>
@@ -116,7 +122,7 @@ const SignIn = ({ setToken }: SignInProps) => {
           <div className={invalidCredentials ? 'error-sign-in' : 'sign-in-message'}>
             Wrong email or password!
           </div>
-          <button className='form-button'>Sign in</button>
+          <button disabled={isLoading} className='form-button'>Sign in</button>
         </div>
       </form>
     </div>

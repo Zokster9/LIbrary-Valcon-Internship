@@ -12,9 +12,11 @@ interface RentHistoryTableProps {
   retrieveBook: boolean
   retrieveBookHistory: boolean
   setRetrieveBook: Dispatch<SetStateAction<boolean>>
+  isLoading: boolean
+  setIsLoading: Dispatch<SetStateAction<boolean>>
 }
 
-const RentHistoryTable = ({ bookId, retrieveBook, retrieveBookHistory, setRetrieveBook }: RentHistoryTableProps) => {
+const RentHistoryTable = ({ bookId, retrieveBook, retrieveBookHistory, setRetrieveBook, isLoading, setIsLoading }: RentHistoryTableProps) => {
   const [ bookRentHistories, setBookRentHistories ] = useState<BookRentHistory[]>([])
 
   const fetchBookRentHistory = () => {
@@ -35,16 +37,20 @@ const RentHistoryTable = ({ bookId, retrieveBook, retrieveBookHistory, setRetrie
 
   const handleReturnBook = (bookRentId: number) => {
     try {
+      setIsLoading(true)
       returnBook(bookRentId)
         .then(() => {
+          setIsLoading(false)
           toast.success('You have successfully returned a book!')
           fetchBookRentHistory()
           setRetrieveBook(!retrieveBook)
         })
         .catch(() => {
+          setIsLoading(false)
           toast.warn('You have already returned all books!')
         })
     } catch (error) {
+      setIsLoading(false)
       toast.warn('You have already returned all books!')
       return
     }
@@ -91,6 +97,7 @@ const RentHistoryTable = ({ bookId, retrieveBook, retrieveBookHistory, setRetrie
                                 type='button'
                                 className='return-book-btn'
                                 onClick={() => { handleReturnBook(bookRentHistory.Id) }}
+                                disabled={isLoading}
                               >
                                 Return a book
                               </button>

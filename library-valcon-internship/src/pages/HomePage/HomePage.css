@@ -7,6 +7,14 @@
   display: none;
 }
 
+.loader > .spinner-container {
+  all: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4rem;
+}
+
 @media (max-width: 400px) {
   .fab {
     all: unset;
@@ -23,5 +31,9 @@
   
   .fab:active {
     box-shadow: 0 0 10px #cdc3c3;
+  }
+
+  .loader > .spinner-container {
+    margin-top: unset;
   }
 }
