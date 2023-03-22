@@ -7,6 +7,14 @@
   display: none;
 }
 
+.spinner-container {
+  all: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4rem;
+}
+
 @media (max-width: 400px) {
   .fab {
     all: unset;
