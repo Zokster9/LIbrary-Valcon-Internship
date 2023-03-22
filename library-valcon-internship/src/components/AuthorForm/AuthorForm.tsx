@@ -88,9 +88,6 @@ const AuthorForm = ({ authorForm, authorFormValidation,
         }
         {onSubmit &&
           <div className='add-author-button-field'>
-            <div className={!authorFormValidation.isAuthorDataValid ? 'error-author-modal' : 'author-modal-message'}>
-              Something went wrong!
-            </div>
             <div className='modal-btn'>
               <button
                 type='button'

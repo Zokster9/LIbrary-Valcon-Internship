@@ -15,7 +15,18 @@ import TopBookRentalsResponse from '../models/responses/TopBookRentalsResponse'
 export const BASE_64_EXTENSION = 'data:image/png;base64,'
 
 export const convertDateToString = (date: Date) => {
-  return new Intl.DateTimeFormat('sr-RS').format(date)
+  return new Intl.DateTimeFormat('sr-RS',{ month: '2-digit', day: '2-digit', year: 'numeric' }).format(date)
+}
+
+export const convertDateToInputDate = (date: Date | null, format: 'yyyy-MM-dd' | 'dd.MM.yyyy') => {
+  if (!date) return ''
+  const parts = date.toISOString().split('T')
+  const dashSplit = parts[0].split('-')
+  const year = dashSplit[0]
+  const month = dashSplit[1].padStart(2, '0')
+  const day = dashSplit[2].padStart(2, '0')
+  const mydate = (format === 'yyyy-MM-dd') ? (`${year}-${month}-${day}`) : (`${day}.${month}.${year}`)
+  return mydate
 }
 
 export const convertAuthorsToArrayString = (authors: Author[]) => {
@@ -36,8 +47,8 @@ export const convertBooksPagedResponseToBooks = (books: BookPagedResponse[]): Bo
       Cover: book.Cover,
       Authors: convertAuthorPagedResponseToAuthors(book.Authors),
       PublishDate: new Date(book.PublishDate),
-      Quantity: 0,
-      Available: 0
+      Quantity: book.Quantity,
+      Available: book.Available
     }
   })
 }
@@ -79,7 +90,7 @@ const convertAuthorIdResponseToAuthors = (authors: AuthorIdResponse[]): Author[]
 export const convertBookHistoryResponseToBookHistory = (bookHistories: BookRentHistoryResponse[]): BookRentHistory[] => {
   return bookHistories.map(bookHistory => {
     return {
-      Id: `${bookHistory.User.Email}${new Date(bookHistory.RentDate).getMilliseconds()}`,
+      Id: bookHistory.Id,
       User: bookHistory.User,
       RentDate: new Date(bookHistory.RentDate),
       IsReturned: bookHistory.IsReturned
@@ -154,12 +165,6 @@ export const initAuthorFormValidation = (): AuthorFormValidation => {
     isLastNameValid: true,
     isAuthorDataValid: true
   }
-}
-
-export const getBookRentLastUserId = (bookRentHistories: BookRentHistory[]): number => {
-  return bookRentHistories
-    .filter(bookRentHistory => !bookRentHistory.IsReturned)
-    .reverse()[0].User.Id
 }
 
 export const convertTopRentalBooksToBooks = (topRentalBooks: TopBookRentalsResponse[]): Book[] => {

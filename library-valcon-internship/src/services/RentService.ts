@@ -12,8 +12,8 @@ export const getBookRentHistory = async (bookId: string) => {
   return axios.get<BookRentHistoryResponse[]>(`${baseUrl}api/Rental/book-history/${bookId}`)
 }
 
-export const returnBook = async (bookId: string, userId: number) => {
-  return axios.post(`${baseUrl}api/Rental/return/${bookId}/${userId}`)
+export const returnBook = async (bookRentId: number) => {
+  return axios.post(`${baseUrl}api/Rental/return/${bookRentId}`)
 }
 
 export const getTopRentalBooks = async (count: number) => {

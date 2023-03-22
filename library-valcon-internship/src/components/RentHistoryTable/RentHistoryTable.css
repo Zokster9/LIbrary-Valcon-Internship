@@ -1,31 +1,63 @@
 .rent-history {
+  margin-top: 2rem;
   display: flex;
   flex-flow: column;
   justify-content: center;
   align-items: center;
   width: 100%;
-  gap: 1.5rem
+  gap: 1.5rem;
+  padding-inline: 100px;
+}
+
+.rent-history-header {
+  text-align: center;
+  margin: unset;
+}
+
+.rent-history-subtitle {
+  margin: unset;
+  text-align: center;
+  font-size: 18px;
 }
 
 .rent-history-table {
-  table-layout: fixed;
-  width: 50%;
   border-collapse: collapse;
-  border: 3px solid black;
+  margin-bottom: 3rem;
+  width: 100%;
 }
 
-.rent-history-table-header {
+.rent-history-table td, .rent-history-table th {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
   text-align: center;
 }
 
-.rent-history-table-data {
-  text-align: center;
+.rent-history-table th {
+  background-color: #444;
+  color: white;
+}
+
+.rent-history-table tbody tr:nth-child(even) {
+  background-color: #f5f5f5f5;
 }
 
 .return-book-btn {
-  border-radius: 15px;
+  border-radius: 8px;
   background-color: rgb(199, 149, 10);
   color: white;
-  padding: 0.5rem;
+  padding: 5px;
   text-transform: uppercase;
+}
+
+@media (max-width: 400px) {
+  .rent-history {
+    padding-inline: unset;
+  }
+
+  .rent-history-table {
+    overflow-x: auto;
+    white-space: nowrap;
+    display: block;
+    width: 100%;
+  }
 }

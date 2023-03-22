@@ -7,7 +7,11 @@ import Book from '../../models/Book'
 import { getTopRentalBooks } from '../../services/RentService'
 import { convertTopRentalBooksToBooks } from '../../utils/Utils'
 
-const TopRentalBooksPage = () => {
+interface TopRentalBooksPageProps {
+  token: string | null
+}
+
+const TopRentalBooksPage = ({ token }: TopRentalBooksPageProps) => {
   const [ books, setBooks ] = useState<Book[]>([])
   useEffect(() => {
     getTopRentalBooks(10)
@@ -20,7 +24,7 @@ const TopRentalBooksPage = () => {
   }, [])
   return (
     <div>
-      <BookList books={books} />
+      <BookList books={books} token={token} />
     </div>
   )
 }

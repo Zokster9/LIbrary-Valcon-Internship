@@ -7,5 +7,7 @@ export default interface BookPagedResponse {
   Isbn: string
   Cover: string
   PublishDate: string
+  Quantity: number
+  Available: number
   Authors: AuthorPagedResponse[]
 }

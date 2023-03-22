@@ -6,7 +6,8 @@
   width: 100%;
   background-color: #444;
   overflow: hidden;
-  min-height: 6.875rem;
+  height: 70px;
+  max-height: 70px;
 }
 
 .header-user {

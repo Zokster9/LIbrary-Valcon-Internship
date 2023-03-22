@@ -1,8 +1,13 @@
 .book-card {
   display: flex;
   flex-flow: column;
-  width: 20%;
-  padding: 1rem;
+  max-width: 500px;
+  width: 380px;
+  min-width: 200px;
+  height: 600px;
+  max-height: 600px;
+  padding-block: 0px;
+  padding-inline: 12px;
   border: 1px solid black;
   border-radius: 15px;
   color: white;
@@ -11,17 +16,18 @@
   transition: box-shadow 0.2s ease-in-out, opacity 0.2s ease-in-out;
   justify-content: space-evenly;
   cursor: pointer;
+  gap: 2px;
 }
 
 .book-card:active {
   opacity: 0.8;
-  box-shadow: 0 0 30px 30px #666;
+  box-shadow: 0 0 20px 15px #666;
   transition: box-shadow 0.2s ease-in-out, opacity 0.2s ease-in-out;
 }
 
 .book-card:hover {
   opacity: 0.8;
-  box-shadow: 0 0 30px 30px #666;
+  box-shadow: 0 0 20px 15px #666;
   transition: box-shadow 0.2s ease-in-out, opacity 0.2s ease-in-out;
 }
 
@@ -81,11 +87,67 @@
   white-space: nowrap;
 }
 
+.book-card-btns {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.book-card-btn {
+  border-radius: 8px;
+  color: white;
+  padding-block: 8px;
+  padding-inline: 15px;
+  text-align: center;
+  max-width: 100px;
+  min-width: 80px;
+  font-size: 16px;
+}
+
+.delete-btn {
+  background-color: red;
+}
+
+.edit-btn {
+  background-color: rgb(199, 149, 10);
+}
+
+.edit-btn--mobile {
+  display: none;
+}
+
+.book-card-content {
+  margin: unset;
+}
+
+.book-card-info-authors--hide {
+  min-width: 250px;
+  text-align: right;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 @media (max-width: 400px) {
   .book-card {
     justify-content: unset;
     margin: unset;
     width: 100%;
+    height: 450px;
+    max-height: 450px;
     margin-bottom: 2rem;
+    gap: 15px;
+  }
+
+  .edit-btn--mobile {
+    display: unset;
+  }
+
+  .edit-btn--desktop {
+    display: none;
+  }
+
+  .book-card-info-authors--hide {
+    min-width: 200px;
   }
 }

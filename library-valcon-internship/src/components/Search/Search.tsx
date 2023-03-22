@@ -115,8 +115,8 @@ const Search = ({ isSearchVisible, setSearch, setFilter, setSort }: SearchProps)
         autoComplete='off'
         onChange={debouncedChangeHandler}
       />
-      <VscFilter className='icon' onClick={handleShowFilterToggle} title='Filter' />
-      <BsSortDown className='icon' onClick={handleShowSortToggle} title='Sort' />
+      <VscFilter size={50} className='icon' onClick={handleShowFilterToggle} title='Filter' />
+      <BsSortDown size={50} className='icon' onClick={handleShowSortToggle} title='Sort' />
       {showModal &&
         <Modal closeModal={handleCloseModals} confirm={handleConfirm} >
           {showFilter && <FilterForm filterForm={filterForm} setFilterForm={setFilterForm} />}

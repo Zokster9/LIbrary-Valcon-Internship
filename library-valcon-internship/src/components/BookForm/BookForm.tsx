@@ -8,7 +8,7 @@ import AuthorFormType from '../../models/AuthorFormType'
 import AuthorFormValidation from '../../models/AuthorFormValidation'
 import BookFormType from '../../models/BookFormType'
 import BookFormValidation from '../../models/BookFormValidation'
-import { setDefaultCoverValue } from '../../utils/Utils'
+import { convertDateToInputDate, setDefaultCoverValue } from '../../utils/Utils'
 import AuthorForm from '../AuthorForm/AuthorForm'
 import './BookForm.css'
 
@@ -65,20 +65,31 @@ const BookForm = ({
     setBookForm(bookForm => {
       return {
         ...bookForm,
-        [formProperty]: value
+        [formProperty]: formProperty === 'releaseDate' ? new Date(value) : value
       }
     })
   }
   const handleOnBlurInput = (formProperty: keyof BookFormType,
     validationProperty: keyof BookFormValidation) => {
-    const formValue: string = bookForm[formProperty] as string
-    if (formValue.trim() === '') {
-      setBookFormValidation(bookFormValidation => {
-        return {
-          ...bookFormValidation,
-          [validationProperty]: false
-        }
-      })
+    if (formProperty === 'releaseDate') {
+      if (!bookForm[formProperty]) {
+        setBookFormValidation(bookFormValidation => {
+          return {
+            ...bookFormValidation,
+            [validationProperty]: false
+          }
+        })
+      }
+    } else {
+      const formValue: string = bookForm[formProperty] as string
+      if (formValue.trim() === '') {
+        setBookFormValidation(bookFormValidation => {
+          return {
+            ...bookFormValidation,
+            [validationProperty]: false
+          }
+        })
+      }
     }
   }
 
@@ -90,6 +101,17 @@ const BookForm = ({
       }
     })
   }
+
+  const handleRemoveCover = () => {
+    setCover('')
+    setBookForm(bookForm => {
+      return {
+        ...bookForm,
+        requestCover: new Blob()
+      }
+    })
+  }
+
   return (
     <>
       <h1 className='book-header'>{title}</h1>
@@ -104,6 +126,7 @@ const BookForm = ({
               alt='placeholder-book'
             />
           </button>
+          <button className='book-remove-cover-btn' type='button' onClick={handleRemoveCover}>Remove cover</button>
           <input
             className='book-text-area'
             type='file'
@@ -229,6 +252,7 @@ const BookForm = ({
                 !bookFormValidation.isReleaseDateValid ? 'book-input book-error-input' : 'book-input'
               }
               type='date'
+              value={convertDateToInputDate(bookForm.releaseDate, 'yyyy-MM-dd')}
               onChange={({ currentTarget }: FormEvent<HTMLInputElement>) => {
                 handleOnChangeInput(currentTarget.value, 'releaseDate')
               }}
@@ -305,15 +329,6 @@ const BookForm = ({
               </div>
             </div>
           </div>
-        </div>
-        <div className='book-submit-area'>
-          <h4 className=
-            { !bookFormValidation.isDataValid ? 'book-error-message' :
-              'book-error-message hidden'
-            }
-          >
-            Wrong book data!
-          </h4>
         </div>
       </form>
     </>
