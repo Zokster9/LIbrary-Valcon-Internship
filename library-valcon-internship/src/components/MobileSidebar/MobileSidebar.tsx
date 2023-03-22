@@ -23,7 +23,7 @@ const MobileSidebar = ({ isVisible, token, setToken, handleMenuClick }: MobileSi
   }
   return (
     <div className={isVisible && isLoggedIn ? 'mobileSidebar' : 'mobileSidebar-hidden'}>
-      <NavbarLink to='top-rental-books' className='sidebar-link' color='#F56211'>
+      <NavbarLink to='top-rental-books' className='sidebar-link' color='#8C6E1B'>
             Top 10 Rental Books
       </NavbarLink>
       <button className='sidebar-link' onClick={handleSignOut}>

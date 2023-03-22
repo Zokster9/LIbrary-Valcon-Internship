@@ -18,13 +18,13 @@ const Navbar = ({ handleMenuClick, token }: NavbarProps) => {
   const jsonToken: Token | null = token ? JSON.parse(token) as Token : null
   return isLoggedIn ? (
     <nav className='navbar'>
-      <NavbarLink className='navbar-link' to='' color='#F56211'>
+      <NavbarLink className='navbar-link' to='' color='#8C6E1B'>
         <img src={home} alt='home-icon' />
       </NavbarLink>
       <button className='navbar-link' onClick={() => handleMenuClick()}>
         <img src={hamburgerMenuIcon} alt='moreOptions-icon' />
       </button>
-      <NavbarLink to='top-rental-books' className='navbar-options-link' color='#F56211'>
+      <NavbarLink to='top-rental-books' className='navbar-options-link' color='#8C6E1B'>
             Top 10 Rental Books
       </NavbarLink>
       {
