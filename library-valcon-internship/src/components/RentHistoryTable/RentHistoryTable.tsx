@@ -52,8 +52,11 @@ const RentHistoryTable = ({ bookId, retrieveBook, retrieveBookHistory, setRetrie
 
   return (
     <div className='rent-history'>
-      <h1 style={{ textAlign: 'center' }}>
-        {bookRentHistories.length > 0 ? 'Rent history' : 'Book has never been rented before!'}
+      <h1 className='rent-history-header'>
+        Rent history
+      </h1>
+      <h1 className='rent-history-subtitle'>
+        {bookRentHistories.length === 0 && 'Book has never been rented before!'}
       </h1>
       {
         bookRentHistories.length > 0 &&

@@ -1,4 +1,5 @@
 .rent-history {
+  margin-top: 2rem;
   display: flex;
   flex-flow: column;
   justify-content: center;
@@ -6,6 +7,17 @@
   width: 100%;
   gap: 1.5rem;
   padding-inline: 100px;
+}
+
+.rent-history-header {
+  text-align: center;
+  margin: unset;
+}
+
+.rent-history-subtitle {
+  margin: unset;
+  text-align: center;
+  font-size: 18px;
 }
 
 .rent-history-table {

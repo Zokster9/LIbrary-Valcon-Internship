@@ -127,13 +127,13 @@ const BookDetailsPage = () => {
             <h1 className='book-details-title'>{book?.Title}</h1>
             <BookAvailableMessage isAvailable={book?.Available !== 0} />
           </div>
-          <p className='book-details-description'>
-            {book?.Description}
-          </p>
           <div className='book-details-field'>
             <label className='book-details-label'>Authors</label>
             <h3 className='book-details-authors'>{authors}</h3>
           </div>
+          <p className='book-details-description'>
+            {book?.Description}
+          </p>
           <div className='book-details-mobile-fields'>
             <div className='book-details-field'>
               <label className='book-details-label-sidecontent'>ISBN</label>
