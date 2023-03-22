@@ -1,6 +1,8 @@
 import { Dispatch, SetStateAction } from 'react'
 
 import { useNavigate } from 'react-router-dom'
+
+import NavbarLink from '../NavbarLink/NavbarLink'
 import './MobileSidebar.css'
 
 interface MobileSidebarProps {
@@ -21,6 +23,9 @@ const MobileSidebar = ({ isVisible, token, setToken, handleMenuClick }: MobileSi
   }
   return (
     <div className={isVisible && isLoggedIn ? 'mobileSidebar' : 'mobileSidebar-hidden'}>
+      <NavbarLink to='top-rental-books' className='sidebar-link' color='#F56211'>
+            Top 10 Rental Books
+      </NavbarLink>
       <button className='sidebar-link' onClick={handleSignOut}>
         Sign out
       </button>

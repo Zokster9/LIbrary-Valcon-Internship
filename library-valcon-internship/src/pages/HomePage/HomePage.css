@@ -32,4 +32,8 @@
   .fab:active {
     box-shadow: 0 0 10px #cdc3c3;
   }
+
+  .spinner-container {
+    margin-top: unset;
+  }
 }

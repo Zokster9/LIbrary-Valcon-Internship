@@ -18,11 +18,11 @@
     width: 50%;
     min-height: 100vh;
     margin-bottom: 12%;
-    opacity: 0.3;
+    opacity: 0.95;
   }
 
   .sidebar-link {
-    color: #f4f3f3;
+    color: white;
     width: 100%;
     text-align: center;
     text-decoration: none;
